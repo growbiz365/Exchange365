@@ -294,6 +294,7 @@ class GeneralVoucherController extends Controller
 
         $partyDetails = 'Bank: ' . $bank->bank_name . ($details ? ', ' . $details : '');
         PartyLedger::create([
+            'business_id' => $voucher->business_id,
             'party_id' => $party->party_id,
             'currency_id' => $bank->currency_id,
             'voucher_id' => $voucherId,
@@ -309,6 +310,7 @@ class GeneralVoucherController extends Controller
 
         $bankDetails = 'Party: ' . $party->party_name . ', Rate ' . $rate . ($details ? ', ' . $details : '');
         BankLedger::create([
+            'business_id' => $voucher->business_id,
             'bank_id' => $bank->bank_id,
             'voucher_id' => $voucherId,
             'voucher_type' => $voucherType,

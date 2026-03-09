@@ -23,6 +23,7 @@ class BankLedger extends Model
     protected $primaryKey = 'bank_ledger_id';
 
     protected $fillable = [
+        'business_id',
         'bank_id',
         'voucher_id',
         'voucher_type',

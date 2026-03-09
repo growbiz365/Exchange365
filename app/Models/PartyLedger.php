@@ -23,6 +23,7 @@ class PartyLedger extends Model
     protected $primaryKey = 'party_ledger_id';
 
     protected $fillable = [
+        'business_id',
         'party_id',
         'currency_id',
         'voucher_id',
