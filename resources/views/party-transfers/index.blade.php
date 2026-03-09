@@ -112,7 +112,8 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 bg-white/50">
                     @forelse($transfers as $transfer)
-                    <tr class="hover:bg-sky-50/60 transition-colors duration-150">
+                    <tr class="hover:bg-sky-50/60 transition-colors duration-150 cursor-pointer"
+                        onclick="window.location='{{ route('party-transfers.show', $transfer) }}'">
                         <td class="whitespace-nowrap pl-6 pr-3 py-4 text-sm font-semibold text-gray-900">{{ $transfer->party_transfer_id }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-600">{{ $transfer->date_added->format('d M Y') }}</td>
                         <td class="whitespace-nowrap px-3 py-4">
@@ -139,7 +140,7 @@
                         </td>
                         <td class="whitespace-nowrap pl-3 pr-6 py-4">
                             <div class="flex items-center justify-center gap-1">
-                                <a href="{{ route('party-transfers.show', $transfer) }}"
+                                <a href="{{ route('party-transfers.show', $transfer) }}" onclick="event.stopPropagation()"
                                     class="inline-flex items-center justify-center rounded-lg p-2 text-indigo-600 hover:bg-indigo-100 transition"
                                     title="View transfer">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +148,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </a>
-                                <a href="{{ route('party-transfers.edit', $transfer) }}"
+                                <a href="{{ route('party-transfers.edit', $transfer) }}" onclick="event.stopPropagation()"
                                     class="inline-flex items-center justify-center rounded-lg p-2 text-sky-600 hover:bg-sky-100 transition"
                                     title="Edit transfer">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +159,7 @@
                                     onsubmit="return confirm('Are you sure you want to delete this transfer?');" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
+                                    <button type="submit" onclick="event.stopPropagation()"
                                         class="inline-flex items-center justify-center rounded-lg p-2 text-rose-600 hover:bg-rose-100 transition"
                                         title="Delete transfer">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

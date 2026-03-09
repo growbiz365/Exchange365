@@ -99,6 +99,7 @@ class BankTransferController extends Controller
             $details = trim((string) $request->details);
 
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $fromBank->bank_id,
                 'withdrawal_amount' => $request->amount,
                 'deposit_amount' => 0,
@@ -110,6 +111,7 @@ class BankTransferController extends Controller
             ]);
 
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $toBank->bank_id,
                 'deposit_amount' => $request->amount,
                 'withdrawal_amount' => 0,
@@ -234,6 +236,7 @@ class BankTransferController extends Controller
             $details = trim((string) $request->details);
 
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $fromBank->bank_id,
                 'withdrawal_amount' => $request->amount,
                 'deposit_amount' => 0,
@@ -245,6 +248,7 @@ class BankTransferController extends Controller
             ]);
 
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $toBank->bank_id,
                 'deposit_amount' => $request->amount,
                 'withdrawal_amount' => 0,

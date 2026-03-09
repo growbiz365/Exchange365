@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Edit Money Exchange #{{ $moneyExchange->money_exchange_id }}" />
 
-    <form action="{{ route('money-exchanges.update', $moneyExchange) }}" method="POST" id="exchangeForm">
+    <form action="{{ route('money-exchanges.update', $moneyExchange) }}" method="POST" id="exchangeForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

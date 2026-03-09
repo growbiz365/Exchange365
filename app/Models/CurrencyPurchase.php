@@ -23,6 +23,7 @@ class CurrencyPurchase extends Model
     protected $primaryKey = 'currency_purchase_id';
 
     protected $fillable = [
+        'business_id',
         'currency_id',
         'date_added',
         'currency_amount',

@@ -118,6 +118,7 @@ class PartyTransferController extends Controller
 
             // Create ledger entry for credit party
             PartyLedger::create([
+                'business_id' => $businessId,
                 'party_id' => $request->credit_party,
                 'credit_amount' => $request->credit_amount,
                 'debit_amount' => 0,
@@ -133,6 +134,7 @@ class PartyTransferController extends Controller
 
             // Create ledger entry for debit party
             PartyLedger::create([
+                'business_id' => $businessId,
                 'party_id' => $request->debit_party,
                 'debit_amount' => $request->debit_amount,
                 'credit_amount' => 0,
@@ -230,6 +232,7 @@ class PartyTransferController extends Controller
 
             // Create new ledger entry for credit party
             PartyLedger::create([
+                'business_id' => $businessId,
                 'party_id' => $request->credit_party,
                 'credit_amount' => $request->credit_amount,
                 'debit_amount' => 0,
@@ -245,6 +248,7 @@ class PartyTransferController extends Controller
 
             // Create new ledger entry for debit party
             PartyLedger::create([
+                'business_id' => $businessId,
                 'party_id' => $request->debit_party,
                 'debit_amount' => $request->debit_amount,
                 'credit_amount' => 0,

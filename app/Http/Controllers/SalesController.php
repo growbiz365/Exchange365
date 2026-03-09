@@ -271,6 +271,7 @@ class SalesController extends Controller
 
         $bankDetails = 'Party: ' . $party->party_name . ', Rate ' . $rate . ($details ? ', ' . $details : '');
         BankLedger::create([
+            'business_id' => $sale->business_id,
             'bank_id' => $bank->bank_id,
             'voucher_id' => $voucherId,
             'voucher_type' => $voucherType,
@@ -283,6 +284,7 @@ class SalesController extends Controller
 
         $moreDetails = $bank->bank_name . ', ' . number_format($currencyAmount, 2) . ' ' . ($bank->currency->currency_symbol ?? '') . ', Rate ' . $rate . ($details ? ', ' . $details : '');
         PartyLedger::create([
+            'business_id' => $sale->business_id,
             'party_id' => $party->party_id,
             'currency_id' => $sale->party_currency_id,
             'voucher_id' => $voucherId,

@@ -129,6 +129,7 @@ class PartyController extends Controller
 
                         // Create ledger entry
                         PartyLedger::create([
+                            'business_id' => $business->id,
                             'party_id' => $party->party_id,
                             'currency_id' => $balance['currency_id'],
                             'voucher_id' => $party->party_id,
@@ -242,6 +243,7 @@ class PartyController extends Controller
 
                         // Create ledger entry
                         PartyLedger::create([
+                            'business_id' => $business->id,
                             'party_id' => $party->party_id,
                             'currency_id' => $balance['currency_id'],
                             'voucher_id' => $party->party_id,

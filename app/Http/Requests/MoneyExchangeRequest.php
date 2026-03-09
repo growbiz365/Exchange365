@@ -22,7 +22,9 @@ class MoneyExchangeRequest extends FormRequest
             'credit_amount' => 'required|numeric|min:0.01',
             'rate' => 'required|numeric|min:0.0001',
             'details' => 'nullable|string|max:1000',
+            'attachments' => 'nullable|array',
             'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:5120',
+            'attachment_titles' => 'nullable|array',
             'attachment_titles.*' => 'nullable|string|max:255',
         ];
     }
@@ -35,6 +37,7 @@ class MoneyExchangeRequest extends FormRequest
             'to_account_id' => 'to account',
             'debit_amount' => 'debit amount',
             'credit_amount' => 'credit amount',
+            'attachments.*' => 'attachment',
         ];
     }
 
@@ -42,6 +45,8 @@ class MoneyExchangeRequest extends FormRequest
     {
         return [
             'to_account_id.different' => 'To account must be different from from account.',
+            'attachments.*.mimes' => 'Each attachment must be a file of type: jpg, jpeg, png, pdf, doc, docx, xls, xlsx.',
+            'attachments.*.max' => 'Each attachment must not be greater than 5MB.',
         ];
     }
 }

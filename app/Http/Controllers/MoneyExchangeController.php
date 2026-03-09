@@ -104,6 +104,7 @@ class MoneyExchangeController extends Controller
 
             $bankDetails = "To Account:{$toBank->bank_name} (" . number_format($request->credit_amount, 2) . ") Rate:{$request->rate}";
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $fromBank->bank_id,
                 'withdrawal_amount' => $request->debit_amount,
                 'deposit_amount' => 0,
@@ -116,6 +117,7 @@ class MoneyExchangeController extends Controller
 
             $bankDetails = "From Account:{$fromBank->bank_name} (" . number_format($request->debit_amount, 2) . ") Rate:{$request->rate}";
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $toBank->bank_id,
                 'deposit_amount' => $request->credit_amount,
                 'withdrawal_amount' => 0,
@@ -127,6 +129,7 @@ class MoneyExchangeController extends Controller
             ]);
 
             CurrencyPurchase::create([
+                'business_id' => $businessId,
                 'currency_id' => $toBank->currency_id,
                 'date_added' => $request->date_added,
                 'currency_amount' => $request->credit_amount,
@@ -251,6 +254,7 @@ class MoneyExchangeController extends Controller
 
             $bankDetails = "To Account:{$toBank->bank_name} (" . number_format($request->credit_amount, 2) . ") Rate:{$request->rate}";
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $fromBank->bank_id,
                 'withdrawal_amount' => $request->debit_amount,
                 'deposit_amount' => 0,
@@ -263,6 +267,7 @@ class MoneyExchangeController extends Controller
 
             $bankDetails = "From Account:{$fromBank->bank_name} (" . number_format($request->debit_amount, 2) . ") Rate:{$request->rate}";
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $toBank->bank_id,
                 'deposit_amount' => $request->credit_amount,
                 'withdrawal_amount' => 0,
@@ -274,6 +279,7 @@ class MoneyExchangeController extends Controller
             ]);
 
             CurrencyPurchase::create([
+                'business_id' => $businessId,
                 'currency_id' => $toBank->currency_id,
                 'date_added' => $request->date_added,
                 'currency_amount' => $request->credit_amount,

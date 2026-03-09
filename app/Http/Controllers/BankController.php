@@ -119,6 +119,7 @@ class BankController extends Controller
             ]);
 
             BankLedger::create([
+                'business_id' => $businessId,
                 'bank_id' => $bank->bank_id,
                 'voucher_id' => $bank->bank_id,
                 'voucher_type' => 'Opening Balance',

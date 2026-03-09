@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Create Money Exchange" />
 
-    <form action="{{ route('money-exchanges.store') }}" method="POST" id="exchangeForm">
+    <form action="{{ route('money-exchanges.store') }}" method="POST" id="exchangeForm" enctype="multipart/form-data">
         @csrf
 
         @if ($errors->any())

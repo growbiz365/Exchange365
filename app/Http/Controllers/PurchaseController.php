@@ -256,6 +256,7 @@ class PurchaseController extends Controller
 
         $bankDetails = 'Party: ' . $party->party_name . ', Rate ' . $rate . ($details ? ', ' . $details : '');
         BankLedger::create([
+            'business_id' => $purchase->business_id,
             'bank_id' => $bank->bank_id,
             'voucher_id' => $voucherId,
             'voucher_type' => $voucherType,
@@ -268,6 +269,7 @@ class PurchaseController extends Controller
 
         $moreDetails = $bank->bank_name . ', ' . number_format($creditAmount, 2) . ', Rate ' . $rate . ($details ? ', ' . $details : '');
         PartyLedger::create([
+            'business_id' => $purchase->business_id,
             'party_id' => $party->party_id,
             'currency_id' => $purchase->party_currency_id,
             'voucher_id' => $voucherId,

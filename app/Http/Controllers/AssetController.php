@@ -385,6 +385,7 @@ class AssetController extends Controller
 
         if ((int) $asset->purchase_transaction_type === 2 && $asset->purchase_bank_id) {
             BankLedger::create([
+                'business_id' => $asset->business_id,
                 'bank_id' => $asset->purchase_bank_id,
                 'voucher_id' => $asset->asset_id,
                 'voucher_type' => Asset::VOUCHER_TYPE,
@@ -398,8 +399,9 @@ class AssetController extends Controller
 
         if ((int) $asset->purchase_transaction_type === 3 && $asset->purchase_party_id) {
             PartyLedger::create([
+                'business_id' => $asset->business_id,
                 'party_id' => $asset->purchase_party_id,
-                'currency_id' => 1, // PKR
+                'currency_id' => 1,
                 'voucher_id' => $asset->asset_id,
                 'voucher_type' => Asset::VOUCHER_TYPE,
                 'credit_amount' => $asset->cost_amount,
@@ -423,6 +425,7 @@ class AssetController extends Controller
 
         if ((int) $asset->sale_transaction_type === 2 && $asset->sale_bank_id) {
             BankLedger::create([
+                'business_id' => $asset->business_id,
                 'bank_id' => $asset->sale_bank_id,
                 'voucher_id' => $asset->asset_id,
                 'voucher_type' => Asset::VOUCHER_TYPE,
@@ -436,8 +439,9 @@ class AssetController extends Controller
 
         if ((int) $asset->sale_transaction_type === 3 && $asset->sale_party_id) {
             PartyLedger::create([
+                'business_id' => $asset->business_id,
                 'party_id' => $asset->sale_party_id,
-                'currency_id' => 1, // PKR
+                'currency_id' => 1,
                 'voucher_id' => $asset->asset_id,
                 'voucher_type' => Asset::VOUCHER_TYPE,
                 'credit_amount' => 0,
