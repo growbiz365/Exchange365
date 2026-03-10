@@ -39,7 +39,7 @@
                 <div>
                     <x-input-label for="from_account_id">From Account <span class="text-red-600">*</span></x-input-label>
                     <select id="from_account_id" name="from_account_id" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                        class="chosen-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                         <option value="">Select Source Account</option>
                         @foreach($banks as $bank)
                             <option value="{{ $bank->bank_id }}" {{ old('from_account_id', $bankTransfer->from_account_id) == $bank->bank_id ? 'selected' : '' }}>
@@ -58,7 +58,7 @@
                 <div>
                     <x-input-label for="to_account_id">To Account <span class="text-red-600">*</span></x-input-label>
                     <select id="to_account_id" name="to_account_id" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                        class="chosen-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                         <option value="">Select Destination Account</option>
                         @foreach($banks as $bank)
                             <option value="{{ $bank->bank_id }}" {{ old('to_account_id', $bankTransfer->to_account_id) == $bank->bank_id ? 'selected' : '' }}>
@@ -160,11 +160,44 @@
         </form>
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <style>
+        .chosen-container { width: 100% !important; }
+        .chosen-container-single .chosen-single {
+            height: 38px;
+            line-height: 36px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0 2.25rem 0 0.75rem;
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 0.875rem;
+            color: #111827;
+        }
+        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single div { right: 0.5rem; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.375rem 0.375rem 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 0.875rem; }
+        .chosen-results li.highlighted { background: #2563eb; color: white; }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('transferForm');
             const fromAccountSelect = document.getElementById('from_account_id');
             const toAccountSelect = document.getElementById('to_account_id');
+
+            if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                jQuery('.chosen-select').chosen({
+                    width: '100%',
+                    search_contains: true,
+                    allow_single_deselect: true,
+                    placeholder_text_single: 'Select an option'
+                });
+            }
 
             fromAccountSelect.addEventListener('change', function() {
                 fetchBankBalance(this.value, 'from');
@@ -257,6 +290,9 @@
                     fromOption.disabled = true;
                 }
                 if (toAccountSelect.value === selectedFromAccount) toAccountSelect.value = '';
+            }
+            if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                jQuery('#to_account_id').trigger('chosen:updated');
             }
             setTimeout(validateTransferAmount, 300);
         }

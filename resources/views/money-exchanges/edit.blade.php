@@ -51,7 +51,7 @@
                             From Account <span class="text-red-600">*</span>
                         </label>
                         <select id="from_account_id" name="from_account_id" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
                             <option value="">Select Source Account</option>
                             @foreach($banks as $bank)
                                 <option value="{{ $bank->bank_id }}" {{ old('from_account_id', $moneyExchange->from_account_id) == $bank->bank_id ? 'selected' : '' }}>
@@ -162,7 +162,7 @@
                             To Account <span class="text-red-600">*</span>
                         </label>
                         <select id="to_account_id" name="to_account_id" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
                             <option value="">Select Destination Account</option>
                             @foreach($banks as $bank)
                                 <option value="{{ $bank->bank_id }}" {{ old('to_account_id', $moneyExchange->to_account_id) == $bank->bank_id ? 'selected' : '' }}>
@@ -290,6 +290,24 @@
         </div>
     </form>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <style>
+        .chosen-container { width: 100% !important; }
+        .chosen-container-single .chosen-single {
+            height: 34px; line-height: 32px; padding: 0 8px;
+            border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px;
+            background: #fff; font-family: inherit;
+        }
+        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single div { right: 8px; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 12px; }
+        .chosen-results li.highlighted { background: #2563eb; color: white; }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const debitInput = document.getElementById('debit_amount');
@@ -297,6 +315,15 @@
             const creditInput = document.getElementById('credit_amount');
             const fromAccountSelect = document.getElementById('from_account_id');
             const toAccountSelect = document.getElementById('to_account_id');
+
+            if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                jQuery('.chosen-select').chosen({
+                    width: '100%',
+                    search_contains: true,
+                    allow_single_deselect: true,
+                    placeholder_text_single: 'Select an option'
+                });
+            }
 
             function getOperation() {
                 return document.querySelector('input[name="transaction_operation"]:checked')?.value || '1';
@@ -403,6 +430,9 @@
                     if (toAccountSelect.value === selectedFrom) {
                         toAccountSelect.value = '';
                     }
+                }
+                if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                    jQuery('#to_account_id').trigger('chosen:updated');
                 }
             }
 

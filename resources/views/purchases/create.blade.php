@@ -84,7 +84,7 @@
                         <div>
                             <label for="bank_id" class="block text-xs font-semibold text-gray-600 mb-1">Deposit Bank <span class="text-red-500">*</span></label>
                             <select id="bank_id" name="bank_id" required
-                                class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-emerald-500 focus:ring-emerald-500">
+                                class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-emerald-500 focus:ring-emerald-500">
                                 <option value="">Select Bank</option>
                                 @foreach($banks as $bank)
                                     <option value="{{ $bank->bank_id }}" {{ old('bank_id') == $bank->bank_id ? 'selected' : '' }}>
@@ -120,7 +120,7 @@
                         <div>
                             <label for="party_id" class="block text-xs font-semibold text-gray-600 mb-1">Credit Party <span class="text-red-500">*</span></label>
                             <select id="party_id" name="party_id" required
-                                class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
+                                class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select Party</option>
                                 @foreach($parties as $party)
                                     <option value="{{ $party->party_id }}" {{ old('party_id') == $party->party_id ? 'selected' : '' }}>
@@ -133,7 +133,7 @@
                         <div>
                             <label for="party_currency_id" class="block text-xs font-semibold text-gray-600 mb-1">Party Currency <span class="text-red-500">*</span></label>
                             <select id="party_currency_id" name="party_currency_id" required
-                                class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
+                                class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
                                 @foreach($currencies as $c)
                                     <option value="{{ $c->currency_id }}" {{ old('party_currency_id', '1') == $c->currency_id ? 'selected' : '' }}>
                                         {{ $c->currency }} ({{ $c->currency_symbol ?? '' }})
@@ -170,6 +170,30 @@
         </div>
     </form>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <style>
+        .chosen-container { width: 100% !important; }
+        .chosen-container-single .chosen-single {
+            height: 42px;
+            line-height: 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0 2.25rem 0 0.75rem;
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 0.875rem;
+            color: #111827;
+        }
+        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single div { right: 0.75rem; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.5rem 0.5rem 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.5rem 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 0.875rem; }
+        .chosen-results li.highlighted { background: #2563eb; color: white; }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById('purchaseForm');
@@ -181,6 +205,15 @@
             var debitAmountInput = document.getElementById('debit_amount');
             var opMultiply = document.querySelector('input[name="transaction_operation"][value="2"]');
             var opDivide = document.querySelector('input[name="transaction_operation"][value="1"]');
+
+            if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                jQuery('.chosen-select').chosen({
+                    width: '100%',
+                    search_contains: true,
+                    allow_single_deselect: true,
+                    placeholder_text_single: 'Select an option'
+                });
+            }
 
             function fetchBankBalance(bankId) {
                 var div = document.getElementById('bank_balance_display');

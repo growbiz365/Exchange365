@@ -32,7 +32,7 @@
                     <div>
                         <label for="asset_category_id" class="block text-xs font-semibold text-gray-600 mb-1">Asset Category <span class="text-red-500">*</span></label>
                         <select id="asset_category_id" name="asset_category_id" required
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
+                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select category</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->asset_category_id }}" {{ old('asset_category_id', $asset->asset_category_id) == $cat->asset_category_id ? 'selected' : '' }}>
@@ -88,7 +88,7 @@
                     <div id="purchase_bank_wrapper" class="space-y-0">
                         <label for="purchase_bank_id" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Bank</label>
                         <select id="purchase_bank_id" name="purchase_bank_id"
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
+                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select bank</option>
                             @foreach($banks as $bank)
                                 <option value="{{ $bank->bank_id }}" {{ old('purchase_bank_id', $asset->purchase_bank_id) == $bank->bank_id ? 'selected' : '' }}>{{ $bank->bank_name }}</option>
@@ -100,7 +100,7 @@
                     <div id="purchase_party_wrapper" class="space-y-0 lg:col-span-1">
                         <label for="purchase_party_id" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Party</label>
                         <select id="purchase_party_id" name="purchase_party_id"
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
+                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select party</option>
                             @foreach($parties as $party)
                                 <option value="{{ $party->party_id }}" {{ old('purchase_party_id', $asset->purchase_party_id) == $party->party_id ? 'selected' : '' }}>{{ $party->party_name }}</option>
@@ -126,6 +126,30 @@
         </div>
     </form>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <style>
+        .chosen-container { width: 100% !important; }
+        .chosen-container-single .chosen-single {
+            height: 42px;
+            line-height: 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0 2.25rem 0 0.75rem;
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 0.875rem;
+            color: #111827;
+        }
+        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single div { right: 0.75rem; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.5rem 0.5rem 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.5rem 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 0.875rem; }
+        .chosen-results li.highlighted { background: #2563eb; color: white; }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var typeInputs = document.querySelectorAll('input[name="purchase_transaction_type"]');
@@ -134,6 +158,15 @@
             var bankSelect = document.getElementById('purchase_bank_id');
             var partySelect = document.getElementById('purchase_party_id');
 
+            if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                jQuery('.chosen-select').chosen({
+                    width: '100%',
+                    search_contains: true,
+                    allow_single_deselect: true,
+                    placeholder_text_single: 'Select an option'
+                });
+            }
+
             function updateVisibility() {
                 var selected = document.querySelector('input[name="purchase_transaction_type"]:checked');
                 var value = selected ? selected.value : '1';
@@ -141,6 +174,11 @@
                 partyWrapper.classList.toggle('hidden', value !== '3');
                 document.getElementById('purchase_bank_balance_display').classList.toggle('hidden', value !== '2' || !bankSelect.value);
                 document.getElementById('purchase_party_balance_display').classList.toggle('hidden', value !== '3' || !partySelect.value);
+                if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+                    jQuery('#purchase_bank_id').trigger('chosen:updated');
+                    jQuery('#purchase_party_id').trigger('chosen:updated');
+                    jQuery('#asset_category_id').trigger('chosen:updated');
+                }
             }
 
             function fetchBankBalance(bankId) {

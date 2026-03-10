@@ -47,7 +47,7 @@
                             Party <span class="text-red-600">*</span>
                         </label>
                         <select id="debit_party" name="debit_party" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
                             <option value="">Select Party</option>
                             @foreach($parties as $party)
                                 <option value="{{ $party->party_id }}" {{ old('debit_party') == $party->party_id ? 'selected' : '' }}>
@@ -64,7 +64,7 @@
                             Currency <span class="text-red-600">*</span>
                         </label>
                         <select id="debit_currency_id" name="debit_currency_id" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-red-500 focus:ring-red-500">
                             <option value="">Select Currency</option>
                             @foreach($currencies as $currency)
                                 <option value="{{ $currency->currency_id }}" {{ old('debit_currency_id') == $currency->currency_id ? 'selected' : '' }}>
@@ -165,7 +165,7 @@
                             Party <span class="text-red-600">*</span>
                         </label>
                         <select id="credit_party" name="credit_party" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
                             <option value="">Select Party</option>
                             @foreach($parties as $party)
                                 <option value="{{ $party->party_id }}" {{ old('credit_party') == $party->party_id ? 'selected' : '' }}>
@@ -182,7 +182,7 @@
                             Currency <span class="text-red-600">*</span>
                         </label>
                         <select id="credit_currency_id" name="credit_currency_id" required
-                            class="block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
+                            class="chosen-select block w-full rounded border-gray-300 text-xs focus:border-green-500 focus:ring-green-500">
                             <option value="">Select Currency</option>
                             @foreach($currencies as $currency)
                                 <option value="{{ $currency->currency_id }}" {{ old('credit_currency_id') == $currency->currency_id ? 'selected' : '' }}>
@@ -265,6 +265,24 @@
             </button>
         </div>
     </form>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <style>
+        .chosen-container { width: 100% !important; }
+        .chosen-container-single .chosen-single {
+            height: 34px; line-height: 32px; padding: 0 8px;
+            border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px;
+            background: #fff; font-family: inherit;
+        }
+        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single div { right: 8px; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 12px; }
+        .chosen-results li.highlighted { background: #2563eb; color: white; }
+    </style>
 </x-app-layout>
 
 <script>
@@ -354,6 +372,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const creditCurrencySelect = document.getElementById('credit_currency_id');
     const submitBtn = document.getElementById('submitBtn');
 
+    // Initialize Chosen on all dropdowns
+    if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+        jQuery('.chosen-select').chosen({
+            width: '100%',
+            search_contains: true,
+            allow_single_deselect: true,
+            placeholder_text_single: 'Select an option'
+        });
+    }
+
     function fetchPartyBalance(side) {
         const partySelect = side === 'debit' ? debitPartySelect : creditPartySelect;
         const currencySelect = side === 'debit' ? debitCurrencySelect : creditCurrencySelect;
@@ -427,6 +455,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (creditPartySelect.value === selectedDebitParty) {
                 creditPartySelect.value = '';
             }
+        }
+        if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+            jQuery('#credit_party').trigger('chosen:updated');
         }
     }
 
