@@ -47,7 +47,7 @@
                     class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
                     title="Click to view transfer"
                 >
-                    <x-table-cell>{{ $loop->iteration }}</x-table-cell>
+                    <x-table-cell>{{ $transfer->bank_transfer_id }}</x-table-cell>
                     <x-table-cell>@businessDate($transfer->date_added)</x-table-cell>
                     <x-table-cell>
                         {{ strtoupper($transfer->fromBank?->bank_name ?? '-') }}

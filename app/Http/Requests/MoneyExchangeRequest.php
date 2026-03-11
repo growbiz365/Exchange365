@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MoneyExchangeRequest extends FormRequest
@@ -27,6 +28,21 @@ class MoneyExchangeRequest extends FormRequest
             'attachment_titles' => 'nullable|array',
             'attachment_titles.*' => 'nullable|string|max:255',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $date = $this->input('date_added');
+        if (is_string($date) && $date !== '') {
+            try {
+                // UI sends d/m/Y; backend expects Y-m-d
+                $this->merge([
+                    'date_added' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'),
+                ]);
+            } catch (\Throwable $e) {
+                // Let validation handle invalid values
+            }
+        }
     }
 
     public function attributes(): array

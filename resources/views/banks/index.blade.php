@@ -59,7 +59,7 @@
                     class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
                     title="Click to edit bank"
                 >
-                    <x-table-cell>{{ $loop->iteration }}</x-table-cell>
+                    <x-table-cell>{{ $bank->bank_id }}</x-table-cell>
                     <x-table-cell>
                         <div>
                             <div class="font-medium">{{ $bank->bank_name }}</div>

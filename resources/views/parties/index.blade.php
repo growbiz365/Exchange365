@@ -60,7 +60,7 @@
                     class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
                     title="Click to edit party"
                 >
-                    <x-table-cell>{{ $loop->iteration }}</x-table-cell>
+                    <x-table-cell>{{ $party->party_id }}</x-table-cell>
                     <x-table-cell>
                         <div>
                             <div class="font-medium">{{ $party->party_name }}</div>

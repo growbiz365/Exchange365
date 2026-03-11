@@ -34,117 +34,151 @@
             @csrf
             @method('PUT')
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- From Account -->
-                <div>
-                    <x-input-label for="from_account_id">From Account <span class="text-red-600">*</span></x-input-label>
-                    <select id="from_account_id" name="from_account_id" required
-                        class="chosen-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                        <option value="">Select Source Account</option>
-                        @foreach($banks as $bank)
-                            <option value="{{ $bank->bank_id }}" {{ old('from_account_id', $bankTransfer->from_account_id) == $bank->bank_id ? 'selected' : '' }}>
-                                {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
-                            </option>
-                        @endforeach
-                    </select>
-                    <div id="from_account_balance" class="mt-1 text-sm hidden">
-                        <span class="font-medium">Balance:</span>
-                        <span id="from_balance_amount" class="ml-1"></span>
+            {{-- Row 1: Date --}}
+            <div class="mb-4">
+                <div class="flex items-center gap-3">
+                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                        Date <span>*</span>
+                    </label>
+                    <div class="flex-1">
+                        <x-text-input id="date_added" name="date_added" type="text"
+                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                            :value="old('date_added', $bankTransfer->date_added->format('Y-m-d'))" required />
+                        <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
                     </div>
-                    <x-input-error :messages="$errors->get('from_account_id')" class="mt-1" />
                 </div>
+            </div>
 
-                <!-- To Account -->
-                <div>
-                    <x-input-label for="to_account_id">To Account <span class="text-red-600">*</span></x-input-label>
-                    <select id="to_account_id" name="to_account_id" required
-                        class="chosen-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                        <option value="">Select Destination Account</option>
-                        @foreach($banks as $bank)
-                            <option value="{{ $bank->bank_id }}" {{ old('to_account_id', $bankTransfer->to_account_id) == $bank->bank_id ? 'selected' : '' }}>
-                                {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
-                            </option>
-                        @endforeach
-                    </select>
-                    <div id="to_account_balance" class="mt-1 text-sm hidden">
-                        <span class="font-medium">Balance:</span>
-                        <span id="to_balance_amount" class="ml-1"></span>
-                    </div>
-                    <x-input-error :messages="$errors->get('to_account_id')" class="mt-1" />
-                </div>
-
-                <!-- Amount -->
-                <div>
-                    <x-input-label for="amount">Amount <span class="text-red-600">*</span></x-input-label>
-                    <x-text-input id="amount" name="amount" type="number" step="0.01" class="mt-1 block w-full"
-                        :value="old('amount', $bankTransfer->amount)" required placeholder="0.00" />
-                    <x-input-error :messages="$errors->get('amount')" class="mt-1" />
-                </div>
-
-                <!-- Transfer Date -->
-                <div>
-                    <x-input-label for="date_added">Transfer Date <span class="text-red-600">*</span></x-input-label>
-                    <x-text-input id="date_added" name="date_added" type="date" class="mt-1 block w-full"
-                        :value="old('date_added', $bankTransfer->date_added->format('Y-m-d'))" required />
-                    <x-input-error :messages="$errors->get('date_added')" class="mt-1" />
-                </div>
-
-                <!-- Details -->
-                <div class="md:col-span-2">
-                    <x-input-label for="details" class="text-xs">Details</x-input-label>
-                    <textarea id="details" name="details" rows="2"
-                        class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-1.5"
-                        placeholder="Optional transfer details...">{{ old('details', $bankTransfer->details) }}</textarea>
-                    <x-input-error :messages="$errors->get('details')" class="mt-0.5" />
-                </div>
-
-                <!-- Existing Attachments -->
-                @if($bankTransfer->attachments->count() > 0)
-                <div class="md:col-span-2">
-                    <div class="border rounded-lg p-2.5 bg-gray-50">
-                        <p class="text-xs font-medium text-gray-700 mb-1">Existing Attachments</p>
-                        <div class="space-y-1">
-                            @foreach($bankTransfer->attachments as $attachment)
-                            <div class="flex items-center justify-between py-1 px-2 bg-white rounded border border-gray-200">
-                                <div class="min-w-0">
-                                    @if($attachment->file_title)
-                                        <p class="text-xs font-medium text-gray-900 truncate">{{ $attachment->file_title }}</p>
-                                    @endif
-                                    <a href="{{ $attachment->file_url }}" target="_blank" class="text-xs text-indigo-600 hover:text-indigo-800 truncate block">{{ $attachment->file_name }}</a>
-                                </div>
-                                <button type="button" onclick="deleteAttachment({{ $attachment->id }})" class="ml-2 text-red-600 hover:text-red-800 text-xs">Remove</button>
-                            </div>
+            {{-- Row 2: From / To Accounts --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="flex items-start gap-3">
+                    <label for="from_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                        From Account <span>*</span>
+                    </label>
+                    <div class="flex-1">
+                        <select id="from_account_id" name="from_account_id" required
+                            class="chosen-select block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                            <option value="">Select Source Account</option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->bank_id }}" {{ old('from_account_id', $bankTransfer->from_account_id) == $bank->bank_id ? 'selected' : '' }}>
+                                    {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
+                                </option>
                             @endforeach
+                        </select>
+                        <div id="from_account_balance" class="mt-1 text-xs text-gray-700 hidden">
+                            <span class="font-medium">Balance:</span>
+                            <span id="from_balance_amount" class="ml-1"></span>
                         </div>
+                        <x-input-error :messages="$errors->get('from_account_id')" class="mt-0.5" />
                     </div>
                 </div>
-                @endif
 
-                <!-- New Attachments -->
-                <div class="md:col-span-2">
-                    <div class="border rounded-lg p-2.5 bg-gray-50">
-                        <p class="text-xs font-medium text-gray-700 mb-1.5">Add New Attachments <span class="text-gray-500 font-normal">(5MB max)</span></p>
-                        <div id="attachments-container">
-                            <div class="attachment-group mb-1.5">
-                                <div class="flex flex-wrap items-end gap-2">
-                                    <div class="flex-1 min-w-[120px]">
-                                        <label class="block text-xs font-medium text-gray-700">Title</label>
-                                        <input type="text" name="attachment_titles[]" class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm text-sm py-1 px-2" placeholder="e.g. Receipt" />
-                                    </div>
-                                    <div class="flex-1 min-w-[140px]">
-                                        <label class="block text-xs font-medium text-gray-700">File</label>
-                                        <input type="file" name="attachments[]" class="mt-0.5 block w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-indigo-50 file:text-indigo-700"
-                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx" />
-                                    </div>
-                                </div>
-                            </div>
+                <div class="flex items-start gap-3">
+                    <label for="to_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                        To Account <span>*</span>
+                    </label>
+                    <div class="flex-1">
+                        <select id="to_account_id" name="to_account_id" required
+                            class="chosen-select block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                            <option value="">Select Destination Account</option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->bank_id }}" {{ old('to_account_id', $bankTransfer->to_account_id) == $bank->bank_id ? 'selected' : '' }}>
+                                    {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <div id="to_account_balance" class="mt-1 text-xs text-gray-700 hidden">
+                            <span class="font-medium">Balance:</span>
+                            <span id="to_balance_amount" class="ml-1"></span>
                         </div>
-                        <button type="button" onclick="addAttachmentField()" class="mt-1 inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-600 bg-white hover:bg-gray-50">
-                            <svg class="h-3.5 w-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                            Add More
+                        <x-input-error :messages="$errors->get('to_account_id')" class="mt-0.5" />
+                    </div>
+                </div>
+            </div>
+
+            {{-- Row 3: Amount & Details --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <label for="amount" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                        Transfer Amount <span>*</span>
+                    </label>
+                    <div class="flex-1">
+                        <x-text-input id="amount" name="amount" type="number" step="0.01"
+                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            :value="old('amount', $bankTransfer->amount)" required placeholder="0.00" />
+                        <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700">
+                        Details
+                    </label>
+                    <div class="flex-1">
+                        <textarea id="details" name="details" rows="2"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-1.5"
+                            placeholder="Optional transfer details...">{{ old('details', $bankTransfer->details) }}</textarea>
+                        <x-input-error :messages="$errors->get('details')" class="mt-0.5" />
+                    </div>
+                </div>
+            </div>
+
+            {{-- Attachments --}}
+            @if($bankTransfer->attachments->count() > 0)
+            <div class="border rounded-lg p-3 bg-gray-50 mb-3">
+                <p class="text-xs font-medium text-gray-700 mb-1">Existing Attachments</p>
+                <div class="space-y-1">
+                    @foreach($bankTransfer->attachments as $attachment)
+                    <div class="flex items-center justify-between py-1 px-2 bg-white rounded border border-gray-200">
+                        <div class="min-w-0">
+                            @if($attachment->file_title)
+                                <p class="text-xs font-medium text-gray-900 truncate">{{ $attachment->file_title }}</p>
+                            @endif
+                            <a href="{{ $attachment->file_url }}" target="_blank"
+                                class="text-xs text-indigo-600 hover:text-indigo-800 truncate block">
+                                {{ $attachment->file_name }}
+                            </a>
+                        </div>
+                        <button type="button" onclick="deleteAttachment({{ $attachment->id }})"
+                            class="ml-2 text-xs text-red-600 hover:text-red-800">
+                            Remove
                         </button>
                     </div>
+                    @endforeach
                 </div>
+            </div>
+            @endif
+
+            <div class="border rounded-lg p-3 bg-gray-50 mb-4">
+                <p class="text-xs font-medium text-gray-700 mb-1.5">
+                    Add New Attachments
+                    <span class="text-gray-500 font-normal">(5MB max)</span>
+                </p>
+                <div id="attachments-container">
+                    <div class="attachment-group mb-1.5">
+                        <div class="flex flex-wrap items-end gap-2">
+                            <div class="flex-1 min-w-[120px]">
+                                <label class="block text-xs font-medium text-gray-700">Title</label>
+                                <input type="text" name="attachment_titles[]"
+                                    class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm text-sm py-1 px-2"
+                                    placeholder="e.g. Receipt" />
+                            </div>
+                            <div class="flex-1 min-w-[140px]">
+                                <label class="block text-xs font-medium text-gray-700">File</label>
+                                <input type="file" name="attachments[]"
+                                    class="mt-0.5 block w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-indigo-50 file:text-indigo-700"
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="addAttachmentField()"
+                    class="mt-1 inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-600 bg-white hover:bg-gray-50">
+                    <svg class="h-3.5 w-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Add More
+                </button>
             </div>
 
             <!-- Form Actions -->
@@ -161,13 +195,15 @@
     </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         .chosen-container { width: 100% !important; }
         .chosen-container-single .chosen-single {
-            height: 38px;
-            line-height: 36px;
+            height: 36px;
+            line-height: 34px;
             border: 1px solid #d1d5db;
             border-radius: 0.375rem;
             padding: 0 2.25rem 0 0.75rem;
@@ -182,6 +218,35 @@
         .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .chosen-results { font-size: 0.875rem; }
         .chosen-results li.highlighted { background: #2563eb; color: white; }
+
+        /* Compact flatpickr date input & calendar */
+        #date_added.flatpickr-input {
+            height: 36px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            font-size: 0.875rem;
+        }
+        .flatpickr-calendar {
+            font-size: 0.75rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+        }
+        .flatpickr-day {
+            max-width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 9999px;
+        }
+        .flatpickr-day.today {
+            border-color: #4f46e5;
+        }
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            color: #fff;
+        }
     </style>
 
     <script>
@@ -211,6 +276,12 @@
             if (fromAccountSelect.value) fetchBankBalance(fromAccountSelect.value, 'from');
             if (toAccountSelect.value) fetchBankBalance(toAccountSelect.value, 'to');
             filterToAccountOptions();
+
+            // Date picker (same behavior as party transfers, format Y-m-d)
+            flatpickr('#date_added', {
+                dateFormat: 'Y-m-d',
+                allowInput: false,
+            });
 
             form.addEventListener('submit', function(e) {
                 if (fromAccountSelect.value === toAccountSelect.value) {

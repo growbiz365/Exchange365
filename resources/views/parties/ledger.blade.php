@@ -180,7 +180,7 @@
                     <label for="currency_id">Currency</label>
                     <select name="currency_id" id="currency_id">
                         @foreach($currencies as $c)
-                            <option value="{{ $c->currency_id }}" {{ request('currency_id') == $c->currency_id ? 'selected' : '' }}>{{ $c->currency }}</option>
+                            <option value="{{ $c->currency_id }}" {{ (isset($currencyId) && (int)$currencyId === (int)$c->currency_id) ? 'selected' : '' }}>{{ $c->currency }}</option>
                         @endforeach
                     </select>
                 </div>

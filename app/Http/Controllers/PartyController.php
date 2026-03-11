@@ -327,6 +327,7 @@ class PartyController extends Controller
             ->get(['party_id', 'party_name']);
 
         $currencies = Currency::where('status', 1)->orderBy('currency')->get();
+        $defaultCurrency = Currency::getDefault();
 
         $ledgerEntries = null;
         $partyDetails = null;
@@ -336,7 +337,9 @@ class PartyController extends Controller
         $dateFrom = $request->date_from ?? now()->startOfMonth()->format('Y-m-d');
         $dateTo = $request->date_to ?? now()->endOfMonth()->format('Y-m-d');
         $partyId = $request->party_id;
-        $currencyId = $request->currency_id;
+        $currencyId = $request->filled('currency_id')
+            ? $request->currency_id
+            : ($defaultCurrency->currency_id ?? null);
 
         if ($request->filled('party_id') && $request->filled('currency_id')) {
             $partyDetails = Party::find($partyId);
@@ -374,6 +377,7 @@ class PartyController extends Controller
             'business',
             'parties',
             'currencies',
+            'currencyId',
             'ledgerEntries',
             'partyDetails',
             'previousBalance',
@@ -392,8 +396,11 @@ class PartyController extends Controller
         $business = Business::findOrFail(session('active_business'));
         
         $currencies = Currency::where('status', 1)->get();
+        $defaultCurrency = Currency::getDefault();
         $dateSearch = $request->date_search ?? now()->format('Y-m-d');
-        $currencyId = $request->currency_id;
+        $currencyId = $request->filled('currency_id')
+            ? $request->currency_id
+            : ($defaultCurrency->currency_id ?? null);
 
         $partyBalances = null;
 
