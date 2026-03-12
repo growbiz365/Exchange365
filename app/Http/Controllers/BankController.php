@@ -9,6 +9,7 @@ use App\Models\BankType;
 use App\Models\Business;
 use App\Models\Currency;
 use App\Models\BankTransfer;
+use App\Models\MoneyExchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +31,8 @@ class BankController extends Controller
         $totalBanks = Bank::forBusiness($businessId)->count();
         $activeBanks = Bank::forBusiness($businessId)->active()->count();
         $totalTransfers = BankTransfer::where('business_id', $businessId)->count();
+
+        $moneyExchangeAmount = (float) MoneyExchange::forBusiness($businessId)->sum('debit_amount');
 
         $currenciesInUse = (int) Bank::forBusiness($businessId)
             ->selectRaw('COUNT(DISTINCT currency_id) as c')
@@ -59,6 +62,7 @@ class BankController extends Controller
             'totalBanks',
             'activeBanks',
             'totalTransfers',
+            'moneyExchangeAmount',
             'currenciesInUse',
             'totalBalance',
             'recentBanks',

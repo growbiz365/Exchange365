@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class PurchaseRequest extends FormRequest
 {
@@ -33,6 +34,21 @@ class PurchaseRequest extends FormRequest
             'debit_amount' => ['required', 'numeric', 'min:0'],
             'details' => ['nullable', 'string', 'max:1000'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $date = $this->input('date_added');
+
+        if (is_string($date) && $date !== '' && str_contains($date, '/')) {
+            try {
+                $this->merge([
+                    'date_added' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'),
+                ]);
+            } catch (\Throwable $e) {
+                // Let validation handle invalid values
+            }
+        }
     }
 
     public function attributes(): array

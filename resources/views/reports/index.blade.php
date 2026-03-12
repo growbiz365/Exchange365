@@ -213,7 +213,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-gray-900 group-hover:text-sky-600 transition-colors duration-300 mb-1">Bank Currency Balances</h3>
+                            <h3 class="text-base font-bold text-gray-900 group-hover:text-sky-600 transition-colors duration-300 mb-1">Currency Balances</h3>
                             <p class="text-xs text-gray-500">Balances grouped by currency</p>
                         </div>
                         <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">

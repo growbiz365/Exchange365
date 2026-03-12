@@ -13,7 +13,7 @@
             <h4 class="text-sm font-bold text-gray-900">Create General Voucher</h4>
         </div>
 
-        <form method="POST" action="{{ route('general-vouchers.store') }}" enctype="multipart/form-data" id="voucherForm" class="p-6">
+        <form method="POST" action="{{ route('general-vouchers.store') }}" enctype="multipart/form-data" id="voucherForm" class="p-6 space-y-3">
             @csrf
 
             @if ($errors->any())
@@ -196,9 +196,38 @@
         .chosen-container .chosen-drop { z-index: 9999 !important; }
 
         #date_added.flatpickr-input { height: 34px; padding: 4px 8px; font-size: 12px; }
+        #date_added {
+            max-width: 180px;
+            display: inline-block;
+        }
         .flatpickr-calendar { font-size: 11px; border-radius: 0.5rem; box-shadow: 0 10px 25px rgba(15,23,42,0.15); }
         .flatpickr-day { max-width: 28px; height: 28px; line-height: 28px; border-radius: 9999px; }
         .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+
+        /* More compact form spacing without changing font sizes */
+        #voucherForm .mb-4 {
+            margin-bottom: 0.75rem;
+        }
+        #voucherForm .mb-6 {
+            margin-bottom: 1rem;
+        }
+        #voucherForm .grid {
+            row-gap: 0.75rem;
+            column-gap: 1rem;
+        }
+        #voucherForm .attachment-group {
+            margin-bottom: 0.5rem;
+        }
+        #voucherForm .flex.items-center.gap-3,
+        #voucherForm .flex.items-start.gap-3 {
+            gap: 0.5rem;
+        }
+        #voucherForm .flex.items-center.gap-6 {
+            gap: 0.75rem;
+        }
+        #voucherForm .pt-2 {
+            padding-top: 0.5rem;
+        }
     </style>
 
     <script>

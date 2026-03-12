@@ -130,7 +130,7 @@
             top: 50%;
             transform: translateY(-50%);
             border: 6px solid transparent;
-            border-right-color: rgb(30 41 59);
+            border-right-color: rgb(17 24 39);
         }
 
         /* Premium Focus States */
@@ -146,7 +146,7 @@
         }
     </style>
 </head>
-<body class="h-full bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-x-hidden"
+<body class="h-full bg-gray-50 overflow-x-hidden"
       x-data="{
           sidebarOpen: false,
           profileMenuOpen: false,

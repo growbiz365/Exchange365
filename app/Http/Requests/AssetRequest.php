@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AssetRequest extends FormRequest
@@ -9,6 +10,13 @@ class AssetRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->date_added && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $this->date_added)) {
+            $this->merge(['date_added' => Carbon::createFromFormat('d/m/Y', $this->date_added)->format('Y-m-d')]);
+        }
     }
 
     public function rules(): array

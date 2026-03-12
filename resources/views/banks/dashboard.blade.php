@@ -63,7 +63,7 @@
 
     {{-- Stats Grid --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {{-- Total Banks --}}
+        {{-- Currencies In Use --}}
         <div class="relative bg-gradient-to-br from-sky-50 via-sky-50 to-sky-100 rounded-xl shadow-sm border border-sky-100 p-6 overflow-hidden group hover:shadow-lg transition-all duration-300">
             <div class="absolute top-0 right-0 w-24 h-24 opacity-10">
                 <svg viewBox="0 0 100 100" class="w-full h-full text-sky-600">
@@ -77,13 +77,13 @@
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c-4.418 0-8 2.239-8 5s3.582 5 8 5 8-2.239 8-5-3.582-5-8-5zM4 13v2c0 2.761 3.582 5 8 5s8-2.239 8-5v-2" />
                         </svg>
                     </div>
                 </div>
                 <div class="ml-4 flex-1">
-                    <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">Total Banks</p>
-                    <p class="text-2xl font-bold text-sky-900 mt-1">{{ number_format($totalBanks) }}</p>
+                    <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">Currencies In Use</p>
+                    <p class="text-2xl font-bold text-sky-900 mt-1">{{ number_format($currenciesInUse) }}</p>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        {{-- Total Bank Transfers --}}
+        {{-- Money Exchange Amount --}}
         <div class="relative bg-gradient-to-br from-indigo-50 via-indigo-50 to-indigo-100 rounded-xl shadow-sm border border-indigo-100 p-6 overflow-hidden group hover:shadow-lg transition-all duration-300">
             <div class="absolute top-0 right-0 w-24 h-24 opacity-10">
                 <svg viewBox="0 0 100 100" class="w-full h-full text-indigo-600">
@@ -127,13 +127,15 @@
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h11m0 0L12 3m3 4-3 4m7 6H9m0 0 3-4m-3 4 3 4" />
                         </svg>
                     </div>
                 </div>
                 <div class="ml-4 flex-1">
-                    <p class="text-sm font-semibold text-indigo-700 uppercase tracking-wide">Bank Transfers</p>
-                    <p class="text-2xl font-bold text-indigo-900 mt-1">{{ number_format($totalTransfers) }}</p>
+                    <p class="text-sm font-semibold text-indigo-700 uppercase tracking-wide">Money Exchange Amount</p>
+                    <p class="text-2xl font-bold text-indigo-900 mt-1">
+                        {{ number_format($moneyExchangeAmount, 2) }}
+                    </p>
                 </div>
             </div>
         </div>

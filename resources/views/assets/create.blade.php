@@ -22,134 +22,246 @@
         </div>
     @endif
 
-    <form action="{{ route('assets.store') }}" method="POST" id="assetForm">
+    @php
+        $displayDate = old('date_added')
+            ? (preg_match('/^\d{4}-\d{2}-\d{2}$/', old('date_added'))
+                ? \Carbon\Carbon::parse(old('date_added'))->format('d/m/Y')
+                : old('date_added'))
+            : date('d/m/Y');
+    @endphp
+
+    <form action="{{ route('assets.store') }}" method="POST" id="assetForm" class="space-y-3">
         @csrf
-        <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg border border-white/60 overflow-hidden">
-            {{-- Asset info row --}}
-            <div class="p-4 border-b border-gray-100">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div>
-                        <label for="asset_category_id" class="block text-xs font-semibold text-gray-600 mb-1">Asset Category <span class="text-red-500">*</span></label>
-                        <select id="asset_category_id" name="asset_category_id" required
-                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">Select category</option>
-                            @foreach($categories as $cat)
-                                <option value="{{ $cat->asset_category_id }}" {{ old('asset_category_id') == $cat->asset_category_id ? 'selected' : '' }}>
-                                    {{ $cat->asset_category }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <x-input-error :messages="$errors->get('asset_category_id')" class="mt-0.5 text-xs" />
-                    </div>
-                    <div>
-                        <label for="date_added" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Date <span class="text-red-500">*</span></label>
-                        <input type="date" id="date_added" name="date_added" value="{{ old('date_added', date('Y-m-d')) }}" required
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500" />
-                        <x-input-error :messages="$errors->get('date_added')" class="mt-0.5 text-xs" />
-                    </div>
-                    <div>
-                        <label for="asset_name" class="block text-xs font-semibold text-gray-600 mb-1">Asset Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="asset_name" name="asset_name" value="{{ old('asset_name') }}" required placeholder="Asset name"
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 uppercase focus:border-indigo-500 focus:ring-indigo-500" />
-                        <x-input-error :messages="$errors->get('asset_name')" class="mt-0.5 text-xs" />
-                    </div>
-                    <div>
-                        <label for="cost_amount" class="block text-xs font-semibold text-gray-600 mb-1">Cost Amount <span class="text-red-500">*</span></label>
-                        <input type="number" step="0.01" id="cost_amount" name="cost_amount" value="{{ old('cost_amount') }}" required placeholder="0.00"
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500" />
-                        <x-input-error :messages="$errors->get('cost_amount')" class="mt-0.5 text-xs" />
-                    </div>
-                </div>
+
+        <div class="bg-white shadow rounded-lg border border-gray-200">
+
+            {{-- Card Header --}}
+            <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
+                <h4 class="text-sm font-bold text-gray-900">Add Asset</h4>
             </div>
 
-            {{-- Type & source --}}
-            <div class="p-4 border-b border-gray-100">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Type <span class="text-red-500">*</span></label>
-                        <div class="flex flex-wrap gap-4 mt-0.5">
-                            @php $type = old('purchase_transaction_type', '1'); @endphp
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name="purchase_transaction_type" value="1" {{ $type == '1' ? 'checked' : '' }} required class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                <span class="text-sm text-gray-700">Opening Asset ( اوپننگ اثاثہ )</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name="purchase_transaction_type" value="2" {{ $type == '2' ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                <span class="text-sm text-gray-700">Cash ( نقد )</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name="purchase_transaction_type" value="3" {{ $type == '3' ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                <span class="text-sm text-gray-700">Party ( پارٹی )</span>
-                            </label>
+            <div class="px-6 py-4">
+
+                {{-- Row 1: Date & Type --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
+                    <div class="flex items-center gap-3">
+                        <label for="date_added" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Purchase Date <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <input type="text" id="date_added" name="date_added"
+                                   value="{{ $displayDate }}" required readonly
+                                   placeholder="dd/mm/yyyy"
+                                   class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            <x-input-error :messages="$errors->get('date_added')" class="mt-0.5 text-xs" />
                         </div>
-                        <x-input-error :messages="$errors->get('purchase_transaction_type')" class="mt-0.5 text-xs" />
                     </div>
-                    <div id="purchase_bank_wrapper" class="space-y-0">
-                        <label for="purchase_bank_id" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Bank</label>
-                        <select id="purchase_bank_id" name="purchase_bank_id"
-                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">Select bank</option>
-                            @foreach($banks as $bank)
-                                <option value="{{ $bank->bank_id }}" {{ old('purchase_bank_id') == $bank->bank_id ? 'selected' : '' }}>{{ $bank->bank_name }}</option>
-                            @endforeach
-                        </select>
-                        <div id="purchase_bank_balance_display" class="mt-1 text-xs text-gray-600 hidden">Balance: <span id="purchase_bank_balance_amount" class="font-semibold"></span></div>
-                        <x-input-error :messages="$errors->get('purchase_bank_id')" class="mt-0.5 text-xs" />
-                    </div>
-                    <div id="purchase_party_wrapper" class="space-y-0 lg:col-span-1">
-                        <label for="purchase_party_id" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Party</label>
-                        <select id="purchase_party_id" name="purchase_party_id"
-                            class="chosen-select block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">Select party</option>
-                            @foreach($parties as $party)
-                                <option value="{{ $party->party_id }}" {{ old('purchase_party_id') == $party->party_id ? 'selected' : '' }}>{{ $party->party_name }}</option>
-                            @endforeach
-                        </select>
-                        <div id="purchase_party_balance_display" class="mt-1 text-xs text-gray-600 hidden">Balance: <span id="purchase_party_balance_amount" class="font-semibold"></span></div>
-                        <x-input-error :messages="$errors->get('purchase_party_id')" class="mt-0.5 text-xs" />
-                    </div>
-                    <div class="lg:col-span-2">
-                        <label for="purchase_details" class="block text-xs font-semibold text-gray-600 mb-1">Purchase Details</label>
-                        <textarea id="purchase_details" name="purchase_details" rows="2" placeholder="Optional notes..."
-                            class="block w-full rounded-lg border-gray-300 text-sm py-2 focus:border-indigo-500 focus:ring-indigo-500">{{ old('purchase_details') }}</textarea>
-                        <x-input-error :messages="$errors->get('purchase_details')" class="mt-0.5 text-xs" />
+
+                    <div class="flex items-start gap-3">
+                        <label class="w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5">
+                            Type <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            @php $type = old('purchase_transaction_type', '1'); @endphp
+                            <div class="flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="purchase_transaction_type" value="1"
+                                           {{ $type == '1' ? 'checked' : '' }} required
+                                           class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <span class="text-sm text-gray-700">Opening Asset ( اوپننگ اثاثہ )</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="purchase_transaction_type" value="2"
+                                           {{ $type == '2' ? 'checked' : '' }}
+                                           class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <span class="text-sm text-gray-700">Cash ( نقد )</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="purchase_transaction_type" value="3"
+                                           {{ $type == '3' ? 'checked' : '' }}
+                                           class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <span class="text-sm text-gray-700">Party ( پارٹی )</span>
+                                </label>
+                            </div>
+                            <x-input-error :messages="$errors->get('purchase_transaction_type')" class="mt-0.5 text-xs" />
+                        </div>
                     </div>
                 </div>
+
+                {{-- Row 2: Asset Category & Asset Name --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
+                    <div class="flex items-center gap-3">
+                        <label for="asset_category_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Asset Category <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <select id="asset_category_id" name="asset_category_id" required
+                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select category</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->asset_category_id }}" {{ old('asset_category_id') == $cat->asset_category_id ? 'selected' : '' }}>
+                                        {{ $cat->asset_category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('asset_category_id')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <label for="asset_name" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Asset Name <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <input type="text" id="asset_name" name="asset_name"
+                                   value="{{ old('asset_name') }}" required
+                                   class="block w-full rounded border-gray-300 text-sm uppercase focus:border-indigo-500 focus:ring-indigo-500"
+                                   placeholder="Asset name" />
+                            <x-input-error :messages="$errors->get('asset_name')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-gray-200 mb-4">
+
+                {{-- Row 3: Conditional Party / Bank --}}
+                <div class="mb-4 space-y-3">
+                    <div id="purchase_party_wrapper" class="flex items-center gap-3">
+                        <label for="purchase_party_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Purchase From Party <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <select id="purchase_party_id" name="purchase_party_id"
+                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select party</option>
+                                @foreach($parties as $party)
+                                    <option value="{{ $party->party_id }}" {{ old('purchase_party_id') == $party->party_id ? 'selected' : '' }}>{{ $party->party_name }}</option>
+                                @endforeach
+                            </select>
+                            <div id="purchase_party_balance_display" class="mt-1 text-xs text-gray-700 hidden">
+                                <span class="font-medium">Balance:</span>
+                                <span id="purchase_party_balance_amount" class="ml-1"></span>
+                            </div>
+                            <x-input-error :messages="$errors->get('purchase_party_id')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+
+                    <div id="purchase_bank_wrapper" class="flex items-center gap-3">
+                        <label for="purchase_bank_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Purchase From Bank <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <select id="purchase_bank_id" name="purchase_bank_id"
+                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select bank</option>
+                                @foreach($banks as $bank)
+                                    <option value="{{ $bank->bank_id }}" {{ old('purchase_bank_id') == $bank->bank_id ? 'selected' : '' }}>{{ $bank->bank_name }}</option>
+                                @endforeach
+                            </select>
+                            <div id="purchase_bank_balance_display" class="mt-1 text-xs text-gray-700 hidden">
+                                <span class="font-medium">Balance:</span>
+                                <span id="purchase_bank_balance_amount" class="ml-1"></span>
+                            </div>
+                            <x-input-error :messages="$errors->get('purchase_bank_id')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Row 4: Cost Amount & Purchase Details --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+                    <div class="flex items-center gap-3">
+                        <label for="cost_amount" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                            Cost Amount <span>*</span>
+                        </label>
+                        <div class="flex-1">
+                            <input type="number" step="0.01" id="cost_amount" name="cost_amount"
+                                   value="{{ old('cost_amount') }}" required
+                                   class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                   placeholder="0.00" />
+                            <x-input-error :messages="$errors->get('cost_amount')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <label for="purchase_details" class="w-36 shrink-0 text-xs font-semibold text-gray-700">
+                            Purchase Details
+                        </label>
+                        <div class="flex-1">
+                            <input type="text" id="purchase_details" name="purchase_details"
+                                   value="{{ old('purchase_details') }}"
+                                   class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                   placeholder="" />
+                            <x-input-error :messages="$errors->get('purchase_details')" class="mt-0.5 text-xs" />
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 p-4 bg-gray-50/50 border-t border-gray-100">
-                <a href="{{ route('assets.index') }}" class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">Cancel</a>
-                <button type="submit" id="submitBtn" class="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">Save</button>
+            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-200">
+                <a href="{{ route('assets.index') }}"
+                   class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                    Cancel
+                </a>
+                <button type="submit" id="submitBtn"
+                        class="inline-flex items-center rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+                    Save
+                </button>
             </div>
         </div>
     </form>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <style>
         .chosen-container { width: 100% !important; }
         .chosen-container-single .chosen-single {
-            height: 42px;
-            line-height: 40px;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            padding: 0 2.25rem 0 0.75rem;
-            background: #fff;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            font-size: 0.875rem;
-            color: #111827;
+            height: 30px; line-height: 28px; padding: 0 8px;
+            border: 1px solid #d1d5db; border-radius: 4px; font-size: 12px;
+            background: #fff; font-family: inherit;
         }
         .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 0.75rem; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.5rem 0.5rem 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.5rem 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 0.875rem; }
+        .chosen-container-single .chosen-single div { right: 8px; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 4px 4px 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 4px 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chosen-results { font-size: 12px; }
         .chosen-results li.highlighted { background: #2563eb; color: white; }
+        .chosen-container .chosen-drop { z-index: 9999 !important; }
+        #date_added.flatpickr-input { height: 30px; font-size: 12px; }
+        #date_added {
+            max-width: 180px;
+            display: inline-block;
+        }
+        .flatpickr-calendar { font-size: 12px; }
+
+        /* More compact form spacing without changing font sizes */
+        #assetForm .mb-4 {
+            margin-bottom: 0.75rem;
+        }
+        #assetForm .grid {
+            row-gap: 0.75rem;
+            column-gap: 1rem;
+        }
+        #assetForm .flex.items-center.gap-3,
+        #assetForm .flex.items-start.gap-3 {
+            gap: 0.5rem;
+        }
+        #assetForm .flex.flex-wrap.gap-3 {
+            gap: 0.6rem;
+        }
+        #assetForm .px-6.py-4 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
     </style>
 
     <script>
+        flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false });
+
         document.addEventListener('DOMContentLoaded', function () {
             var typeInputs = document.querySelectorAll('input[name="purchase_transaction_type"]');
             var bankWrapper = document.getElementById('purchase_bank_wrapper');
@@ -189,7 +301,7 @@
                         if (typeof data.balance !== 'undefined') {
                             var bal = parseFloat(data.balance);
                             span.textContent = bal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            span.className = 'font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
+                            span.className = 'ml-1 font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
                             div.classList.remove('hidden');
                         } else { div.classList.add('hidden'); }
                     }).catch(function () { div.classList.add('hidden'); });
@@ -205,7 +317,7 @@
                         if (typeof data.balance !== 'undefined') {
                             var bal = parseFloat(data.balance);
                             span.textContent = bal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            span.className = 'font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
+                            span.className = 'ml-1 font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
                             div.classList.remove('hidden');
                         } else { div.classList.add('hidden'); }
                     }).catch(function () { div.classList.add('hidden'); });

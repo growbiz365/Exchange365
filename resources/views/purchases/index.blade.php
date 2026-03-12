@@ -120,7 +120,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $p->party?->party_name ?? '-' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@currency($p->credit_amount)</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $p->partyCurrency?->currency_symbol ?? '' }} {{ number_format($p->debit_amount, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ number_format($p->rate, 4) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ number_format($p->rate, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" onclick="event.stopPropagation();">
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('purchases.show', $p) }}" class="text-amber-700 hover:text-amber-900">View</a>

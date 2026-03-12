@@ -91,8 +91,7 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset #</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset ID</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -108,7 +107,6 @@
                             class="cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out"
                             title="Click to view asset"
                         >
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ($assets->currentPage() - 1) * $assets->perPage() + $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-700">{{ $a->asset_id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@businessDate($a->date_added)</td>
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $a->category?->asset_category ?? '—' }}</td>

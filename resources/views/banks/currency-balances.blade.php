@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Currency Balances - {{ $business->business_name ?? 'ExchangeHub' }} - ExchangeHub</title>
+    <title>Currency Balances - {{ $business->business_name ?? 'ExchangeHub' }} - ExchangeHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
@@ -297,7 +297,7 @@
                     </div>
                     <div class="report-header-right">
                         <div class="report-title">
-                            <h2>Bank Currency Balances</h2>
+                            <h2>Currency Balances</h2>
                             <div><strong>As of Date:</strong> {{ \Carbon\Carbon::parse($dateSearch)->format('d M Y') }}</div>
                         </div>
                     </div>

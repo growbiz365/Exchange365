@@ -30,7 +30,7 @@
             <x-error-alert message="{{ session('error') }}" />
         @endif
 
-        <form method="POST" action="{{ route('bank-transfers.update', $bankTransfer) }}" enctype="multipart/form-data" id="transferForm">
+        <form method="POST" action="{{ route('bank-transfers.update', $bankTransfer) }}" enctype="multipart/form-data" id="transferForm" class="space-y-3">
             @csrf
             @method('PUT')
 
@@ -41,9 +41,16 @@
                         Date <span>*</span>
                     </label>
                     <div class="flex-1">
-                        <x-text-input id="date_added" name="date_added" type="text"
+                        @php
+                            $dateAddedValue = old('date_added');
+                            if (is_string($dateAddedValue) && $dateAddedValue !== '' && str_contains($dateAddedValue, '-')) {
+                                try { $dateAddedValue = \Carbon\Carbon::parse($dateAddedValue)->format('d/m/Y'); } catch (\Throwable $e) {}
+                            }
+                            if (!$dateAddedValue) { $dateAddedValue = $bankTransfer->date_added->format('d/m/Y'); }
+                        @endphp
+                        <input id="date_added" name="date_added" type="text"
                             class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
-                            :value="old('date_added', $bankTransfer->date_added->format('Y-m-d'))" required />
+                            value="{{ $dateAddedValue }}" required placeholder="DD/MM/YYYY" />
                         <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
                     </div>
                 </div>
@@ -226,6 +233,10 @@
             padding-bottom: 4px;
             font-size: 0.875rem;
         }
+        #date_added {
+            max-width: 180px;
+            display: inline-block;
+        }
         .flatpickr-calendar {
             font-size: 0.75rem;
             border-radius: 0.5rem;
@@ -246,6 +257,28 @@
             background: #4f46e5;
             border-color: #4f46e5;
             color: #fff;
+        }
+
+        /* More compact form spacing without changing font sizes */
+        #transferForm .mb-4 {
+            margin-bottom: 0.75rem;
+        }
+        #transferForm .grid {
+            row-gap: 0.75rem;
+            column-gap: 1rem;
+        }
+        #transferForm .attachment-group {
+            margin-bottom: 0.5rem;
+        }
+        #transferForm .flex.items-center.gap-3,
+        #transferForm .flex.items-start.gap-3 {
+            gap: 0.5rem;
+        }
+        #transferForm .border-t.pt-4 {
+            padding-top: 0.75rem;
+        }
+        #transferForm .mt-6 {
+            margin-top: 1rem;
         }
     </style>
 
@@ -277,9 +310,9 @@
             if (toAccountSelect.value) fetchBankBalance(toAccountSelect.value, 'to');
             filterToAccountOptions();
 
-            // Date picker (same behavior as party transfers, format Y-m-d)
+            // Date picker (day/month/year)
             flatpickr('#date_added', {
-                dateFormat: 'Y-m-d',
+                dateFormat: 'd/m/Y',
                 allowInput: false,
             });
 
