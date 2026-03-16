@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full antialiased" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full antialiased bg-[#FFF6E8]" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -146,7 +146,7 @@
         }
     </style>
 </head>
-<body class="h-full bg-gray-50 overflow-x-hidden"
+<body class="h-full bg-[#FFF6E8] overflow-x-hidden"
       x-data="{
           sidebarOpen: false,
           profileMenuOpen: false,
@@ -177,12 +177,14 @@
     @include('layouts.sidebar')
     
     <!-- Main Layout Container - Prevents content jump -->
-    <div class="layout-container min-h-screen">
+    <div class="layout-container min-h-screen bg-[#FFF6E8]">
         @include('layouts.header')
         
-        <main class="py-6 page-transition">
-            <div class="px-4 sm:px-6 lg:px-8">
-                {{$slot}}
+        <main class="py-6 page-transition bg-[#FFF6E8]">
+            <div class="px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
+                <div class="bg-white rounded-2xl shadow-md border border-orange-100 min-h-[calc(100vh-8rem)] p-6">
+                    {{$slot}}
+                </div>
             </div>
         </main>
     </div>

@@ -1,12 +1,12 @@
 <div class="header-wrapper">
     <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-[#F5DFB8] bg-[#FFF6E8] px-4 shadow-sm sm:px-6 lg:px-8">
         
         <!-- Microsoft 365 Style Sidebar Toggle (Desktop) -->
         <button 
             type="button"
             @click="toggleSidebar()"
-            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 group relative"
+            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-[#FDEBD0] hover:text-gray-800 transition-all duration-200 group relative"
             title="Toggle Sidebar (Ctrl+B)">
             <svg class="h-5 w-5 transition-transform duration-200"
                 :class="{ 'rotate-180': sidebarCollapsed }"
@@ -26,7 +26,7 @@
         <!-- Mobile Menu Button -->
         <button 
             type="button" 
-            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors" 
+            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-[#FDEBD0] transition-colors" 
             @click="sidebarOpen = true">
             <span class="sr-only">Open sidebar</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -35,7 +35,7 @@
         </button>
 
         <!-- Separator -->
-        <div class="h-6 w-px bg-gray-200" aria-hidden="true"></div>
+        <div class="h-6 w-px bg-orange-200" aria-hidden="true"></div>
         <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             {{-- Search form commented out --}}
             <div class="flex-1"></div>
@@ -44,9 +44,9 @@
                 <!-- Button to show current branch -->
                 @if(auth()->user()->businesses->isNotEmpty()) <!-- Check if the user has any branches -->
                     <button type="button"
-                        class="flex items-center justify-between text-gray-900 px-3 py-2 text-sm font-medium bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 group"
+                        class="flex items-center justify-between text-gray-800 px-3 py-2 text-sm font-medium bg-white hover:bg-orange-50 border border-orange-100 hover:border-orange-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-1 focus:ring-offset-[#FFF6E8] group"
                         @click="branchMenuOpen = !branchMenuOpen"
-                        :class="{ 'ring-2 ring-blue-500 border-blue-300 bg-blue-50': branchMenuOpen }">
+                        :class="{ 'ring-2 ring-orange-200 border-orange-200 bg-orange-50': branchMenuOpen }">
 
                         <div class="flex items-center min-w-0">
                             <!-- Exchange Icon with live indicator -->
@@ -71,17 +71,17 @@
                                     @php
                                         $activeBusiness = \App\Models\Business::find(session('active_business'));
                 @endphp
-                                    <div class="text-sm font-semibold text-gray-900 truncate max-w-40 group-hover:text-blue-700 transition-colors duration-200">
+                                    <div class="text-sm font-semibold text-gray-900 truncate max-w-40 group-hover:text-gray-700 transition-colors duration-200">
                                         {{ $activeBusiness->business_name }}
                                     </div>
-                                    <div class="text-xs text-amber-600 mt-0.5 font-medium">
+                                    <div class="text-xs text-amber-500 mt-0.5 font-semibold">
                                         Exchange Branch
                                     </div>
                             @else
                                     <div class="text-sm font-medium text-gray-700">
                                         Select Exchange
                                     </div>
-                                    <div class="text-xs text-gray-500 mt-0.5">
+                                    <div class="text-xs text-gray-400 mt-0.5">
                                         No active exchange
                                     </div>
                             @endif
@@ -90,8 +90,8 @@
 
                         <!-- Chevron Icon with enhanced animation -->
                         <div class="flex-shrink-0 ml-3">
-                            <svg class="h-5 w-5 text-gray-400 transform transition-all duration-300 group-hover:text-blue-500"
-                                :class="{ 'rotate-180 text-blue-600': branchMenuOpen }"
+                            <svg class="h-5 w-5 text-gray-400 transform transition-all duration-300 group-hover:text-amber-600"
+                                :class="{ 'rotate-180 text-amber-600': branchMenuOpen }"
                                 viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
                         </svg>
@@ -215,13 +215,13 @@
                     </svg>
                 </button> --}}
                 <!-- Separator -->
-                <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true"></div>
+                <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-orange-200" aria-hidden="true"></div>
                 <!-- Enhanced Profile dropdown -->
                 <div class="relative" x-data="{ profileMenuOpen: false }">
                     <button type="button" 
-                        class="group -m-1.5 flex items-center p-1.5 hover:bg-blue-50 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        class="group flex items-center gap-1 px-2 py-1.5 bg-white hover:bg-orange-50 border border-orange-100 hover:border-orange-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200"
                         @click="profileMenuOpen = !profileMenuOpen"
-                        :class="{ 'bg-blue-50 ring-2 ring-blue-400': profileMenuOpen }">
+                        :class="{ 'bg-orange-50 border-orange-200 ring-2 ring-orange-200': profileMenuOpen }">
                         <span class="sr-only">Open user menu</span>
                         
                         <!-- Enhanced Avatar with status -->
@@ -243,15 +243,15 @@
                         <!-- User info with role -->
                         <span class="hidden lg:flex lg:items-center lg:ml-3">
                             <span class="flex flex-col items-start">
-                                <span class="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors duration-200">
+                                <span class="text-sm font-semibold text-gray-900 group-hover:text-gray-700 transition-colors duration-200">
                                     {{ Auth::user()->name }}
                                 </span>
                                 <span class="text-xs text-gray-500 font-medium">
                                     {{ Auth::user()->email }}
                                 </span>
                             </span>
-                            <svg class="ml-3 h-5 w-5 text-gray-400 transform transition-all duration-200 group-hover:text-blue-600"
-                                :class="{'rotate-180 text-blue-600': profileMenuOpen}"
+                            <svg class="ml-2 h-4 w-4 text-gray-400 transform transition-all duration-200 group-hover:text-amber-600"
+                                :class="{'rotate-180 text-amber-600': profileMenuOpen}"
                                 viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
                                     d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
