@@ -68,23 +68,25 @@ class BankTransferController extends Controller
                 ->with('error', 'Please select a business first.');
         }
 
+        // Run all business-rule checks BEFORE opening a transaction
+        // so that session flash works reliably and no open transaction is left behind.
+        $fromBank = Bank::forBusiness($businessId)->active()->findOrFail($request->from_account_id);
+        $toBank   = Bank::forBusiness($businessId)->active()->findOrFail($request->to_account_id);
+
+        if ($fromBank->currency_id !== $toBank->currency_id) {
+            return back()->withInput()->with('error', 'Please select same currency accounts.');
+        }
+
+        $available = (float) BankLedger::where('bank_id', $fromBank->bank_id)
+            ->selectRaw('COALESCE(SUM(deposit_amount), 0) - COALESCE(SUM(withdrawal_amount), 0) as balance')
+            ->value('balance');
+
+        if ((float) $request->amount > $available) {
+            return back()->withInput()->with('error', 'Insufficient balance. Available: ' . number_format($available, 2) . ', Requested: ' . number_format($request->amount, 2));
+        }
+
         DB::beginTransaction();
         try {
-            $fromBank = Bank::forBusiness($businessId)->active()->findOrFail($request->from_account_id);
-            $toBank = Bank::forBusiness($businessId)->active()->findOrFail($request->to_account_id);
-
-            if ($fromBank->currency_id !== $toBank->currency_id) {
-                return back()->withInput()->with('error', 'Please select same currency accounts.');
-            }
-
-            $available = (float) BankLedger::where('bank_id', $fromBank->bank_id)
-                ->selectRaw('COALESCE(SUM(deposit_amount), 0) - COALESCE(SUM(withdrawal_amount), 0) as balance')
-                ->value('balance');
-
-            if ((float) $request->amount > $available) {
-                return back()->withInput()->with('error', 'Insufficient Balance in Bank Account.');
-            }
-
             $transfer = BankTransfer::create([
                 'business_id' => $businessId,
                 'date_added' => $request->date_added,

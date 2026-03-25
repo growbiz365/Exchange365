@@ -45,9 +45,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
                 <div class="flex items-center gap-3">
                     <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <input type="text" id="date_added" name="date_added" value="{{ $dateAddedValue }}" required readonly
-                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer shadow-sm"
                             placeholder="DD/MM/YYYY" />
                         <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
                     </div>
@@ -195,10 +195,19 @@
         .chosen-results li.highlighted { background: #2563eb; color: white; }
         .chosen-container .chosen-drop { z-index: 9999 !important; }
 
-        #date_added.flatpickr-input { height: 34px; padding: 4px 8px; font-size: 12px; }
-        #date_added {
-            max-width: 180px;
-            display: inline-block;
+        /* Full width + same outer size as Chosen (32px) */
+        #voucherForm #date_added.flatpickr-input,
+        #voucherForm #date_added {
+            width: 100%;
+            max-width: none;
+            display: block;
+            box-sizing: border-box;
+        }
+        #date_added.flatpickr-input {
+            height: 32px;
+            line-height: 30px;
+            padding: 0 8px;
+            font-size: 12px;
         }
         .flatpickr-calendar { font-size: 11px; border-radius: 0.5rem; box-shadow: 0 10px 25px rgba(15,23,42,0.15); }
         .flatpickr-day { max-width: 28px; height: 28px; line-height: 28px; border-radius: 9999px; }

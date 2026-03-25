@@ -64,7 +64,7 @@
         </style>
     </head>
     <body class="font-sans text-gray-900 antialiased overflow-hidden">
-        <div class="h-screen flex bg-white">
+        <div class="h-screen flex bg-gray-100">
             <!-- Left Column - Login Form -->
             <div class="flex-1 flex items-center justify-center p-6 lg:p-8">
                 <div class="w-full max-w-md">

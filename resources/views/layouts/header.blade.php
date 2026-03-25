@@ -1,12 +1,12 @@
 <div class="header-wrapper">
     <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-[#F5DFB8] bg-[#FFF6E8] px-4 shadow-sm sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-gray-200 bg-gray-100 px-4 shadow-sm sm:px-6 lg:px-8">
         
         <!-- Microsoft 365 Style Sidebar Toggle (Desktop) -->
         <button 
             type="button"
             @click="toggleSidebar()"
-            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-[#FDEBD0] hover:text-gray-800 transition-all duration-200 group relative"
+            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-200 hover:text-gray-800 transition-all duration-200 group relative"
             title="Toggle Sidebar (Ctrl+B)">
             <svg class="h-5 w-5 transition-transform duration-200"
                 :class="{ 'rotate-180': sidebarCollapsed }"
@@ -26,7 +26,7 @@
         <!-- Mobile Menu Button -->
         <button 
             type="button" 
-            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-[#FDEBD0] transition-colors" 
+            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-200 transition-colors" 
             @click="sidebarOpen = true">
             <span class="sr-only">Open sidebar</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -35,7 +35,7 @@
         </button>
 
         <!-- Separator -->
-        <div class="h-6 w-px bg-orange-200" aria-hidden="true"></div>
+        <div class="h-6 w-px bg-gray-300" aria-hidden="true"></div>
         <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             {{-- Search form commented out --}}
             <div class="flex-1"></div>
@@ -44,14 +44,14 @@
                 <!-- Button to show current branch -->
                 @if(auth()->user()->businesses->isNotEmpty()) <!-- Check if the user has any branches -->
                     <button type="button"
-                        class="flex items-center justify-between text-gray-800 px-3 py-2 text-sm font-medium bg-white hover:bg-orange-50 border border-orange-100 hover:border-orange-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-1 focus:ring-offset-[#FFF6E8] group"
+                        class="flex items-center justify-between text-gray-800 px-3 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-200/90 border border-gray-200/90 hover:border-gray-300 rounded-xl shadow-none transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300/70 focus:ring-offset-1 focus:ring-offset-gray-100 group"
                         @click="branchMenuOpen = !branchMenuOpen"
-                        :class="{ 'ring-2 ring-orange-200 border-orange-200 bg-orange-50': branchMenuOpen }">
+                        :class="{ 'ring-1 ring-gray-300/80 border-gray-300 bg-gray-200/80': branchMenuOpen }">
 
                         <div class="flex items-center min-w-0">
                             <!-- Exchange Icon with live indicator -->
                             <div class="flex-shrink-0 mr-3 relative">
-                                <div class="h-8 w-8 bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 rounded-lg flex items-center justify-center shadow-md">
+                                <div class="h-8 w-8 bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 rounded-lg flex items-center justify-center shadow-sm">
                                     <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
@@ -59,7 +59,7 @@
                                 <!-- Live indicator with animation -->
                                 <div class="absolute -top-1 -right-1">
                                     <div class="relative">
-                                        <div class="h-3 w-3 bg-emerald-400 rounded-full border-2 border-white shadow-sm"></div>
+                                        <div class="h-3 w-3 bg-emerald-400 rounded-full border-2 border-gray-100 shadow-sm"></div>
                                         <div class="absolute inset-0 h-3 w-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                     <div class="text-sm font-semibold text-gray-900 truncate max-w-40 group-hover:text-gray-700 transition-colors duration-200">
                                         {{ $activeBusiness->business_name }}
                                     </div>
-                                    <div class="text-xs text-amber-500 mt-0.5 font-semibold">
+                                    <div class="text-xs text-gray-500 mt-0.5 font-medium">
                                         Exchange Branch
                                     </div>
                             @else
@@ -90,8 +90,8 @@
 
                         <!-- Chevron Icon with enhanced animation -->
                         <div class="flex-shrink-0 ml-3">
-                            <svg class="h-5 w-5 text-gray-400 transform transition-all duration-300 group-hover:text-amber-600"
-                                :class="{ 'rotate-180 text-amber-600': branchMenuOpen }"
+                            <svg class="h-5 w-5 text-gray-400 transform transition-all duration-300 group-hover:text-gray-700"
+                                :class="{ 'rotate-180 text-gray-700': branchMenuOpen }"
                                 viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
                         </svg>
@@ -215,18 +215,18 @@
                     </svg>
                 </button> --}}
                 <!-- Separator -->
-                <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-orange-200" aria-hidden="true"></div>
+                <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-300" aria-hidden="true"></div>
                 <!-- Enhanced Profile dropdown -->
                 <div class="relative" x-data="{ profileMenuOpen: false }">
                     <button type="button" 
-                        class="group flex items-center gap-1 px-2 py-1.5 bg-white hover:bg-orange-50 border border-orange-100 hover:border-orange-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                        class="group flex items-center gap-1 px-2 py-1.5 bg-gray-100 hover:bg-gray-200/90 border border-gray-200/90 hover:border-gray-300 rounded-xl shadow-none transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300/70 focus:ring-offset-1 focus:ring-offset-gray-100"
                         @click="profileMenuOpen = !profileMenuOpen"
-                        :class="{ 'bg-orange-50 border-orange-200 ring-2 ring-orange-200': profileMenuOpen }">
+                        :class="{ 'bg-gray-200/80 border-gray-300 ring-1 ring-gray-300/80': profileMenuOpen }">
                         <span class="sr-only">Open user menu</span>
                         
                         <!-- Enhanced Avatar with status -->
                         <div class="relative">
-                            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 flex items-center justify-center ring-2 ring-white shadow-md group-hover:shadow-lg transition-all duration-200 group-hover:scale-105">
+                            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 flex items-center justify-center ring-2 ring-gray-100 shadow-sm group-hover:shadow-md transition-all duration-200 group-hover:scale-105">
                                 <span class="text-sm font-bold text-white uppercase tracking-tight">
                                     {{ substr(Auth::user()->name, 0, 2) }}
                                 </span>
@@ -234,7 +234,7 @@
                             <!-- Online status indicator with pulse -->
                             <div class="absolute -bottom-0.5 -right-0.5">
                                 <div class="relative">
-                                    <div class="h-3 w-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+                                    <div class="h-3 w-3 bg-emerald-500 border-2 border-gray-100 rounded-full"></div>
                                     <div class="absolute inset-0 h-3 w-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                                 </div>
                             </div>
@@ -250,8 +250,8 @@
                                     {{ Auth::user()->email }}
                                 </span>
                             </span>
-                            <svg class="ml-2 h-4 w-4 text-gray-400 transform transition-all duration-200 group-hover:text-amber-600"
-                                :class="{'rotate-180 text-amber-600': profileMenuOpen}"
+                            <svg class="ml-2 h-4 w-4 text-gray-400 transform transition-all duration-200 group-hover:text-gray-700"
+                                :class="{'rotate-180 text-gray-700': profileMenuOpen}"
                                 viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
                                     d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"

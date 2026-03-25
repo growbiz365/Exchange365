@@ -10,11 +10,6 @@
     <x-dynamic-heading title="Create Bank Transfer" />
 
     <div class="bg-white border border-gray-200 shadow-lg sm:rounded-xl p-4">
-        <div class="mb-4">
-            <h2 class="text-base font-semibold text-gray-900">Transfer Details</h2>
-            <p class="text-xs text-gray-600">Enter the transfer information below.</p>
-        </div>
-
         @if ($errors->any())
             <div class="rounded-md mb-4 bg-red-50 border border-red-400 p-4 text-red-800">
                 <p class="text-sm font-medium">Whoops! Something went wrong.</p>
@@ -33,13 +28,13 @@
         <form method="POST" action="{{ route('bank-transfers.store') }}" enctype="multipart/form-data" id="transferForm" class="space-y-3">
             @csrf
 
-            {{-- Row 1: Date --}}
-            <div class="mb-4">
-                <div class="flex items-center gap-3">
+            {{-- Row 1: Date (same grid width as From Account below) --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="flex items-start gap-3">
                     <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">
                         Date <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         @php
                             $dateAddedValue = old('date_added');
                             if (is_string($dateAddedValue) && $dateAddedValue !== '' && str_contains($dateAddedValue, '-')) {
@@ -48,11 +43,12 @@
                             if (!$dateAddedValue) { $dateAddedValue = date('d/m/Y'); }
                         @endphp
                         <input id="date_added" name="date_added" type="text"
-                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer shadow-sm"
                             value="{{ $dateAddedValue }}" required placeholder="DD/MM/YYYY" />
                         <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
                     </div>
                 </div>
+                <div class="hidden md:block min-w-0" aria-hidden="true"></div>
             </div>
 
             {{-- Row 2: From / To Accounts --}}
@@ -61,7 +57,7 @@
                     <label for="from_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
                         From Account <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <select id="from_account_id" name="from_account_id" required
                             class="chosen-select block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                             <option value="">Select Source Account</option>
@@ -83,7 +79,7 @@
                     <label for="to_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
                         To Account <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <select id="to_account_id" name="to_account_id" required
                             class="chosen-select block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                             <option value="">Select Destination Account</option>
@@ -181,7 +177,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        .chosen-container { width: 100% !important; }
+        #transferForm .grid > div { min-width: 0; }
+        .chosen-container {
+            width: 100% !important;
+            max-width: 100%;
+        }
         .chosen-container-single .chosen-single {
             height: 36px;
             line-height: 34px;
@@ -192,24 +192,38 @@
             box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             font-size: 0.875rem;
             color: #111827;
+            overflow: hidden;
         }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
+        .chosen-container-single .chosen-single span {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 0.5rem;
+        }
         .chosen-container-single .chosen-single div { right: 0.5rem; }
         .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.375rem 0.375rem 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 0.875rem; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 100%; }
+        .chosen-results { font-size: 0.875rem; max-width: 100%; }
+        .chosen-results li {
+            white-space: normal;
+            word-break: break-word;
+        }
         .chosen-results li.highlighted { background: #2563eb; color: white; }
 
-        /* Compact flatpickr date input & calendar */
+        /* Match date input to other form controls (full width, same height) */
+        #transferForm #date_added.flatpickr-input,
+        #transferForm #date_added {
+            width: 100%;
+            max-width: none;
+            display: block;
+            box-sizing: border-box;
+        }
         #date_added.flatpickr-input {
             height: 36px;
             padding-top: 4px;
             padding-bottom: 4px;
             font-size: 0.875rem;
-        }
-        #date_added {
-            max-width: 180px;
-            display: inline-block;
         }
         .flatpickr-calendar {
             font-size: 0.75rem;
@@ -262,6 +276,11 @@
             const fromAccountSelect = document.getElementById('from_account_id');
             const toAccountSelect = document.getElementById('to_account_id');
 
+            // Always ensure submit button is enabled on page load (handles back-redirect case)
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Create Transfer';
+
             if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
                 jQuery('.chosen-select').chosen({
                     width: '100%',
@@ -293,9 +312,27 @@
             form.addEventListener('submit', function(e) {
                 if (fromAccountSelect.value === toAccountSelect.value) {
                     e.preventDefault();
-                    alert('Source and destination accounts cannot be the same.');
+                    showInsufficientBalanceError('Source and destination accounts cannot be the same.');
                     return;
                 }
+
+                // Block submit if insufficient balance
+                const fromBalanceEl = document.getElementById('from_balance_amount');
+                const amountInput   = document.getElementById('amount');
+                if (fromBalanceEl && fromBalanceEl.dataset.balance !== undefined && fromBalanceEl.dataset.balance !== '' && amountInput.value) {
+                    const available = parseFloat(fromBalanceEl.dataset.balance);
+                    const requested = parseFloat(amountInput.value);
+                    if (requested > available) {
+                        e.preventDefault();
+                        showInsufficientBalanceError(
+                            'Insufficient balance. Available: ' + available.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
+                            ', Requested: ' + requested.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+                        );
+                        amountInput.focus();
+                        return;
+                    }
+                }
+
                 document.getElementById('submitBtn').disabled = true;
                 document.getElementById('submitBtn').innerHTML = 'Saving...';
             });
@@ -324,32 +361,54 @@
                 .catch(() => document.getElementById(type + '_account_balance').classList.add('hidden'));
         }
 
+        function showInsufficientBalanceError(message) {
+            // Remove any existing inline error banner
+            let banner = document.getElementById('balance-error-banner');
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = 'balance-error-banner';
+                banner.className = 'mb-4 flex items-start gap-3 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700';
+                const form = document.getElementById('transferForm');
+                form.parentNode.insertBefore(banner, form);
+            }
+            banner.innerHTML = `<svg class="mt-0.5 h-4 w-4 shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg><span>${message}</span>`;
+            banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function clearInsufficientBalanceError() {
+            const banner = document.getElementById('balance-error-banner');
+            if (banner) banner.remove();
+        }
+
         function validateTransferAmount() {
             const fromBalanceAmount = document.getElementById('from_balance_amount');
             const amountInput = document.getElementById('amount');
             let errorDiv = document.getElementById('amount-error');
-            if (!fromBalanceAmount.dataset.balance || !amountInput.value) {
+
+            if (!fromBalanceAmount || !fromBalanceAmount.dataset.balance || fromBalanceAmount.dataset.balance === '' || !amountInput.value) {
                 if (errorDiv) errorDiv.remove();
-                amountInput.setCustomValidity('');
                 amountInput.classList.remove('border-red-500');
+                clearInsufficientBalanceError();
                 return;
             }
+
             const availableBalance = parseFloat(fromBalanceAmount.dataset.balance);
-            const transferAmount = parseFloat(amountInput.value);
+            const transferAmount   = parseFloat(amountInput.value);
+
             if (transferAmount > availableBalance) {
-                amountInput.setCustomValidity('Insufficient balance in From Account.');
-                amountInput.classList.add('border-red-500');
+                amountInput.classList.add('border-red-500', 'ring-1', 'ring-red-500');
                 if (!errorDiv) {
-                    errorDiv = document.createElement('div');
+                    errorDiv = document.createElement('p');
                     errorDiv.id = 'amount-error';
-                    errorDiv.className = 'mt-1 text-sm text-red-600';
+                    errorDiv.className = 'mt-1 text-xs text-red-600 font-medium';
                     amountInput.closest('div').appendChild(errorDiv);
                 }
-                errorDiv.textContent = 'Insufficient balance in From Account.';
+                errorDiv.textContent = 'Insufficient balance. Available: ' +
+                    availableBalance.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
             } else {
-                amountInput.setCustomValidity('');
-                amountInput.classList.remove('border-red-500');
+                amountInput.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
                 if (errorDiv) errorDiv.remove();
+                clearInsufficientBalanceError();
             }
         }
 
@@ -376,7 +435,11 @@
         }
 
         document.getElementById('amount').addEventListener('input', validateTransferAmount);
-        document.getElementById('from_account_id').addEventListener('change', function() { setTimeout(validateTransferAmount, 500); });
+        document.getElementById('from_account_id').addEventListener('change', function() { setTimeout(validateTransferAmount, 600); });
+        // Also hook into Chosen's change event for the from_account select
+        if (typeof jQuery !== 'undefined') {
+            jQuery('#from_account_id').on('change', function() { setTimeout(validateTransferAmount, 600); });
+        }
 
         let attachmentIndex = 1;
         function addAttachmentField() {
