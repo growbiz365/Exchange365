@@ -5,7 +5,7 @@
 
     <form action="{{ route('cities.store') }}" method="POST">
         @csrf
-        <div class="bg-white shadow-lg sm:rounded-lg border border-gray-200 p-8">
+        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
             <div class="pb-10 mb-10 border-b border-gray-150 my-8">
                 <h2 class="text-lg font-semibold text-gray-900">City Information</h2>
                 <p class="mt-1 text-sm text-gray-600">Please provide details of the city.</p>

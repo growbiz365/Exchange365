@@ -7,7 +7,7 @@
 
     <div class="fixed inset-0 -z-10 bg-gradient-to-br from-amber-50/40 via-white to-orange-50/30 pointer-events-none"></div>
 
-    <div class="relative backdrop-blur-xl bg-white/80 rounded-2xl shadow-xl shadow-amber-500/5 border border-white/60 p-6 mb-6 mt-4 overflow-hidden group">
+    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-amber-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
         <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-amber-400/20 to-orange-500/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
         <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-amber-400/15 to-orange-400/15 rounded-full blur-2xl"></div>
 
@@ -37,7 +37,7 @@
                     Add Purchase
                 </a>
                 <a href="{{ route('purchases.index') }}"
-                   class="inline-flex items-center justify-center rounded-xl backdrop-blur-sm bg-white/90 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                   class="inline-flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
                     <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-slate-500/5 border border-white/60 p-6 mb-8 overflow-hidden">
+    <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-slate-500/5 border border-gray-200 p-6 mb-8 overflow-hidden">
         <div class="relative mb-4 flex items-center justify-between">
             <div>
                 <h2 class="text-lg font-bold text-gray-900 flex items-center">

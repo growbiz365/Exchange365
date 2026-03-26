@@ -26,7 +26,7 @@
             </div>
         @endif
 
-        <div class="bg-white shadow-lg sm:rounded-lg border border-gray-200 p-6">
+        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-6">
             <h2 class="text-md font-semibold text-gray-900 mb-4">Party Information</h2>
             <p class="text-sm text-gray-600 mb-6">Please provide details of the party.</p>
 
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Opening Balances Section -->
-        <div class="bg-white shadow-lg sm:rounded-lg border border-gray-200 p-6 mt-6">
+        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-6 mt-6">
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h2 class="text-md font-semibold text-gray-900">Opening Balances (Multi-Currency)</h2>

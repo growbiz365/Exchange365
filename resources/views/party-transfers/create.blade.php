@@ -2,7 +2,7 @@
     @section('title', 'Add Party Transfer - ExchangeHub')
     <x-breadcrumb :breadcrumbs="[['url' => '/', 'label' => 'Home'], ['url' => '/parties/dashboard', 'label' => 'Party Management'], ['url' => route('party-transfers.index'), 'label' => 'Party Transfers'], ['url' => '#', 'label' => 'Add Transfer']]" />
 
-    <div class="bg-white shadow rounded-lg border border-gray-200">
+    <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
 
         {{-- Card Header --}}
         <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">

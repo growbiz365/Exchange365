@@ -28,7 +28,7 @@
     <form action="{{ route('assets.sell', $asset) }}" method="POST" class="space-y-3" id="assetSellForm">
         @csrf
 
-        <div class="bg-white shadow rounded-lg border border-gray-200">
+        <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
 
             {{-- Card Header --}}
             <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">

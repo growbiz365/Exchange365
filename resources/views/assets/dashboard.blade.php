@@ -9,7 +9,7 @@
     <div class="fixed inset-0 -z-10 bg-gradient-to-br from-slate-50/40 via-white to-amber-50/30 pointer-events-none"></div>
 
     {{-- Header --}}
-    <div class="relative backdrop-blur-xl bg-white/80 rounded-2xl shadow-xl shadow-slate-500/5 border border-white/60 p-6 mb-6 mt-4 overflow-hidden group">
+    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-slate-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
         <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-amber-400/20 to-slate-500/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
         <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-slate-400/15 to-amber-400/15 rounded-full blur-2xl"></div>
 
@@ -41,14 +41,14 @@
                     Add Asset
                 </a>
                 <a href="{{ route('assets.index') }}"
-                   class="inline-flex items-center justify-center rounded-xl backdrop-blur-sm bg-white/90 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                   class="inline-flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
                     <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-4.5L3 7.5m18 0l-9 4.5m9-4.5v9l-9 4.5M3 7.5l9 4.5M3 7.5v9l9 4.5m0-9v9" />
                     </svg>
                     All Assets
                 </a>
                 <a href="{{ route('asset-categories.index') }}"
-                class="inline-flex items-center justify-center rounded-xl backdrop-blur-sm bg-white/90 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                class="inline-flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
                     <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-4.5L3 7.5m18 0l-9 4.5m9-4.5v9l-9 4.5M3 7.5l9 4.5M3 7.5v9l9 4.5m0-9v9" />
                     </svg>
@@ -177,7 +177,7 @@
 
     {{-- Totals --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-slate-500/5 border border-white/60 p-5 overflow-hidden">
+        <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-slate-500/5 border border-gray-200 p-5 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-slate-400/10 rounded-full blur-2xl"></div>
             <div class="relative flex items-center justify-between">
                 <div>
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-emerald-500/5 border border-white/60 p-5 overflow-hidden">
+        <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-emerald-500/5 border border-gray-200 p-5 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-400/10 rounded-full blur-2xl"></div>
             <div class="relative flex items-center justify-between">
                 <div>
@@ -209,7 +209,7 @@
     </div>
 
     {{-- Recent assets --}}
-    <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-slate-500/5 border border-white/60 p-6 mb-8 overflow-hidden">
+    <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-slate-500/5 border border-gray-200 p-6 mb-8 overflow-hidden">
         <div class="absolute -top-16 -left-16 w-40 h-40 bg-gradient-to-br from-slate-400/10 to-amber-400/10 rounded-full blur-3xl"></div>
         <div class="relative mb-4 flex items-center justify-between">
             <div>

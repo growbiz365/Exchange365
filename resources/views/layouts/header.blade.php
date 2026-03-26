@@ -1,12 +1,12 @@
 <div class="header-wrapper">
     <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-gray-200 bg-gray-100 px-4 shadow-sm sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-3 border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
         
         <!-- Microsoft 365 Style Sidebar Toggle (Desktop) -->
         <button 
             type="button"
             @click="toggleSidebar()"
-            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-200 hover:text-gray-800 transition-all duration-200 group relative"
+            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all duration-200 group relative"
             title="Toggle Sidebar (Ctrl+B)">
             <svg class="h-5 w-5 transition-transform duration-200"
                 :class="{ 'rotate-180': sidebarCollapsed }"
@@ -26,7 +26,7 @@
         <!-- Mobile Menu Button -->
         <button 
             type="button" 
-            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-200 transition-colors" 
+            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors" 
             @click="sidebarOpen = true">
             <span class="sr-only">Open sidebar</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -44,9 +44,9 @@
                 <!-- Button to show current branch -->
                 @if(auth()->user()->businesses->isNotEmpty()) <!-- Check if the user has any branches -->
                     <button type="button"
-                        class="flex items-center justify-between text-gray-800 px-3 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-200/90 border border-gray-200/90 hover:border-gray-300 rounded-xl shadow-none transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300/70 focus:ring-offset-1 focus:ring-offset-gray-100 group"
+                        class="flex items-center justify-between text-gray-800 px-3 py-2 text-sm font-medium bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-200/70 focus:ring-offset-1 focus:ring-offset-white group"
                         @click="branchMenuOpen = !branchMenuOpen"
-                        :class="{ 'ring-1 ring-gray-300/80 border-gray-300 bg-gray-200/80': branchMenuOpen }">
+                        :class="{ 'ring-1 ring-indigo-200/60 border-gray-300 bg-gray-50': branchMenuOpen }">
 
                         <div class="flex items-center min-w-0">
                             <!-- Exchange Icon with live indicator -->
@@ -59,7 +59,7 @@
                                 <!-- Live indicator with animation -->
                                 <div class="absolute -top-1 -right-1">
                                     <div class="relative">
-                                        <div class="h-3 w-3 bg-emerald-400 rounded-full border-2 border-gray-100 shadow-sm"></div>
+                                        <div class="h-3 w-3 bg-emerald-400 rounded-full border-2 border-white shadow-sm"></div>
                                         <div class="absolute inset-0 h-3 w-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                                     </div>
                                 </div>
@@ -219,14 +219,14 @@
                 <!-- Enhanced Profile dropdown -->
                 <div class="relative" x-data="{ profileMenuOpen: false }">
                     <button type="button" 
-                        class="group flex items-center gap-1 px-2 py-1.5 bg-gray-100 hover:bg-gray-200/90 border border-gray-200/90 hover:border-gray-300 rounded-xl shadow-none transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300/70 focus:ring-offset-1 focus:ring-offset-gray-100"
+                        class="group flex items-center gap-1 px-2 py-1.5 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-200/70 focus:ring-offset-1 focus:ring-offset-white"
                         @click="profileMenuOpen = !profileMenuOpen"
-                        :class="{ 'bg-gray-200/80 border-gray-300 ring-1 ring-gray-300/80': profileMenuOpen }">
+                        :class="{ 'bg-gray-50 border-gray-300 ring-1 ring-indigo-200/60': profileMenuOpen }">
                         <span class="sr-only">Open user menu</span>
                         
                         <!-- Enhanced Avatar with status -->
                         <div class="relative">
-                            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 flex items-center justify-center ring-2 ring-gray-100 shadow-sm group-hover:shadow-md transition-all duration-200 group-hover:scale-105">
+                            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 flex items-center justify-center ring-2 ring-white shadow-sm group-hover:shadow-md transition-all duration-200 group-hover:scale-105">
                                 <span class="text-sm font-bold text-white uppercase tracking-tight">
                                     {{ substr(Auth::user()->name, 0, 2) }}
                                 </span>
@@ -234,7 +234,7 @@
                             <!-- Online status indicator with pulse -->
                             <div class="absolute -bottom-0.5 -right-0.5">
                                 <div class="relative">
-                                    <div class="h-3 w-3 bg-emerald-500 border-2 border-gray-100 rounded-full"></div>
+                                    <div class="h-3 w-3 bg-emerald-500 border-2 border-white rounded-full"></div>
                                     <div class="absolute inset-0 h-3 w-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@
 
 
            <!-- Card Container -->
-           <div class="bg-white shadow rounded-lg p-6">
+           <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
                
 
 

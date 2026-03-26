@@ -16,7 +16,7 @@
     
         <div class="">
             <div class="">   
-                <div class="bg-white shadow-lg sm:rounded-lg border border-gray-200 p-8">
+                <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
                 
                 <!-- Form Start -->
                 <form action="{{ route('permissions.store') }}" method="POST">

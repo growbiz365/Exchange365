@@ -9,7 +9,7 @@
     <div class="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/30 via-white to-purple-50/20 pointer-events-none"></div>
 
     {{-- Header Section - Glass Morphism --}}
-    <div class="relative backdrop-blur-xl bg-white/70 rounded-2xl shadow-xl shadow-blue-500/5 border border-white/60 p-6 mb-6 mt-4 overflow-hidden group">
+    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-blue-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
         <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
         <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-indigo-400/15 to-blue-400/15 rounded-full blur-2xl"></div>
 
@@ -37,7 +37,7 @@
                     Add Party
                 </a>
                 <a href="{{ route('party-transfers.create') }}"
-                    class="inline-flex items-center justify-center rounded-xl backdrop-blur-sm bg-white/90 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                    class="inline-flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
                     <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
                     </svg>
@@ -182,7 +182,7 @@
     </div>
 
     {{-- Quick Actions - Command Palette Style --}}
-    <div class="relative backdrop-blur-xl bg-white/70 rounded-xl shadow-lg shadow-indigo-500/5 border border-white/60 p-6 mb-6 overflow-hidden">
+    <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-indigo-500/5 border border-gray-200 p-6 mb-6 overflow-hidden">
         <div class="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full blur-3xl"></div>
 
@@ -201,7 +201,7 @@
 
         <div class="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             <a href="{{ route('parties.index') }}"
-                class="group relative backdrop-blur-lg bg-white/90 rounded-xl border border-white/60 p-4 hover:shadow-xl hover:shadow-amber-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
+                class="group relative bg-gray-50 rounded-xl border border-gray-200 p-4 hover:shadow-xl hover:shadow-amber-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-orange-500/0 group-hover:from-amber-500/10 group-hover:to-orange-500/5 transition-all duration-300 rounded-xl"></div>
                 <div class="absolute -top-6 -right-6 w-16 h-16 bg-amber-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative flex flex-col items-center text-center space-y-2.5">
@@ -220,7 +220,7 @@
                 </div>
             </a>
             <a href="{{ route('party-transfers.index') }}"
-                class="group relative backdrop-blur-lg bg-white/90 rounded-xl border border-white/60 p-4 hover:shadow-xl hover:shadow-sky-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
+                class="group relative bg-gray-50 rounded-xl border border-gray-200 p-4 hover:shadow-xl hover:shadow-sky-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-sky-500/0 to-blue-500/0 group-hover:from-sky-500/10 group-hover:to-blue-500/5 transition-all duration-300 rounded-xl"></div>
                 <div class="absolute -top-6 -right-6 w-16 h-16 bg-sky-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative flex flex-col items-center text-center space-y-2.5">
@@ -239,7 +239,7 @@
                 </div>
             </a>
             <a href="{{ route('parties.ledger') }}"
-                class="group relative backdrop-blur-lg bg-white/90 rounded-xl border border-white/60 p-4 hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
+                class="group relative bg-gray-50 rounded-xl border border-gray-200 p-4 hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/10 group-hover:to-green-500/5 transition-all duration-300 rounded-xl"></div>
                 <div class="absolute -top-6 -right-6 w-16 h-16 bg-emerald-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative flex flex-col items-center text-center space-y-2.5">
@@ -258,7 +258,7 @@
                 </div>
             </a>
             <a href="{{ route('parties.balances') }}"
-                class="group relative backdrop-blur-lg bg-white/90 rounded-xl border border-white/60 p-4 hover:shadow-xl hover:shadow-violet-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
+                class="group relative bg-gray-50 rounded-xl border border-gray-200 p-4 hover:shadow-xl hover:shadow-violet-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/5 transition-all duration-300 rounded-xl"></div>
                 <div class="absolute -top-6 -right-6 w-16 h-16 bg-violet-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative flex flex-col items-center text-center space-y-2.5">
@@ -277,7 +277,7 @@
                 </div>
             </a>
             <a href="{{ route('parties.currency') }}"
-                class="group relative backdrop-blur-lg bg-white/90 rounded-xl border border-white/60 p-4 hover:shadow-xl hover:shadow-rose-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
+                class="group relative bg-gray-50 rounded-xl border border-gray-200 p-4 hover:shadow-xl hover:shadow-rose-500/20 hover:-translate-y-1 hover:scale-105 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-rose-500/0 to-pink-500/0 group-hover:from-rose-500/10 group-hover:to-pink-500/5 transition-all duration-300 rounded-xl"></div>
                 <div class="absolute -top-6 -right-6 w-16 h-16 bg-rose-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative flex flex-col items-center text-center space-y-2.5">
@@ -301,7 +301,7 @@
     {{-- Recent activity - Timeline Style --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
         {{-- Recent Parties --}}
-        <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-amber-500/5 border border-white/60 p-6 overflow-hidden group">
+        <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-amber-500/5 border border-gray-200 p-6 overflow-hidden group">
             <div class="absolute -top-16 -left-16 w-40 h-40 bg-gradient-to-br from-amber-400/10 to-orange-400/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
 
             <div class="relative flex items-center justify-between mb-5">
@@ -331,7 +331,7 @@
                     @if(!$loop->last)
                     <div class="absolute left-5 top-12 bottom-0 w-0.5 bg-gradient-to-b from-amber-200 to-transparent"></div>
                     @endif
-                    <a href="{{ route('parties.show', $party) }}" class="relative flex items-start space-x-3 p-3.5 backdrop-blur-sm bg-white/90 rounded-lg border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 block">
+                    <a href="{{ route('parties.show', $party) }}" class="relative flex items-start space-x-3 p-3.5 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 block">
                         <div class="relative flex-shrink-0">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg blur-md opacity-0 group-hover/item:opacity-60 transition-opacity duration-300"></div>
                             <div class="relative w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md group-hover/item:scale-110 group-hover/item:rotate-6 transition-all duration-300">
@@ -386,7 +386,7 @@
         </div>
 
         {{-- Recent Transfers --}}
-        <div class="relative backdrop-blur-xl bg-white/80 rounded-xl shadow-lg shadow-sky-500/5 border border-white/60 p-6 overflow-hidden group">
+        <div class="relative bg-gray-100 rounded-xl shadow-lg shadow-sky-500/5 border border-gray-200 p-6 overflow-hidden group">
             <div class="absolute -top-16 -left-16 w-40 h-40 bg-gradient-to-br from-sky-400/10 to-blue-400/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
 
             <div class="relative flex items-center justify-between mb-5">
@@ -416,7 +416,7 @@
                     @if(!$loop->last)
                     <div class="absolute left-5 top-12 bottom-0 w-0.5 bg-gradient-to-b from-sky-200 to-transparent"></div>
                     @endif
-                    <a href="{{ route('party-transfers.edit', $transfer) }}" class="relative flex items-start space-x-3 p-3.5 backdrop-blur-sm bg-white/90 rounded-lg border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 block">
+                    <a href="{{ route('party-transfers.edit', $transfer) }}" class="relative flex items-start space-x-3 p-3.5 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 block">
                         <div class="relative flex-shrink-0">
                             <div class="absolute inset-0 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg blur-md opacity-0 group-hover/item:opacity-60 transition-opacity duration-300"></div>
                             <div class="relative w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md group-hover/item:scale-110 group-hover/item:rotate-6 transition-all duration-300">

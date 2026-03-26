@@ -7,7 +7,7 @@
 
   <x-dynamic-heading title="Settings" />  
 
-  <div class="mb-10 p-10 mt-5 bg-white py-5">
+  <div class="mb-10 p-10 mt-5 bg-gray-100 py-5 rounded-xl border border-gray-200">
         <h3 class="text-base py-5 font-semibold text-gray-900">Master Files</h3>
         <div>
             <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
@@ -65,7 +65,7 @@
 
 
 
-    <!-- <div class="mb-10 p-10 mt-5 bg-white py-5">
+    <!-- <div class="mb-10 p-10 mt-5 bg-gray-100 py-5 rounded-xl border border-gray-200">
         <h3 class="text-base py-5 font-semibold text-gray-900">Arms Management</h3>
         <div>
             <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
@@ -102,7 +102,7 @@
 
 
   @can('view user management')
-  <div class="mb-10 p-10 mt-5 bg-white py-5">
+  <div class="mb-10 p-10 mt-5 bg-gray-100 py-5 rounded-xl border border-gray-200">
     <h3 class="text-base py-5 font-semibold text-gray-900">User Management</h3>
     <div>
       <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">

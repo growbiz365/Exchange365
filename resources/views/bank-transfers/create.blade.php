@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Create Bank Transfer" />
 
-    <div class="bg-white border border-gray-200 shadow-lg sm:rounded-xl p-4">
+    <div class="bg-gray-100 border border-gray-200 shadow-sm sm:rounded-xl p-4">
         @if ($errors->any())
             <div class="rounded-md mb-4 bg-red-50 border border-red-400 p-4 text-red-800">
                 <p class="text-sm font-medium">Whoops! Something went wrong.</p>

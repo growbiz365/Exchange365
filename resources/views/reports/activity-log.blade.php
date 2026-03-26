@@ -39,7 +39,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="bg-gray-100 rounded-2xl shadow-sm border border-gray-200 p-4 mb-6">
         <form method="GET" action="{{ route('reports.activity-log') }}" class="space-y-4">
             <div class="flex flex-wrap items-end gap-3">
                 <div class="min-w-[140px]">
@@ -87,7 +87,7 @@
     </div>
 
     <!-- Activity table -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gray-100 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-slate-50 to-white">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold text-gray-900 flex items-center">

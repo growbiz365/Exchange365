@@ -41,7 +41,7 @@
         @method('PUT')
         <input type="hidden" name="sales_id" value="{{ $sale->sales_id }}" />
 
-        <div class="bg-white shadow rounded-lg border border-gray-200">
+        <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
 
             {{-- General info rows --}}
             <div class="px-6 py-4 border-b border-gray-200">

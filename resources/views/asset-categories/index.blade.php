@@ -36,7 +36,7 @@
     @endif
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
+    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
         <form method="GET" action="{{ route('asset-categories.index') }}">
             <div class="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-2 lg:space-y-0">
                 <div class="flex-1 min-w-[150px]">
@@ -75,7 +75,7 @@
     </div>
 
     <!-- List -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-sky-50 via-white to-white">
             <div class="flex items-center space-x-3">
                 <div class="p-2 bg-sky-100 rounded-lg">

@@ -23,7 +23,7 @@
 
 
             <!-- Card Container -->
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
                 {{-- <div class="flex justify-between items-center mb-4">
                     <!-- Search Form -->
                     <form action="{{ route('permissions.index') }}" method="GET" class="flex space-x-3">
@@ -44,7 +44,7 @@
 
    
             <!-- Card Container -->
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
                
 
 

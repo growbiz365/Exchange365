@@ -22,7 +22,7 @@
     
 
     <div class="py-6">
-        <div class="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+        <div class="bg-gray-100 shadow-sm border border-gray-200 rounded-xl overflow-hidden">
             
 @if(Session::has('success')) 
                 <div class="mx-6 mt-6">

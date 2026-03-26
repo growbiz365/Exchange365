@@ -17,7 +17,7 @@
 
     <div>
         <div>
-            <div class="bg-white shadow-sm sm:rounded-lg">
+            <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200">
                 <div class="p-6 text-gray-900">
                     <!-- Form Start -->
                     <form action="{{ route('subusers.update', $subUser->id) }}" method="POST">

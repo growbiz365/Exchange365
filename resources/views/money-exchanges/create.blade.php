@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Create Money Exchange" />
 
-    <div class="bg-white shadow rounded-lg border border-gray-200">
+    <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
         <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
             <h4 class="text-sm font-bold text-gray-900">Create Money Exchange</h4>
         </div>

@@ -9,7 +9,7 @@
 
     <div class="fixed inset-0 -z-10 bg-gradient-to-br from-emerald-50/30 via-white to-teal-50/20 pointer-events-none"></div>
 
-    <div class="relative backdrop-blur-xl bg-white/70 rounded-2xl shadow-xl shadow-emerald-500/5 border border-white/60 p-6 mb-6 mt-4 overflow-hidden group">
+    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-emerald-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
         <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
@@ -98,7 +98,7 @@
         </div>
 
         {{-- Transaction Details --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 backdrop-blur-sm bg-white/90">
+        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 bg-gray-50">
             <div class="relative p-6">
                 <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200">
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md">

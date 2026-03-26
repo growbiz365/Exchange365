@@ -14,7 +14,7 @@
     @endif
 
     {{-- Simple Table Layout (like reference) --}}
-    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mt-4">
+    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden mt-4">
         <div class="border-b border-gray-200 bg-white px-4 py-3">
             <form action="{{ route('party-transfers.index') }}" method="GET">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
