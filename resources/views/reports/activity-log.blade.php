@@ -7,29 +7,26 @@
     ]" />
 
     <!-- Header -->
-    <div class="relative bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-2xl shadow-xl border border-slate-600/20 p-8 mb-8 mt-4 overflow-hidden">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl"></div>
-        </div>
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-indigo-400/10 to-slate-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-start space-x-4">
-                <div class="flex-shrink-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                    <svg class="h-8 w-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex-shrink-0 bg-gradient-to-br from-amber-500 to-orange-600 p-3 rounded-xl shadow-lg">
+                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-white tracking-tight">Activity Log</h1>
-                    <p class="text-sm text-white/80 mt-1">Audit trail of create, update, and delete actions across the system</p>
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Activity Log</h1>
+                    <p class="text-sm text-gray-500 mt-1">Audit trail of create, update, and delete actions across the system</p>
                     <div class="flex flex-wrap gap-2 mt-3">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-white/10 text-white border border-white/20">Who, what, when</span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-amber-50 text-amber-700 border-amber-100">Who, what, when</span>
                     </div>
                 </div>
             </div>
             <a href="{{ route('reports.index') }}"
-                class="inline-flex items-center px-4 py-2.5 text-sm font-semibold text-slate-900 bg-white/90 hover:bg-white rounded-xl border border-white/30 shadow-lg transition-all duration-200">
+                class="inline-flex items-center px-4 py-2.5 text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 rounded-xl border border-gray-300 shadow-sm transition-all duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -39,22 +36,22 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-gray-100 rounded-2xl shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-4">
         <form method="GET" action="{{ route('reports.activity-log') }}" class="space-y-4">
             <div class="flex flex-wrap items-end gap-3">
                 <div class="min-w-[140px]">
                     <label for="date_from" class="block text-xs font-medium text-gray-600 mb-1">From date</label>
                     <input type="date" id="date_from" name="date_from" value="{{ request('date_from') }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500" />
+                        class="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500" />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="date_to" class="block text-xs font-medium text-gray-600 mb-1">To date</label>
                     <input type="date" id="date_to" name="date_to" value="{{ request('date_to') }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500" />
+                        class="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500" />
                 </div>
                 <div class="min-w-[160px]">
                     <label for="event" class="block text-xs font-medium text-gray-600 mb-1">Event</label>
-                    <select id="event" name="event" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
+                    <select id="event" name="event" class="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
                         <option value="">All events</option>
                         <option value="created" {{ request('event') === 'created' ? 'selected' : '' }}>Created</option>
                         <option value="updated" {{ request('event') === 'updated' ? 'selected' : '' }}>Updated</option>
@@ -63,7 +60,7 @@
                 </div>
                 <div class="min-w-[160px]">
                     <label for="log_name" class="block text-xs font-medium text-gray-600 mb-1">Log type</label>
-                    <select id="log_name" name="log_name" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
+                    <select id="log_name" name="log_name" class="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
                         <option value="">All logs</option>
                         <option value="default" {{ request('log_name') === 'default' ? 'selected' : '' }}>Model changes</option>
                         <option value="auth" {{ request('log_name') === 'auth' ? 'selected' : '' }}>Login / Logout</option>
@@ -87,8 +84,8 @@
     </div>
 
     <!-- Activity table -->
-    <div class="bg-gray-100 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-slate-50 to-white">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 bg-white">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold text-gray-900 flex items-center">
                     <svg class="w-5 h-5 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +127,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($activities as $activity)
-                            <tr class="hover:bg-gray-50/80 transition-colors">
+                            <tr class="hover:bg-indigo-50/40 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                     <span class="font-medium text-gray-900">{{ $activity->created_at->format('M d, Y') }}</span>
                                     <span class="block text-xs text-gray-500">{{ $activity->created_at->format('g:i A') }}</span>
@@ -148,14 +145,14 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @php
                                         $eventColors = [
-                                            'created' => 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                                            'updated' => 'bg-amber-100 text-amber-800 border-amber-200',
-                                            'deleted' => 'bg-red-100 text-red-800 border-red-200',
+                                            'created' => 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                                            'updated' => 'bg-amber-50 text-amber-700 border-amber-100',
+                                            'deleted' => 'bg-rose-50 text-rose-700 border-rose-100',
                                         ];
-                                        $color = $eventColors[$activity->event ?? ''] ?? 'bg-gray-100 text-gray-800 border-gray-200';
+                                        $color = $eventColors[$activity->event ?? ''] ?? 'bg-gray-50 text-gray-700 border-gray-200';
                                         $eventLabel = $activity->event ?? ($activity->log_name === 'auth' ? 'auth' : ($activity->log_name === 'session' ? 'session' : '—'));
                                     @endphp
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border {{ $color }}">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border {{ $color }}">
                                         {{ $eventLabel }}
                                     </span>
                                 </td>
@@ -195,7 +192,7 @@
                 </table>
             </div>
 
-            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50">
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
                 {{ $activities->links() }}
             </div>
         @endif

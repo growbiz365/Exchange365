@@ -7,11 +7,11 @@
     ]" />
 
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-indigo-50 via-white to-white rounded-xl shadow-sm border border-indigo-100 p-6 mb-6 mt-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <div class="p-2 bg-indigo-100 rounded-lg">
+                    <div class="p-2 bg-indigo-50 border border-indigo-100 rounded-lg">
                         <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
                         </svg>
@@ -36,30 +36,30 @@
     @endif
 
     <!-- Filters Section (Compact) -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4 mb-4">
         <form method="GET" action="{{ route('money-exchanges.index') }}">
             <div class="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-2 lg:space-y-0">
                 <div class="flex-1 min-w-[150px]">
                     <label for="money_exchange_id" class="sr-only">Exchange #</label>
                     <input type="number" id="money_exchange_id" name="money_exchange_id" value="{{ request('money_exchange_id') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Exchange # (ID)" min="1" />
                 </div>
                 <div class="flex-1 min-w-[180px]">
                     <label for="search" class="sr-only">Search</label>
                     <input type="text" id="search" name="search" value="{{ request('search') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Search bank or details..." />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="date_from" class="sr-only">Date From</label>
                     <input type="date" id="date_from" name="date_from" value="{{ request('date_from') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="date_to" class="sr-only">Date To</label>
                     <input type="date" id="date_to" name="date_to" value="{{ request('date_to') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div class="flex items-center space-x-2 mt-2 lg:mt-0">
                     <button type="submit"
@@ -76,11 +76,11 @@
     </div>
 
     <!-- Money Exchanges List -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-white">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 bg-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-indigo-100 rounded-lg">
+                    <div class="p-2 bg-indigo-50 border border-indigo-100 rounded-lg">
                         <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
                         </svg>
@@ -112,7 +112,7 @@
                         @foreach($exchanges as $exchange)
                             <tr
                                 onclick="window.location.href='{{ route('money-exchanges.show', $exchange) }}'"
-                                class="cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out"
+                                class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                                 title="Click to view exchange"
                             >
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">{{ $exchange->money_exchange_id }}</td>
@@ -122,7 +122,7 @@
                                     <div class="text-xs text-gray-500">{{ $exchange->fromBank?->currency?->currency ?? '-' }} ({{ $exchange->fromBank?->currency?->currency_symbol ?? '-' }})</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <span class="inline-flex px-2 py-0.5 text-xs font-medium rounded bg-rose-100 text-rose-800">
+                                    <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border bg-rose-50 text-rose-700 border-rose-100">
                                         −{{ number_format($exchange->debit_amount, 2) }}
                                     </span>
                                 </td>
@@ -131,7 +131,7 @@
                                     <div class="text-xs text-gray-500">{{ $exchange->toBank?->currency?->currency ?? '-' }} ({{ $exchange->toBank?->currency?->currency_symbol ?? '-' }})</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <span class="inline-flex px-2 py-0.5 text-xs font-medium rounded bg-emerald-100 text-emerald-800">
+                                    <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border bg-emerald-50 text-emerald-700 border-emerald-100">
                                         +{{ number_format($exchange->credit_amount, 2) }}
                                     </span>
                                 </td>
@@ -157,7 +157,7 @@
                 </table>
             </div>
 
-            <div class="px-6 py-4 border-t border-gray-200">
+            <div class="px-6 py-4 border-t border-gray-100">
                 {{ $exchanges->withQueryString()->links() }}
             </div>
         @else

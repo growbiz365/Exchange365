@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="">
         <div class="">
-            <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200">
+            <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
                 <div class="p-6 text-gray-900">
                     <!-- Form Start -->
                     <form action="{{ route('users.update', $user->id) }}" method="POST">

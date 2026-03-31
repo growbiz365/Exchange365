@@ -7,11 +7,11 @@
     ]" />
 
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-sky-50 via-white to-white rounded-xl shadow-sm border border-sky-100 p-6 mb-6 mt-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <div class="p-2 bg-sky-100 rounded-lg">
+                    <div class="p-2 bg-sky-50 border border-sky-100 rounded-lg">
                         <svg class="w-8 h-8 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" />
                         </svg>
@@ -36,25 +36,25 @@
     @endif
 
     <!-- Filters -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4 mb-4">
         <form method="GET" action="{{ route('asset-categories.index') }}">
             <div class="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-2 lg:space-y-0">
                 <div class="flex-1 min-w-[150px]">
                     <label for="asset_category_id" class="sr-only">Category #</label>
                     <input type="number" id="asset_category_id" name="asset_category_id" value="{{ request('asset_category_id') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500"
                         placeholder="Category # (ID)" min="1" />
                 </div>
                 <div class="flex-1 min-w-[180px]">
                     <label for="asset_category" class="sr-only">Category Name</label>
                     <input type="text" id="asset_category" name="asset_category" value="{{ request('asset_category') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500"
                         placeholder="Search by category name" />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="status" class="sr-only">Status</label>
                     <select id="status" name="status"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500">
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500">
                         <option value="">All Status</option>
                         <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactive</option>
@@ -75,10 +75,10 @@
     </div>
 
     <!-- List -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-sky-50 via-white to-white">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 bg-white">
             <div class="flex items-center space-x-3">
-                <div class="p-2 bg-sky-100 rounded-lg">
+                <div class="p-2 bg-sky-50 border border-sky-100 rounded-lg">
                     <svg class="w-6 h-6 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" />
                     </svg>
@@ -106,14 +106,14 @@
                         @foreach($categories as $cat)
                             <tr
                                 onclick="window.location.href='{{ route('asset-categories.edit', $cat) }}'"
-                                class="cursor-pointer hover:bg-sky-50 transition duration-150 ease-in-out"
+                                class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                                 title="Click to edit category"
                             >
                                 <x-table-cell>{{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}</x-table-cell>
                                 <x-table-cell>{{ $cat->asset_category_id }}</x-table-cell>
                                 <x-table-cell class="font-medium">{{ $cat->asset_category }}</x-table-cell>
                                 <x-table-cell>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $cat->status == 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border {{ $cat->status == 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100' }}">
                                         {{ $cat->status == 1 ? 'Active' : 'Inactive' }}
                                     </span>
                                 </x-table-cell>
@@ -133,7 +133,7 @@
                 </x-table-wrapper>
             </div>
 
-            <div class="px-6 py-4 border-t border-gray-200">
+            <div class="px-6 py-4 border-t border-gray-100">
                 {{ $categories->links() }}
             </div>
         @else

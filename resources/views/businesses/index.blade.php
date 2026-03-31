@@ -4,7 +4,7 @@
 
     <x-dynamic-heading title="Businesses" />
 
-    <div class="space-y-4 pb-8">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
         <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <x-search-form action="{{ route('businesses.index') }}" placeholder="Search by name, owner, email, country, or timezone..." />
             @can('module','create businesses')

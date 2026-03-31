@@ -7,24 +7,20 @@
         ['url' => route('purchases.show', $purchase), 'label' => 'Purchase #' . $purchase->purchase_id]
     ]" />
 
-    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-amber-50/30 via-white to-orange-50/20 pointer-events-none"></div>
-
-    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-amber-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-amber-400/10 to-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <div class="relative flex-shrink-0">
-                    <div class="relative bg-gradient-to-br from-amber-500 to-orange-600 p-3 rounded-xl shadow-lg">
+                <div class="flex-shrink-0">
+                    <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 via-amber-800 to-orange-900 bg-clip-text text-transparent">
-                        Purchase #{{ $purchase->purchase_id }}
-                    </h1>
-                    <p class="text-sm text-gray-600 mt-0.5">
+                    <h1 class="text-2xl font-bold text-gray-900">Purchase #{{ $purchase->purchase_id }}</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">
                         {{ $purchase->date_added->format('l, d F Y') }}
                         @if($purchase->user)
                             <span class="text-gray-400"> · Recorded by {{ $purchase->user->name }}</span>
@@ -63,14 +59,14 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {{-- Deposit (Bank) --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-rose-100 bg-gradient-to-br from-rose-50/90 via-white to-rose-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-rose-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-50 border border-rose-100">
+                        <svg class="h-5 w-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-rose-800">Deposit ( جمع )</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Deposit ( جمع )</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -88,7 +84,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Deposit Amount</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-rose-100 text-rose-800 ring-1 ring-rose-200/60">
+                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-rose-50 text-rose-700 ring-1 ring-rose-100">
                                 {{ number_format($purchase->credit_amount, 2) }} {{ $purchase->bank?->currency?->currency_symbol ?? '' }}
                             </span>
                         </dd>
@@ -98,14 +94,14 @@
         </div>
 
         {{-- Transaction Details --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 bg-gray-50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 border border-amber-100">
+                        <svg class="h-5 w-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-800">Transaction</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Transaction</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -116,7 +112,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Operation</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded {{ $purchase->transaction_operation === \App\Models\Purchase::TRANSACTION_MULTIPLY ? 'bg-amber-100 text-amber-800' : 'bg-sky-100 text-sky-800' }}">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border {{ $purchase->transaction_operation === \App\Models\Purchase::TRANSACTION_MULTIPLY ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-sky-50 text-sky-700 border-sky-100' }}">
                                 {{ $purchase->transaction_operation_label }}
                             </span>
                         </dd>
@@ -128,7 +124,7 @@
                     @if($purchase->details)
                     <div class="pt-2">
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Details</dt>
-                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">{{ $purchase->details }}</dd>
+                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-200">{{ $purchase->details }}</dd>
                     </div>
                     @endif
                 </dl>
@@ -136,14 +132,14 @@
         </div>
 
         {{-- Credit Party --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-emerald-100 bg-gradient-to-br from-emerald-50/90 via-white to-emerald-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-emerald-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
+                        <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-emerald-800">Credit ( جمع ) Party</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Credit ( جمع ) Party</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -161,7 +157,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Amount</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200/60">
+                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
                                 {{ number_format($purchase->debit_amount, 2) }} {{ $purchase->partyCurrency?->currency_symbol ?? '' }}
                             </span>
                         </dd>

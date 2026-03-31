@@ -8,9 +8,9 @@
 
     <x-dynamic-heading title="All Banks" />
 
-    <div class="space-y-4 pb-8">
-        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-            <div class="flex gap-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
                 <x-search-form
                     action="{{ route('banks.index') }}"
                     placeholder="Search by bank name or account..."
@@ -18,7 +18,7 @@
                     value="{{ request('bank_name') }}"
                 />
                 <select name="status"
-                    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    class="rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     onchange="window.location.href='{{ route('banks.index') }}?status='+this.value+'&bank_name={{ request('bank_name') }}'">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
@@ -26,7 +26,7 @@
                 </select>
             </div>
 
-            <div class="ml-0 sm:ml-4 mt-4 sm:mt-0 w-full sm:w-auto">
+            <div class="w-full sm:w-auto">
                 <x-button href="{{ route('banks.create') }}">Add Bank</x-button>
             </div>
         </div>
@@ -56,7 +56,7 @@
             @forelse($banks as $bank)
                 <tr
                     onclick="window.location.href='{{ route('banks.edit', $bank) }}'"
-                    class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
+                    class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                     title="Click to edit bank"
                 >
                     <x-table-cell>{{ $bank->bank_id }}</x-table-cell>
@@ -73,7 +73,7 @@
                     <x-table-cell>{{ $bank->bankType?->bank_type ?? '—' }}</x-table-cell>
                     <x-table-cell>{{ number_format($bank->opening_balance, 2) }}</x-table-cell>
                     <x-table-cell>
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $bank->status == 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                        <span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded-full border {{ $bank->status == 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100' }}">
                             {{ $bank->status == 1 ? 'Active' : 'Inactive' }}
                         </span>
                     </x-table-cell>

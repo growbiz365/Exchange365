@@ -7,10 +7,19 @@
         @csrf
         @method('PUT')
 
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
-            <div class="pb-10 mb-10 border-b border-gray-150 my-8">
-                <h2 class="text-lg font-semibold text-gray-900">Currency Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Please update the details of the currency.</p>
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
+            <div class="pb-6 mb-6 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-10V6m0 12v-2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-900 leading-tight">Currency Information</h2>
+                        <p class="mt-0.5 text-xs text-gray-500">Please update the details of the currency.</p>
+                    </div>
+                </div>
 
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">

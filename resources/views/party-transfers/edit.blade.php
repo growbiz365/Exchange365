@@ -2,13 +2,23 @@
     @section('title', 'Edit Party Transfer - ExchangeHub')
     <x-breadcrumb :breadcrumbs="[['url' => '/', 'label' => 'Home'], ['url' => '/parties/dashboard', 'label' => 'Party Management'], ['url' => route('party-transfers.index'), 'label' => 'Party Transfers'], ['url' => '#', 'label' => 'Edit Transfer']]" />
 
-    <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
+    <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
 
         {{-- Card Header --}}
-        <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
-            <h4 class="text-sm font-bold text-gray-900">
-                Edit Party Transfer #{{ $partyTransfer->party_transfer_id }}
-            </h4>
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2">
+                <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-900 leading-tight">
+                        Edit Party Transfer #{{ $partyTransfer->party_transfer_id }}
+                    </h4>
+                    <p class="text-xs text-gray-500 mt-0.5">Update voucher details</p>
+                </div>
+            </div>
             <div class="flex items-center gap-2">
                 
                 <form action="{{ route('party-transfers.destroy', $partyTransfer) }}" method="POST" class="inline"
@@ -261,7 +271,7 @@
             </div>
 
             {{-- Attachments Section --}}
-            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 mb-4">
+            <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
 
                 {{-- Existing Attachments --}}
                 @if($partyTransfer->attachments->count() > 0)

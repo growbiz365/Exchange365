@@ -10,10 +10,19 @@
     <form action="{{ route('asset-categories.update', $assetCategory) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8 mt-4">
-            <div class="pb-10 mb-10 border-b border-gray-150 my-8">
-                <h2 class="text-lg font-semibold text-gray-900">Asset Category Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Update the details of the asset category.</p>
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
+            <div class="pb-6 mb-6 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V7a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0l-8 5-8-5m16 0H4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-900 leading-tight">Asset Category Information</h2>
+                        <p class="mt-0.5 text-xs text-gray-500">Update the details of the asset category.</p>
+                    </div>
+                </div>
 
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">

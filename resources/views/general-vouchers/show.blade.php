@@ -7,24 +7,20 @@
         ['url' => route('general-vouchers.show', $generalVoucher), 'label' => 'Voucher #' . $generalVoucher->general_voucher_id]
     ]" />
 
-    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/30 via-white to-purple-50/20 pointer-events-none"></div>
-
-    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-sky-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-sky-400/20 to-indigo-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-indigo-400/10 to-slate-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <div class="relative flex-shrink-0">
-                    <div class="relative bg-gradient-to-br from-sky-500 to-indigo-600 p-3 rounded-xl shadow-lg">
+                <div class="flex-shrink-0">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 via-sky-800 to-indigo-900 bg-clip-text text-transparent">
-                        General Voucher #{{ $generalVoucher->general_voucher_id }}
-                    </h1>
-                    <p class="text-sm text-gray-600 mt-0.5">
+                    <h1 class="text-2xl font-bold text-gray-900">General Voucher #{{ $generalVoucher->general_voucher_id }}</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">
                         {{ $generalVoucher->date_added->format('l, d F Y') }}
                         @if($generalVoucher->user)
                             <span class="text-gray-400"> · Recorded by {{ $generalVoucher->user->name }}</span>
@@ -39,7 +35,7 @@
                     Print
                 </a>
                 <a href="{{ route('general-vouchers.edit', $generalVoucher) }}"
-                    class="inline-flex items-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 transition">
+                    class="inline-flex items-center rounded-xl bg-gradient-to-br from-indigo-600 to-slate-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-indigo-700 hover:to-slate-800 transition">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     Edit
                 </a>
@@ -62,14 +58,14 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-rose-100 bg-gradient-to-br from-rose-50/90 via-white to-rose-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-rose-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-50 border border-rose-100">
+                        <svg class="h-5 w-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-rose-800">Bank</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Bank</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -88,14 +84,14 @@
             </div>
         </div>
 
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 bg-gray-50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100">
+                        <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-800">Voucher Details</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Voucher Details</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -106,7 +102,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Entry Type</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded {{ $generalVoucher->entry_type == 1 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800' }}">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border {{ $generalVoucher->entry_type == 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100' }}">
                                 {{ $generalVoucher->entry_type_label }}
                             </span>
                         </dd>
@@ -114,7 +110,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Amount</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-sky-100 text-sky-800 ring-1 ring-sky-200/60">
+                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100">
                                 {{ number_format($generalVoucher->amount, 2) }}
                             </span>
                         </dd>
@@ -126,21 +122,21 @@
                     @if($generalVoucher->details)
                     <div class="pt-2">
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Notes</dt>
-                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">{{ $generalVoucher->details }}</dd>
+                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-200">{{ $generalVoucher->details }}</dd>
                     </div>
                     @endif
                 </dl>
             </div>
         </div>
 
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-emerald-100 bg-gradient-to-br from-emerald-50/90 via-white to-emerald-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-emerald-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
+                        <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-emerald-800">Party</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Party</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -154,8 +150,8 @@
     </div>
 
     @if($generalVoucher->attachments->isNotEmpty())
-    <div class="relative bg-gray-100 rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-6">
-        <div class="border-b border-gray-200/80 bg-gradient-to-r from-gray-50/90 to-white/90 px-6 py-4">
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+        <div class="border-b border-gray-100 bg-white px-6 py-4">
             <div class="flex items-center gap-3">
                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100">
                     <svg class="h-5 w-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L21 13"/></svg>
@@ -169,9 +165,9 @@
         <div class="p-6">
             <ul class="space-y-3">
                 @foreach($generalVoucher->attachments as $attachment)
-                <li class="flex items-center justify-between gap-4 rounded-lg border border-gray-200/80 bg-gray-100 p-4 hover:bg-gray-200/60 transition">
+                <li class="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 hover:bg-white hover:shadow-sm transition">
                     <div class="flex min-w-0 flex-1 items-center gap-3">
-                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white border border-gray-200">
                             <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         <div class="min-w-0">
@@ -196,6 +192,6 @@
             <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             Back to General Vouchers
         </a>
-        <a href="{{ route('general-vouchers.edit', $generalVoucher) }}" class="inline-flex items-center rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 transition">Edit voucher</a>
+        <a href="{{ route('general-vouchers.edit', $generalVoucher) }}" class="inline-flex items-center rounded-lg bg-gradient-to-br from-indigo-600 to-slate-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-700 hover:to-slate-800 transition">Edit voucher</a>
     </div>
 </x-app-layout>

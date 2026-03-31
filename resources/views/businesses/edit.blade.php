@@ -5,11 +5,20 @@
     <form action="{{ route('businesses.update', $business) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
             @if(isset($isAdmin) && $isAdmin)
-            <div class="pb-10 mb-10 border-b border-gray-150 my-8">
-                <h2 class="text-lg font-semibold text-gray-900">Business Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Edit the business details below. Only admins can see this section.</p>
+            <div class="pb-6 mb-6 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-900 leading-tight">Business Information</h2>
+                        <p class="mt-0.5 text-xs text-gray-500">Edit the business details below. Only admins can see this section.</p>
+                    </div>
+                </div>
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">
                         <x-input-label for="business_name">Business Name <span class="text-red-500">*</span></x-input-label>
@@ -107,9 +116,9 @@
                 </div>
             </div>
             @endif
-            <div class="pb-10 mb-10 border-b border-gray-150 my-8">
-                <h2 class="text-lg font-semibold text-gray-900">Business Legal Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Please provide legal details of the business (optional).</p>
+            <div class="pb-6 mb-6 border-b border-gray-100">
+                <h2 class="text-sm font-bold text-gray-900">Business Legal Information</h2>
+                <p class="mt-0.5 text-xs text-gray-500">Please provide legal details of the business (optional).</p>
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">
                         <x-input-label for="store_name">Business Legal Name</x-input-label>

@@ -14,8 +14,8 @@
     @endif
 
     {{-- Simple Table Layout (like reference) --}}
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden mt-4">
-        <div class="border-b border-gray-200 bg-white px-4 py-3">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mt-4">
+        <div class="border-b border-gray-100 bg-white px-5 py-4">
             <form action="{{ route('party-transfers.index') }}" method="GET">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
                     <div class="md:col-span-3">
@@ -25,7 +25,7 @@
                     <div class="md:col-span-2">
                         <input type="number" id="party_transfer_id" name="party_transfer_id" value="{{ request('party_transfer_id') }}"
                             placeholder="Voucher No"
-                            class="w-full rounded border border-indigo-500/70 px-2 py-1.5 text-sm focus:border-indigo-600 focus:ring-indigo-600" />
+                            class="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-indigo-600 focus:ring-indigo-600" />
                     </div>
 
                     <div class="md:col-span-2">
@@ -73,7 +73,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($transfers as $transfer)
-                        <tr class="hover:bg-gray-50 transition duration-150 ease-in-out cursor-pointer"
+                        <tr class="hover:bg-indigo-50/40 transition duration-150 ease-in-out cursor-pointer"
                             onclick="window.location='{{ route('party-transfers.show', $transfer) }}'">
                             <td class="px-4 py-3 whitespace-nowrap font-semibold text-indigo-700">{{ $transfer->party_transfer_id }}</td>
                             <td class="px-4 py-3 whitespace-nowrap text-gray-600">{{ $transfer->date_added->format('d/m/Y') }}</td>
@@ -97,7 +97,7 @@
             </table>
         </div>
 
-        <div class="border-t border-gray-200 bg-gray-50 px-4 py-3">
+        <div class="border-t border-gray-100 bg-gray-50 px-5 py-3">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div class="text-sm text-gray-700">
                     Total Record Found: <strong>{{ $transfers->total() }}</strong>

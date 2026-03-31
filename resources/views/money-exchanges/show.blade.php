@@ -7,16 +7,12 @@
         ['url' => route('money-exchanges.show', $moneyExchange), 'label' => 'Exchange #' . $moneyExchange->money_exchange_id]
     ]" />
 
-    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-sky-50/30 via-white to-emerald-50/20 pointer-events-none"></div>
-
-    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-sky-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-sky-400/20 to-emerald-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-        <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-indigo-400/15 to-sky-400/15 rounded-full blur-2xl"></div>
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-indigo-400/10 to-slate-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <div class="relative flex-shrink-0">
-                    <div class="absolute inset-0 bg-gradient-to-br from-sky-500 to-emerald-500 rounded-xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-                    <div class="relative bg-gradient-to-br from-sky-500 to-emerald-500 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-all duration-300">
+                <div class="flex-shrink-0">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M4 7h11m0 0L12 3m3 4-3 4m7 6H9m0 0 3-4m-3 4 3 4" />
@@ -24,10 +20,8 @@
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 via-sky-800 to-emerald-900 bg-clip-text text-transparent">
-                        Money Exchange #{{ $moneyExchange->money_exchange_id }}
-                    </h1>
-                    <p class="text-sm text-gray-600 mt-0.5">
+                    <h1 class="text-2xl font-bold text-gray-900">Money Exchange #{{ $moneyExchange->money_exchange_id }}</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">
                         {{ $moneyExchange->date_added->format('l, d F Y') }}
                         @if($moneyExchange->user)
                             <span class="text-gray-400"> · Recorded by {{ $moneyExchange->user->name }}</span>
@@ -37,7 +31,7 @@
             </div>
             <div class="flex flex-wrap items-center gap-2 shrink-0">
                 <a href="{{ route('money-exchanges.edit', $moneyExchange) }}"
-                    class="inline-flex items-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                    class="inline-flex items-center rounded-xl bg-gradient-to-br from-indigo-600 to-slate-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-indigo-700 hover:to-slate-800 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -69,17 +63,17 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-rose-100 bg-gradient-to-br from-rose-50/90 via-white to-rose-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-rose-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-50 border border-rose-100">
+                        <svg class="h-5 w-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-rose-800">From Account</h2>
-                        <p class="text-xs text-rose-600">Source bank</p>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">From Account</h2>
+                        <p class="text-xs text-gray-500">Source bank</p>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -98,17 +92,17 @@
             </div>
         </div>
 
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 bg-gray-50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100">
+                        <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-800">Exchange Details</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Exchange Details</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -116,7 +110,7 @@
                         <div>
                             <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Debit Amount</dt>
                             <dd class="mt-1">
-                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-bold bg-rose-100 text-rose-800 ring-1 ring-rose-200/60">
+                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-bold bg-rose-50 text-rose-700 ring-1 ring-rose-100">
                                     - {{ number_format($moneyExchange->debit_amount, 2) }}
                                 </span>
                             </dd>
@@ -124,7 +118,7 @@
                         <div>
                             <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Credit Amount</dt>
                             <dd class="mt-1">
-                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-bold bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200/60">
+                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-bold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
                                     + {{ number_format($moneyExchange->credit_amount, 2) }}
                                 </span>
                             </dd>
@@ -147,7 +141,7 @@
                     @if($moneyExchange->details)
                     <div class="pt-2">
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Notes</dt>
-                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">
+                        <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-200">
                             {{ $moneyExchange->details }}
                         </dd>
                     </div>
@@ -156,17 +150,17 @@
             </div>
         </div>
 
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-emerald-100 bg-gradient-to-br from-emerald-50/90 via-white to-emerald-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-emerald-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
+                        <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-emerald-800">To Account</h2>
-                        <p class="text-xs text-emerald-600">Destination bank</p>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">To Account</h2>
+                        <p class="text-xs text-gray-500">Destination bank</p>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -198,7 +192,7 @@
     </div>
 
     @if($moneyExchange->attachments->isNotEmpty())
-        <div class="relative backdrop-blur-xl bg white/80 rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-6">
+        <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
             <div class="border-b border-gray-200/80 bg-gradient-to-r from-gray-50/90 to-white/90 px-6 py-4">
                 <div class="flex items-center gap-3">
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100">
@@ -216,9 +210,9 @@
             <div class="p-6">
                 <ul class="space-y-3">
                     @foreach($moneyExchange->attachments as $attachment)
-                        <li class="flex items-center justify-between gap-4 rounded-lg border border-gray-200/80 bg-gray-100 p-4 hover:bg-gray-200/60 transition">
+                        <li class="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 hover:bg-white hover:shadow-sm transition">
                             <div class="flex min-w-0 flex-1 items-center gap-3">
-                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white border border-gray-200">
                                     <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -257,7 +251,7 @@
             Back to Money Exchanges
         </a>
         <a href="{{ route('money-exchanges.edit', $moneyExchange) }}"
-           class="inline-flex items-center rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 transition">
+           class="inline-flex items-center rounded-lg bg-gradient-to-br from-indigo-600 to-slate-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-700 hover:to-slate-800 transition">
             Edit exchange
         </a>
     </div>

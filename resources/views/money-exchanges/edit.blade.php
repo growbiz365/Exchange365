@@ -9,9 +9,19 @@
 
     <x-dynamic-heading title="Edit Money Exchange #{{ $moneyExchange->money_exchange_id }}" />
 
-    <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
-        <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
-            <h4 class="text-sm font-bold text-gray-900">Edit Money Exchange #{{ $moneyExchange->money_exchange_id }}</h4>
+    <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2">
+                <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h11m0 0L12 3m3 4-3 4m7 6H9m0 0 3-4m-3 4 3 4" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-900 leading-tight">Edit Money Exchange #{{ $moneyExchange->money_exchange_id }}</h4>
+                    <p class="text-xs text-gray-500 mt-0.5">Update exchange voucher</p>
+                </div>
+            </div>
             <div class="flex items-center gap-2">
                 <form action="{{ route('money-exchanges.destroy', $moneyExchange) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete? This cannot be undone.');">
                     @csrf
@@ -208,7 +218,7 @@
             @endif
 
             {{-- Add New Attachments --}}
-            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 mb-4">
+            <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
                 <h3 class="text-xs font-semibold text-gray-800 mb-1">Add New Attachments</h3>
                 <p class="text-xs text-gray-500 mb-3">Upload additional documents (PDF, DOC, DOCX, JPG, PNG, XLS, XLSX - Max 5MB each).</p>
                 <div id="attachments-container" class="space-y-2">

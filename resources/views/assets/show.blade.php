@@ -6,24 +6,20 @@
         ['url' => '#', 'label' => 'Asset #' . $asset->asset_id],
     ]" />
 
-    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-slate-50/40 via-white to-emerald-50/30 pointer-events-none"></div>
-
-    <div class="relative bg-gray-100 rounded-2xl shadow-xl shadow-slate-500/5 border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-slate-300/30 to-emerald-300/30 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-slate-400/10 to-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <div class="relative flex-shrink-0">
-                    <div class="relative bg-gradient-to-br from-slate-600 to-emerald-600 p-3 rounded-xl shadow-lg">
+                <div class="flex-shrink-0">
+                    <div class="bg-gradient-to-br from-slate-600 to-emerald-600 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" />
                         </svg>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 via-slate-800 to-emerald-900 bg-clip-text text-transparent">
-                        Asset #{{ $asset->asset_id }} — {{ $asset->asset_name }}
-                    </h1>
-                    <p class="text-sm text-gray-600 mt-0.5">
+                    <h1 class="text-2xl font-bold text-gray-900">Asset #{{ $asset->asset_id }} — {{ $asset->asset_name }}</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">
                         Purchased on @businessDate($asset->date_added)
                         @if($asset->user)
                             <span class="text-gray-400"> · Recorded by {{ $asset->user->name }}</span>
@@ -69,14 +65,14 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {{-- Purchase Info --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-slate-100 bg-gradient-to-br from-slate-50/90 via-white to-slate-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-slate-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" /></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 border border-slate-100">
+                        <svg class="h-5 w-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" /></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-slate-800">Purchase</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Purchase</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -91,7 +87,7 @@
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Cost Amount (PKR)</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-slate-100 text-slate-800 ring-1 ring-slate-200/60">
+                            <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-slate-50 text-slate-700 ring-1 ring-slate-200">
                                 @currency($asset->cost_amount)
                             </span>
                         </dd>
@@ -111,7 +107,7 @@
                     @if($asset->purchase_details)
                         <div class="pt-2">
                             <dt class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Purchase Details</dt>
-                            <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">{{ $asset->purchase_details }}</dd>
+                            <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-200">{{ $asset->purchase_details }}</dd>
                         </div>
                     @endif
                 </dl>
@@ -119,14 +115,14 @@
         </div>
 
         {{-- Sale Info --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-emerald-100 bg-gradient-to-br from-emerald-50/90 via-white to-emerald-50/50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-emerald-200/60">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
+                        <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-emerald-800">Sale</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Sale</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
@@ -134,7 +130,7 @@
                         <div>
                             <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Status</dt>
                             <dd class="mt-1">
-                                <span class="inline-flex px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800">
+                                <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border bg-emerald-50 text-emerald-700 border-emerald-100">
                                     Sold Out
                                 </span>
                             </dd>
@@ -146,7 +142,7 @@
                         <div>
                             <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Sale Amount (PKR)</dt>
                             <dd class="mt-1">
-                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200/60">
+                                <span class="inline-flex items-center rounded-lg px-3 py-1.5 text-lg font-bold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
                                     @currency($asset->sale_amount)
                                 </span>
                             </dd>
@@ -166,7 +162,7 @@
                         @if($asset->sale_details)
                             <div class="pt-2">
                                 <dt class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Sale Details</dt>
-                                <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">{{ $asset->sale_details }}</dd>
+                                <dd class="mt-1 text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-200">{{ $asset->sale_details }}</dd>
                             </div>
                         @endif
                     @else
@@ -179,21 +175,21 @@
         </div>
 
         {{-- Summary --}}
-        <div class="relative overflow-hidden rounded-xl shadow-lg border border-gray-200/80 bg-gray-50">
-            <div class="relative p-6">
-                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-200">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-slate-600 shadow-md">
-                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10m4 0h10"/></svg>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100">
+                        <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10m4 0h10"/></svg>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-800">Summary</h2>
+                        <h2 class="text-sm font-bold uppercase tracking-wide text-gray-900">Summary</h2>
                     </div>
                 </div>
                 <dl class="space-y-4">
                     <div>
                         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Current Status</dt>
                         <dd class="mt-1">
-                            <span class="inline-flex px-2.5 py-0.5 text-xs font-semibold rounded-full {{ $asset->asset_status === \App\Models\Asset::STATUS_SOLD ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800' }}">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border {{ $asset->asset_status === \App\Models\Asset::STATUS_SOLD ? 'bg-rose-50 text-rose-700 border-rose-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100' }}">
                                 {{ $asset->asset_status === \App\Models\Asset::STATUS_SOLD ? 'Sold Out' : 'Active' }}
                             </span>
                         </dd>

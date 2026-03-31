@@ -7,11 +7,11 @@
     ]" />
 
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-indigo-50 via-white to-white rounded-xl shadow-sm border border-indigo-100 p-6 mb-6 mt-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <div class="p-2 bg-indigo-100 rounded-lg">
+                    <div class="p-2 bg-indigo-50 border border-indigo-100 rounded-lg">
                         <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -36,19 +36,19 @@
     @endif
 
     <!-- Filters Section (Compact) -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4 mb-4">
         <form method="GET" action="{{ route('general-vouchers.index') }}">
             <div class="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-2 lg:space-y-0">
                 <div class="flex-1 min-w-[150px]">
                     <label for="general_voucher_id" class="sr-only">Voucher #</label>
                     <input type="number" id="general_voucher_id" name="general_voucher_id" value="{{ request('general_voucher_id') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Voucher # (ID)" min="1" />
                 </div>
                 <div class="min-w-[160px]">
                     <label for="bank_id" class="sr-only">Bank</label>
                     <select id="bank_id" name="bank_id"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">All Banks</option>
                         @foreach($banks as $b)
                             <option value="{{ $b->bank_id }}" {{ request('bank_id') == $b->bank_id ? 'selected' : '' }}>{{ $b->bank_name }}</option>
@@ -58,7 +58,7 @@
                 <div class="min-w-[160px]">
                     <label for="party_id" class="sr-only">Party</label>
                     <select id="party_id" name="party_id"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">All Parties</option>
                         @foreach($parties as $p)
                             <option value="{{ $p->party_id }}" {{ request('party_id') == $p->party_id ? 'selected' : '' }}>{{ $p->party_name }}</option>
@@ -68,12 +68,12 @@
                 <div class="min-w-[140px]">
                     <label for="date_from" class="sr-only">Date From</label>
                     <input type="date" id="date_from" name="date_from" value="{{ request('date_from') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="date_to" class="sr-only">Date To</label>
                     <input type="date" id="date_to" name="date_to" value="{{ request('date_to') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div class="flex items-center space-x-2 mt-2 lg:mt-0">
                     <button type="submit"
@@ -90,11 +90,11 @@
     </div>
 
     <!-- General Vouchers List -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-white">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 bg-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-indigo-100 rounded-lg">
+                    <div class="p-2 bg-indigo-50 border border-indigo-100 rounded-lg">
                         <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -124,7 +124,7 @@
                     @foreach($vouchers as $v)
                         <tr
                             onclick="window.location.href='{{ route('general-vouchers.show', $v) }}'"
-                            class="cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out"
+                            class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                             title="Click to view voucher"
                         >
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">{{ $v->general_voucher_id }}</td>
@@ -132,7 +132,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $v->bank?->bank_name ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $v->party?->party_name ?? '-' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex px-2 py-0.5 text-xs font-medium rounded {{ $v->entry_type == 1 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800' }}">
+                                <span class="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full border {{ $v->entry_type == 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100' }}">
                                     {{ $v->entry_type_label }}
                                 </span>
                             </td>
@@ -148,7 +148,7 @@
                 </tbody>
             </table>
 
-            <div class="px-6 py-4 border-t border-gray-200">
+            <div class="px-6 py-4 border-t border-gray-100">
                 {{ $vouchers->links() }}
             </div>
         @else

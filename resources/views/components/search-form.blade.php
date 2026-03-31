@@ -5,7 +5,7 @@
                 type="text" 
                 name="search" 
                 value="{{ request('search') }}" 
-                class="relative block w-full appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 border border-zinc-950/10 bg-transparent dark:bg-white/5 focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                class="relative block w-full appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-gray-900 placeholder:text-gray-500 border border-gray-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" 
                 placeholder="{{ $placeholder }}"
             >
             <svg
@@ -25,7 +25,7 @@
     </div>
     <button
         type="submit"
-        class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -21,7 +21,7 @@
 
 
             <!-- Card Container -->
-            <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
+            <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
 
 
 
@@ -39,7 +39,7 @@
 
 
                                     <input type="text" name="search" value="{{ request('search') }}"
-                                        class="relative block w-full appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 border border-zinc-950/10 bg-transparent dark:bg-white/5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        class="relative block w-full appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-gray-900 placeholder:text-gray-500 border border-gray-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                                         placeholder="Search by Name or Email...">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                         aria-hidden="true"
@@ -51,7 +51,7 @@
                                 </span>
                             </div>
                             <button type="submit"
-                                class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -106,60 +106,53 @@
 
                     <!-- Table -->
                     <div class="overflow-x-auto">
-                        <table class="min-w-full border-collapse border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-100">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
                                 <tr>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/6">
                                         ID
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/4">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
                                         Name
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/4">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
                                         Email
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                                         Roles
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/6">
                                         Status
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/6">
                                         Created At
                                     </th>
-                                    <th
-                                        class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                                         Actions
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="bg-white divide-y divide-gray-200">
                                 @if ($users->isNotEmpty())
                                     @foreach ($users as $user)
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/6">
+                                        <tr class="hover:bg-indigo-50/40 transition-colors">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/6">
                                                 {{ $user->id }}
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/4">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/4">
                                                 {{ $user->name }}
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/4">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/4">
                                                 {{ $user->email }}
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/5">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/5">
                                                 @foreach ($user->roles as $role)
                                                     <span class="inline-block px-2 py-1 text-xs text-white bg-indigo-600 rounded-full mr-2 mb-2">
                                                         {{ $role->name }}
                                                     </span>
                                                 @endforeach
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/6">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/6">
                                                 @if($user->isSuspended())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
                                                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -176,10 +169,10 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/6">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/6">
                                                 {{ \Carbon\Carbon::parse($user->created_at)->format('d M, Y') }}
                                             </td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 w-1/5">
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/5">
                                                 <div class="flex space-x-2">
                                                     @can('edit subusers')
                                                         <a href="{{ route('subusers.edit', $user->id) }}"
@@ -223,7 +216,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="6" class="px-4 py-2 text-center text-sm text-gray-500">
+                                        <td colspan="6" class="px-4 py-10 text-center text-sm text-gray-500">
                                             No users found.
                                         </td>
                                     </tr>

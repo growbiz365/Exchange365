@@ -5,10 +5,20 @@
 
     <form action="{{ route('cities.store') }}" method="POST">
         @csrf
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
-            <div class="pb-10 mb-10 border-b border-gray-150 my-8">
-                <h2 class="text-lg font-semibold text-gray-900">City Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Please provide details of the city.</p>
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
+            <div class="pb-6 mb-6 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12.414a4 4 0 10-5.657 5.657l4.243 4.243a8 8 0 115.657-5.657z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-900 leading-tight">City Information</h2>
+                        <p class="mt-0.5 text-xs text-gray-500">Please provide details of the city.</p>
+                    </div>
+                </div>
 
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">

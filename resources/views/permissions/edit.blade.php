@@ -12,7 +12,7 @@
 
     <div class="">
         <div class=""> 
-             <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-8">
+             <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
                 <!-- Form Start -->
                 <form action="{{ route('permissions.update', $permission->id) }}" method="POST">
                     @csrf

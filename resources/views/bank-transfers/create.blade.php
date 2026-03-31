@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Create Bank Transfer" />
 
-    <div class="bg-gray-100 border border-gray-200 shadow-sm sm:rounded-xl p-4">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-5 mt-4">
         @if ($errors->any())
             <div class="rounded-md mb-4 bg-red-50 border border-red-400 p-4 text-red-800">
                 <p class="text-sm font-medium">Whoops! Something went wrong.</p>
@@ -126,7 +126,7 @@
             </div>
 
             {{-- Attachments --}}
-            <div class="border rounded-lg p-3 bg-gray-50 mb-4">
+            <div class="border border-gray-200 rounded-xl p-3 bg-gray-50 mb-4">
                 <p class="text-xs font-medium text-gray-700 mb-1.5">
                     Attachments
                     <span class="text-gray-500 font-normal">(PDF, Word, Images - 5MB max)</span>

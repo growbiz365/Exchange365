@@ -7,7 +7,7 @@
     ]" />
     
     
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mt-4">
             <div>
                 
             </div>
@@ -22,7 +22,7 @@
     
 
     <div class="py-6">
-        <div class="bg-gray-100 shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+        <div class="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
             
 @if(Session::has('success')) 
                 <div class="mx-6 mt-6">
@@ -31,7 +31,7 @@
 @endif
 
             <!-- Search Section -->
-            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+            <div class="px-6 py-4 bg-white border-b border-gray-100">
                 <form action="{{ route('users.index') }}" method="GET" class="flex gap-3">
                     <div class="flex-1">
                         <div class="relative">
@@ -39,7 +39,7 @@
                 type="text" 
                 name="search" 
                 value="{{ request('search') }}" 
-                                class="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200" 
+                                class="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200" 
                                 placeholder="Search users by name or email..."
                             >
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -88,7 +88,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($users as $user)
-                                <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <tr class="hover:bg-indigo-50/40 transition-colors duration-150">
                                     <!-- User Info -->
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
@@ -266,7 +266,7 @@
 
                 <!-- Pagination -->
             @if($users->hasPages())
-                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
                     {{ $users->links() }}
                 </div>
             @endif

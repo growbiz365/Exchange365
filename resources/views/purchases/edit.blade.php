@@ -40,10 +40,10 @@
         @csrf
         @method('PUT')
 
-        <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4 overflow-hidden">
 
             {{-- General info rows --}}
-            <div class="px-6 py-4 border-b border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-100 bg-white">
                 {{-- Row 1: Date & Details --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
                     <div class="flex items-center gap-3">
@@ -235,7 +235,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-200">
+            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route('purchases.index') }}"
                    class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
                     Cancel

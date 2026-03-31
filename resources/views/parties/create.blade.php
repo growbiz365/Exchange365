@@ -26,9 +26,18 @@
             </div>
         @endif
 
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-6">
-            <h2 class="text-md font-semibold text-gray-900 mb-4">Party Information</h2>
-            <p class="text-sm text-gray-600 mb-6">Please provide details of the party.</p>
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6">
+            <div class="flex items-start gap-3 mb-5">
+                <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-2 rounded-lg shadow-sm">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 01-8 0 4 4 0 018 0ZM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-sm font-bold text-gray-900">Party Information</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Please provide details of the party.</p>
+                </div>
+            </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-4">
                 <!-- Name -->
@@ -49,7 +58,7 @@
                 <div>
                     <x-input-label for="party_type">Party Type <span class="text-red-500">*</span></x-input-label>
                     <select id="party_type" name="party_type"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                        class="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                         <option value="1" {{ old('party_type', '1') == '1' ? 'selected' : '' }}>Khata Party</option>
                         <option value="2" {{ old('party_type') == '2' ? 'selected' : '' }}>Other Party</option>
                     </select>
@@ -67,7 +76,7 @@
                 <div>
                     <x-input-label for="status">Status <span class="text-red-500">*</span></x-input-label>
                     <select id="status" name="status"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                        class="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                         <option value="1" {{ old('status', '1') == '1' ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
                     </select>
@@ -77,11 +86,11 @@
         </div>
 
         <!-- Opening Balances Section -->
-        <div class="bg-gray-100 shadow-sm sm:rounded-lg border border-gray-200 p-6 mt-6">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-6">
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h2 class="text-md font-semibold text-gray-900">Opening Balances (Multi-Currency)</h2>
-                    <p class="text-sm text-gray-600 mt-1">Add opening balances for different currencies (optional)</p>
+                    <h2 class="text-sm font-bold text-gray-900">Opening Balances (Multi-Currency)</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Add opening balances for different currencies (optional)</p>
                 </div>
                 <button type="button" onclick="addBalanceRow()" class="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-500">
                     + Add Currency
@@ -89,8 +98,14 @@
             </div>
 
             <div id="balance-rows" class="space-y-3">
-                <div id="empty-state" class="text-center py-6 text-gray-500 bg-gray-50 rounded-md">
-                    <p>No opening balances added. Click "Add Currency" to add opening balance.</p>
+                <div id="empty-state" class="text-center py-8 text-gray-500 bg-gray-50 rounded-lg border border-gray-200">
+                    <div class="mx-auto w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center mb-2">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
+                    <p class="text-sm">No opening balances added.</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Click “Add Currency” to add opening balance.</p>
                 </div>
             </div>
         </div>

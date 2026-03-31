@@ -8,13 +8,13 @@
 
     <x-dynamic-heading title="Bank Transfers" />
 
-    <div class="space-y-4 pb-8">
-        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-            <div class="flex gap-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
                 <x-search-form action="{{ route('bank-transfers.index') }}" placeholder="Search by account or details..." />
             </div>
             @can('create bank-transfers')
-            <div class="ml-0 sm:ml-4 mt-4 sm:mt-0 w-full sm:w-auto">
+            <div class="w-full sm:w-auto">
                 <x-button href="{{ route('bank-transfers.create') }}">Add Transfer</x-button>
             </div>
             @endcan
@@ -44,7 +44,7 @@
             @forelse($transfers as $transfer)
                 <tr
                     onclick="window.location.href='{{ route('bank-transfers.show', $transfer) }}'"
-                    class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
+                    class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                     title="Click to view transfer"
                 >
                     <x-table-cell>{{ $transfer->bank_transfer_id }}</x-table-cell>

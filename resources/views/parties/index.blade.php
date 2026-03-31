@@ -9,9 +9,9 @@
     <x-dynamic-heading title="All Parties" />
     
 
-    <div class="space-y-4 pb-8">
-        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-            <div class="flex gap-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
                 <x-search-form 
                     action="{{ route('parties.index') }}" 
                     placeholder="Search by name or contact..." 
@@ -19,7 +19,7 @@
                     value="{{ request('party_name') }}"
                 />
                 <select name="status" 
-                    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                    class="rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
                     onchange="window.location.href='{{ route('parties.index') }}?status='+this.value+'&party_name={{ request('party_name') }}'">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
@@ -27,7 +27,7 @@
                 </select>
             </div>
             
-            <div class="ml-0 sm:ml-4 mt-4 sm:mt-0 w-full sm:w-auto">
+            <div class="w-full sm:w-auto">
                     <x-button href="{{ route('parties.create') }}">Add Party</x-button>
                 </div>
             
@@ -57,7 +57,7 @@
             @forelse($parties as $party)
                 <tr
                     onclick="window.location.href='{{ route('parties.edit', $party) }}'"
-                    class="cursor-pointer hover:bg-indigo-50 transition duration-150 ease-in-out"
+                    class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out"
                     title="Click to edit party"
                 >
                     <x-table-cell>{{ $party->party_id }}</x-table-cell>
@@ -69,7 +69,7 @@
                     </x-table-cell>
                     <x-table-cell>{{ $party->contact_no ?? 'N/A' }}</x-table-cell>
                     <x-table-cell>
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $party->party_type == 1 ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
+                        <span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded-full border {{ $party->party_type == 1 ? 'bg-sky-50 text-sky-700 border-sky-100' : 'bg-violet-50 text-violet-700 border-violet-100' }}">
                             {{ $party->party_type_label }}
                         </span>
                     </x-table-cell>
@@ -91,7 +91,7 @@
                         @endif
                     </x-table-cell>
                     <x-table-cell>
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $party->status == 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                        <span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded-full border {{ $party->status == 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100' }}">
                             {{ $party->status_label }}
                         </span>
                     </x-table-cell>

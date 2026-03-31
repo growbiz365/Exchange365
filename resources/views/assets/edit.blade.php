@@ -34,11 +34,21 @@
         @csrf
         @method('PUT')
 
-        <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4 overflow-hidden">
 
             {{-- Card Header --}}
-            <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
-                <h4 class="text-sm font-bold text-gray-900">Edit Asset #{{ $asset->asset_id }}</h4>
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-slate-600 to-emerald-600 p-1.5 rounded-lg shadow-sm">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 7.5l-9-4.5L3 7.5m18 0l-9 4.5m9-4.5v9l-9 4.5M3 7.5l9 4.5M3 7.5v9l9 4.5m0-9v9" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900 leading-tight">Edit Asset #{{ $asset->asset_id }}</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Update asset details</p>
+                    </div>
+                </div>
                 <div class="flex items-center gap-2">
                     @if($asset->asset_status != 2)
                         <a href="{{ route('assets.destroy', $asset) }}"
@@ -209,7 +219,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-200">
+            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route('assets.index') }}"
                    class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
                     Cancel

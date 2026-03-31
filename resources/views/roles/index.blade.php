@@ -23,7 +23,7 @@
 
 
            <!-- Card Container -->
-           <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
+           <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
                
 
 
@@ -104,40 +104,40 @@
 
                 <!-- Table -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full border-collapse border border-gray-200 rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="border border-gray-200 px-4 py-2 text-left text-xs font-semibold text-gray-700 w-16">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-16">
                                     ID
                                 </th>
-                                <th class="border border-gray-200 px-4 py-2 text-left text-xs font-semibold text-gray-700">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     Role Name
                                 </th>
-                                <th class="border border-gray-200 px-4 py-2 text-left text-xs font-semibold text-gray-700">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     Business
                                 </th>
-                                <th class="border border-gray-200 px-4 py-2 text-left text-xs font-semibold text-gray-700">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     Created By
                                 </th>
-                                <th class="border border-gray-200 px-4 py-2 text-left text-xs font-semibold text-gray-700">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     Created At
                                 </th>
-                                <th class="border border-gray-200 px-4 py-2 text-center text-xs font-semibold text-gray-700 w-32">
+                                <th class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider w-32">
                                     Actions
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="bg-white divide-y divide-gray-200">
                             @if($roles->isNotEmpty())
                                 @foreach($roles as $role)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800">
+                                    <tr class="hover:bg-indigo-50/40 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ $role->id }}
                                         </td>
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ $role->name }}
                                         </td>
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             @if(!$role->creator)
                                                 <span class="text-xs text-emerald-700 font-semibold">System / All Businesses</span>
                                             @elseif($role->creator->isSuperAdmin())
@@ -156,17 +156,17 @@
                                                 <span class="text-gray-500 italic text-xs">No business linked</span>
                                             @endif
                                         </td>
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             @if($role->creator)
                                                 {{ $role->creator->name }}
                                             @else
                                                 <span class="text-gray-500 italic">System</span>
                                             @endif
                                         </td>
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}
                                         </td>
-                                        <td class="border border-gray-200 px-4 py-2 text-sm text-gray-800 space-x-2 text-center">
+                                        <td class="px-4 py-3 text-sm text-gray-800 space-x-2 text-center">
                                             @if(auth()->user()->canEditRole($role))
                                             <a href="{{ route('roles.edit', $role->id) }}" class="text-blue-600 hover:underline">
                                                 Edit
@@ -187,7 +187,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6" class="px-4 py-2 text-center text-sm text-gray-500">
+                                    <td colspan="6" class="px-4 py-10 text-center text-sm text-gray-500">
                                         No roles found.
                                     </td>
                                 </tr>

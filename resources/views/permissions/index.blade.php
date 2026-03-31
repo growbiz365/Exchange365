@@ -23,7 +23,7 @@
 
 
             <!-- Card Container -->
-            <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
+            <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
                 {{-- <div class="flex justify-between items-center mb-4">
                     <!-- Search Form -->
                     <form action="{{ route('permissions.index') }}" method="GET" class="flex space-x-3">
@@ -44,7 +44,7 @@
 
    
             <!-- Card Container -->
-            <div class="bg-gray-100 shadow-sm rounded-lg border border-gray-200/80 p-6">
+            <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
                
 
 
@@ -136,37 +136,37 @@
 
                 <!-- Table -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full border-collapse border border-gray-200 rounded-lg">
-                        <thead class="bg-gray-100">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                                     ID
                                 </th>
-                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/3">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/3">
                                     Name
                                 </th>
-                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/4">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
                                     Created At
                                 </th>
-                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                                     Actions
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="bg-white divide-y divide-gray-200">
                             @if($permissions->isNotEmpty())
                                 @foreach($permissions as $permission)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800">
+                                    <tr class="hover:bg-indigo-50/40 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ $permission->id }}
                                         </td>
-                                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ $permission->name }}
                                         </td>
-                                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
                                             {{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}
                                         </td>
-                                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-800 space-x-2">
+                                        <td class="px-4 py-3 text-sm text-gray-800 space-x-2">
                                             @can('edit permissions')
                                             <a href="{{ route('permissions.edit', $permission->id) }}" class="text-blue-600 hover:underline">
                                                 Edit
@@ -192,7 +192,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="4" class="px-4 py-2 text-center text-sm text-gray-500">
+                                    <td colspan="4" class="px-4 py-10 text-center text-sm text-gray-500">
                                         No permissions found.
                                     </td>
                                 </tr>

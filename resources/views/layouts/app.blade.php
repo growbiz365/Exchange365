@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full antialiased bg-gray-50" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full antialiased bg-gray-100" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -104,7 +104,7 @@
         }
         
         ::-webkit-scrollbar-track {
-            background: rgb(241 245 249 / 0.8);
+            background: rgb(243 244 246 / 0.9);
             border-radius: 3px;
         }
         
@@ -146,7 +146,7 @@
         }
     </style>
 </head>
-<body class="h-full bg-gray-50 overflow-x-hidden"
+<body class="h-full bg-gray-100 overflow-x-hidden"
       x-data="{
           sidebarOpen: false,
           profileMenuOpen: false,
@@ -177,10 +177,10 @@
     @include('layouts.sidebar')
     
     <!-- Main Layout Container -->
-    <div class="layout-container min-h-screen bg-gray-50">
+    <div class="layout-container min-h-screen bg-gray-100">
         @include('layouts.header')
 
-        <main class="py-6 page-transition bg-gray-50">
+        <main class="py-6 page-transition bg-gray-100">
             <div class="px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
                 {{$slot}}
             </div>

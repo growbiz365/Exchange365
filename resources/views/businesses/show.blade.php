@@ -21,7 +21,7 @@
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header Card -->
             <div class="mb-6">
-                <div class="bg-gray-100 rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
                         <div class="flex items-center gap-6">
                             <div class="flex-shrink-0">
@@ -82,8 +82,8 @@
                 <div class="lg:col-span-2 space-y-6">
                     @if(isset($isAdmin) && $isAdmin)
                     <!-- Basic Information -->
-                    <div class="bg-gray-100 rounded-xl shadow-sm border border-gray-200">
-                        <div class="border-b border-gray-100 bg-gray-50 px-6 py-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="border-b border-gray-100 bg-white px-6 py-4">
                             <h2 class="text-lg font-medium text-gray-900">Basic Information</h2>
                         </div>
                         <div class="p-6">
@@ -114,8 +114,8 @@
                     @endif
 
                     <!-- Store Information (always visible) -->
-                    <div class="bg-gray-100 rounded-xl shadow-sm border border-gray-200">
-                        <div class="border-b border-gray-100 bg-gray-50 px-6 py-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="border-b border-gray-100 bg-white px-6 py-4">
                             <h2 class="text-lg font-medium text-gray-900">Store Information</h2>
                         </div>
                         <div class="p-6">
@@ -181,8 +181,8 @@
                 @if(isset($isAdmin) && $isAdmin)
                 <div class="space-y-6 lg:col-span-3">
                     <!-- Contact Information -->
-                    <div class="bg-gray-100 rounded-xl shadow-sm border border-gray-200">
-                        <div class="border-b border-gray-100 bg-gray-50 px-6 py-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="border-b border-gray-100 bg-white px-6 py-4">
                             <h2 class="text-lg font-medium text-gray-900">Contact Information</h2>
                         </div>
                         <div class="p-6">
@@ -208,8 +208,8 @@
                     </div>
 
                     <!-- Settings Information -->
-                    <div class="bg-gray-100 rounded-xl shadow-sm border border-gray-200">
-                        <div class="border-b border-gray-100 bg-gray-50 px-6 py-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="border-b border-gray-100 bg-white px-6 py-4">
                             <h2 class="text-lg font-medium text-gray-900">Settings</h2>
                         </div>
                         <div class="p-6 space-y-4">

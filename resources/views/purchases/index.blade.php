@@ -7,11 +7,11 @@
     ]" />
 
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-amber-50 via-white to-white rounded-xl shadow-sm border border-amber-100 p-6 mb-6 mt-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <div class="p-2 bg-amber-100 rounded-lg">
+                    <div class="p-2 bg-amber-50 border border-amber-100 rounded-lg">
                         <svg class="w-8 h-8 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
@@ -36,19 +36,19 @@
     @endif
 
     <!-- Filters Section (Compact) -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 px-4 py-3 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4 mb-4">
         <form method="GET" action="{{ route('purchases.index') }}">
             <div class="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-2 lg:space-y-0">
                 <div class="flex-1 min-w-[150px]">
                     <label for="purchase_id" class="sr-only">Purchase #</label>
                     <input type="number" id="purchase_id" name="purchase_id" value="{{ request('purchase_id') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                         placeholder="Purchase # (ID)" min="1" />
                 </div>
                 <div class="min-w-[160px]">
                     <label for="bank_id" class="sr-only">Bank</label>
                     <select id="bank_id" name="bank_id"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500">
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500">
                         <option value="">All Banks</option>
                         @foreach($banks as $b)
                             <option value="{{ $b->bank_id }}" {{ request('bank_id') == $b->bank_id ? 'selected' : '' }}>{{ $b->bank_name }}</option>
@@ -58,12 +58,12 @@
                 <div class="min-w-[140px]">
                     <label for="date_from" class="sr-only">Date From</label>
                     <input type="date" id="date_from" name="date_from" value="{{ request('date_from') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500" />
                 </div>
                 <div class="min-w-[140px]">
                     <label for="date_to" class="sr-only">Date To</label>
                     <input type="date" id="date_to" name="date_to" value="{{ request('date_to') }}"
-                        class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500" />
+                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500" />
                 </div>
                 <div class="flex items-center space-x-2 mt-2 lg:mt-0">
                     <button type="submit"
@@ -80,11 +80,11 @@
     </div>
 
     <!-- Purchases List -->
-    <div class="bg-gray-100 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-amber-50 via-white to-white">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 bg-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-amber-100 rounded-lg">
+                    <div class="p-2 bg-amber-50 border border-amber-100 rounded-lg">
                         <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
@@ -113,7 +113,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($purchases as $p)
-                        <tr onclick="window.location.href='{{ route('purchases.show', $p) }}';" class="cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out" title="Click to view">
+                        <tr onclick="window.location.href='{{ route('purchases.show', $p) }}';" class="cursor-pointer hover:bg-indigo-50/40 transition duration-150 ease-in-out" title="Click to view">
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-amber-700"><a href="{{ route('purchases.show', $p) }}" class="hover:text-amber-800">{{ $p->purchase_id }}</a></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@businessDate($p->date_added)</td>
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $p->bank?->bank_name ?? '-' }}</td>
@@ -132,7 +132,7 @@
                 </tbody>
             </table>
 
-            <div class="px-6 py-4 border-t border-gray-200">
+            <div class="px-6 py-4 border-t border-gray-100">
                 {{ $purchases->links() }}
             </div>
         @else
