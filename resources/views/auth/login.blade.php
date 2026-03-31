@@ -18,7 +18,7 @@
     <x-auth-session-status class="mb-3" :status="session('status')" />
 
     <!-- Login Form -->
-    <div class="bg-white rounded-2xl shadow-xl p-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <form method="POST" action="{{ route('login') }}" class="space-y-3.5">
             @csrf
 
@@ -33,7 +33,7 @@
                     </div>
                     <input 
                         id="login" 
-                        class="block w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm transition-all" 
+                        class="block w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 bg-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-sm transition-all" 
                         type="text" 
                         name="login" 
                         value="{{ old('login') }}" 
@@ -63,7 +63,7 @@
                     </div>
                     <input 
                         id="password" 
-                        class="block w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm transition-all"
+                        class="block w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 bg-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-sm transition-all"
                         type="password"
                         name="password"
                         autocomplete="current-password"
@@ -86,21 +86,21 @@
                     <input 
                         id="remember_me" 
                         type="checkbox" 
-                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer h-4 w-4 transition" 
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-0 cursor-pointer h-4 w-4 transition" 
                         name="remember"
                     >
                     <span class="ml-2 text-sm text-gray-600 group-hover:text-gray-900 transition">{{ __('Remember me') }}</span>
                 </label>
 
                 @if (Route::has('password.request'))
-                    <a class="text-sm text-blue-600 hover:text-blue-700 font-medium transition hover:underline" href="{{ route('password.request') }}">
+                    <a class="text-sm text-indigo-600 hover:text-indigo-700 font-medium transition hover:underline" href="{{ route('password.request') }}">
                         {{ __('Forgot password?') }}
                     </a>
                 @endif
             </div>
 
             <!-- Login Button -->
-            <button type="submit" class="w-full relative flex justify-center items-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-amber-600 hover:from-blue-700 hover:to-amber-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm">
+            <button type="submit" class="w-full relative flex justify-center items-center px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-slate-700 hover:from-indigo-700 hover:to-slate-800 text-white font-semibold rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-sm">
                 <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                 </svg>
