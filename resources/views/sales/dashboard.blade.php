@@ -6,32 +6,32 @@
     ]" />
 
     {{-- Header --}}
-    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-5 mt-4 overflow-hidden group">
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 mb-5 mt-4 overflow-hidden group">
         <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative flex items-center justify-between flex-wrap gap-4">
-            <div class="flex items-center space-x-4">
+        <div class="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:flex-wrap">
+            <div class="flex items-start sm:items-center gap-3 sm:space-x-4 min-w-0">
                 <div class="flex-shrink-0">
-                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-all duration-300">
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 sm:p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-all duration-300">
+                        <svg class="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
                 </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 mb-0.5">Sales Dashboard</h1>
-                    <p class="text-sm text-gray-500">Overview of sales transactions and totals</p>
+                <div class="min-w-0 flex-1">
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-900 mb-0.5 leading-tight">Sales Dashboard</h1>
+                    <p class="text-xs sm:text-sm text-gray-500">Overview of sales transactions and totals</p>
                 </div>
             </div>
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
                 <a href="{{ route('sales.create') }}"
-                   class="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                   class="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                     </svg>
                     Add Sales
                 </a>
                 <a href="{{ route('sales.index') }}"
-                   class="inline-flex items-center justify-center rounded-xl bg-white border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2">
+                   class="inline-flex items-center justify-center rounded-xl bg-white border border-gray-200 px-4 sm:px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
@@ -50,7 +50,7 @@
 
     {{-- Stats --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-emerald-500 p-5 hover:shadow-md transition-all duration-300 group">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-emerald-500 p-4 sm:p-5 hover:shadow-md transition-all duration-300 group">
             <div class="flex items-center gap-4">
                 <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-slate-600 p-5 hover:shadow-md transition-all duration-300 group">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-slate-600 p-4 sm:p-5 hover:shadow-md transition-all duration-300 group">
             <div class="flex items-center gap-4">
                 <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-800 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-rose-500 p-5 hover:shadow-md transition-all duration-300 group">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-rose-500 p-4 sm:p-5 hover:shadow-md transition-all duration-300 group">
             <div class="flex items-center gap-4">
                 <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,9 +94,9 @@
     </div>
 
     {{-- Recent Sales Table --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-5">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-2">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 mb-5">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2 min-w-0">
                 <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-1.5 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <a href="{{ route('sales.index') }}"
-                class="group/link flex items-center gap-1 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-100 hover:border-emerald-200 transition-all duration-200">
+                class="group/link flex items-center justify-center sm:justify-start gap-1 px-3 py-2 sm:py-1.5 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-100 hover:border-emerald-200 transition-all duration-200 w-full sm:w-auto shrink-0">
                 <span class="text-xs font-semibold text-emerald-700">View all</span>
                 <svg class="w-3.5 h-3.5 text-emerald-600 group-hover/link:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -117,8 +117,8 @@
         </div>
 
         @if($recentSales->count() > 0)
-            <div class="overflow-x-auto -mx-5 sm:mx-0">
-                <table class="min-w-full divide-y divide-gray-100 text-sm">
+            <div class="flow-root overflow-x-auto -mx-4 sm:-mx-5 sm:mx-0">
+                <table class="min-w-[720px] w-full divide-y divide-gray-100 text-sm">
                     <thead>
                         <tr class="bg-gray-50">
                             <th class="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Sales #</th>
@@ -135,8 +135,8 @@
                             <tr class="hover:bg-emerald-50/40 transition-colors duration-150">
                                 <td class="px-4 py-2.5 text-sm font-semibold text-emerald-700">{{ $s->sales_id }}</td>
                                 <td class="px-4 py-2.5 text-sm text-gray-600">@businessDate($s->date_added)</td>
-                                <td class="px-4 py-2.5 text-sm text-gray-700">{{ $s->bank?->bank_name ?? '—' }}</td>
-                                <td class="px-4 py-2.5 text-sm text-gray-700">{{ $s->party?->party_name ?? '—' }}</td>
+                                <td class="px-4 py-2.5 text-sm text-gray-700 max-w-[8rem] sm:max-w-none truncate sm:whitespace-normal" title="{{ $s->bank?->bank_name ?? '—' }}">{{ $s->bank?->bank_name ?? '—' }}</td>
+                                <td class="px-4 py-2.5 text-sm text-gray-700 max-w-[8rem] sm:max-w-none truncate sm:whitespace-normal" title="{{ $s->party?->party_name ?? '—' }}">{{ $s->party?->party_name ?? '—' }}</td>
                                 <td class="px-4 py-2.5 text-sm font-medium text-gray-900 text-right">@currency($s->currency_amount)</td>
                                 <td class="px-4 py-2.5 text-sm font-medium text-gray-900 text-right">{{ $s->partyCurrency?->currency_symbol ?? '' }} {{ number_format($s->party_amount ?? 0, 2) }}</td>
                                 <td class="px-4 py-2.5 text-sm text-right">

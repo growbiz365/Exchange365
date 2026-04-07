@@ -101,7 +101,7 @@
             gap: 10px;
             align-items: flex-end;
             justify-content: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
         }
 
         .form-group {
@@ -164,6 +164,7 @@
             border: 1px solid #333;
             margin-top: 20px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -266,16 +267,66 @@
         }
 
         @media (max-width: 768px) {
+            .page-container {
+                padding: 12px 10px;
+                max-width: 100%;
+            }
+
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .report-header-right,
+            .report-title {
+                text-align: left;
+            }
+
+            .report-title h2 {
+                font-size: 16px;
+            }
+
             .filter-form {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 15px;
             }
+
             .form-group {
                 min-width: auto;
+                flex: 1 1 100%;
             }
+
             .button-group {
-                justify-content: center;
+                justify-content: stretch;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .button-group button,
+            .button-group a {
+                flex: 1 1 auto;
+                min-width: min(100%, 140px);
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                word-break: break-word;
+            }
+
+            .grand-total {
+                padding: 12px;
+                text-align: center;
+            }
+
+            .grand-total-amount {
+                font-size: 16px;
+                word-break: break-word;
             }
         }
     </style>

@@ -8,17 +8,19 @@
 
     <x-dynamic-heading title="All Banks" />
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 mt-4 mb-4">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
-                <x-search-form
-                    action="{{ route('banks.index') }}"
-                    placeholder="Search by bank name or account..."
-                    name="bank_name"
-                    value="{{ request('bank_name') }}"
-                />
+            <div class="flex flex-col gap-3 w-full min-w-0 sm:flex-row sm:flex-wrap sm:items-stretch lg:items-center">
+                <div class="w-full min-w-0 sm:flex-1 sm:max-w-md lg:max-w-lg">
+                    <x-search-form
+                        action="{{ route('banks.index') }}"
+                        placeholder="Search by bank name or account..."
+                        name="bank_name"
+                        value="{{ request('bank_name') }}"
+                    />
+                </div>
                 <select name="status"
-                    class="rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    class="w-full sm:w-auto sm:min-w-[10rem] rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2"
                     onchange="window.location.href='{{ route('banks.index') }}?status='+this.value+'&bank_name={{ request('bank_name') }}'">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
@@ -26,7 +28,7 @@
                 </select>
             </div>
 
-            <div class="w-full sm:w-auto">
+            <div class="w-full sm:w-auto shrink-0">
                 <x-button href="{{ route('banks.create') }}">Add Bank</x-button>
             </div>
         </div>

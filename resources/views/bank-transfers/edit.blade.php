@@ -9,7 +9,7 @@
 
     <x-dynamic-heading title="Edit Bank Transfer #{{ $bankTransfer->bank_transfer_id }}" />
 
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-5 mt-4">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4 sm:p-6 mt-4">
         @if ($errors->any())
             <div class="rounded-md mb-4 bg-red-50 border border-red-400 p-4 text-red-800">
                 <p class="text-sm font-medium">Whoops! Something went wrong.</p>
@@ -31,8 +31,8 @@
 
             {{-- Row 1: Date (same grid width as From Account below) --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div class="flex items-start gap-3">
-                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         Date <span>*</span>
                     </label>
                     <div class="flex-1 min-w-0">
@@ -54,8 +54,8 @@
 
             {{-- Row 2: From / To Accounts --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div class="flex items-start gap-3">
-                    <label for="from_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="from_account_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         From Account <span>*</span>
                     </label>
                     <div class="flex-1 min-w-0">
@@ -76,8 +76,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-start gap-3">
-                    <label for="to_account_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="to_account_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         To Account <span>*</span>
                     </label>
                     <div class="flex-1 min-w-0">
@@ -101,11 +101,11 @@
 
             {{-- Row 3: Amount & Details --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="amount" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="amount" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         Transfer Amount <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <x-text-input id="amount" name="amount" type="number" step="0.01"
                             class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             :value="old('amount', $bankTransfer->amount)" required placeholder="0.00" />
@@ -113,11 +113,11 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700 pt-0.5 sm:pt-0">
                         Details
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <textarea id="details" name="details" rows="2"
                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-1.5"
                             placeholder="Optional transfer details...">{{ old('details', $bankTransfer->details) }}</textarea>
@@ -185,14 +185,14 @@
             </div>
 
             <!-- Form Actions -->
-            <div class="flex items-center justify-start gap-4 mt-6 border-t pt-4">
-                <button type="submit" id="submitBtn" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
-                    Update Transfer
-                </button>
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 mt-6 border-t pt-4">
                 <a href="{{ route('bank-transfers.index') }}"
-                    class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300">
+                    class="inline-flex items-center justify-center px-4 py-2.5 sm:py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 w-full sm:w-auto">
                     Cancel
                 </a>
+                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center px-4 py-2.5 sm:py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 w-full sm:w-auto">
+                    Update Transfer
+                </button>
             </div>
         </form>
     </div>

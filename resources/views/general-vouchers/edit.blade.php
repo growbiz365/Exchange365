@@ -10,31 +10,31 @@
     <x-dynamic-heading title="Edit General Voucher #{{ $generalVoucher->general_voucher_id }}" />
 
     <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-            <div class="flex items-center gap-2">
-                <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
+                <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm shrink-0">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                 </div>
-                <div>
+                <div class="min-w-0">
                     <h4 class="text-sm font-bold text-gray-900 leading-tight">Update General Voucher #{{ $generalVoucher->general_voucher_id }}</h4>
                     <p class="text-xs text-gray-500 mt-0.5">Edit voucher details</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto sm:shrink-0">
                 <a href="{{ route('general-vouchers.print', $generalVoucher) }}" target="_blank"
-                    class="inline-flex items-center px-3 py-1.5 bg-green-600 rounded text-sm font-semibold text-white hover:bg-green-700">Print</a>
-                <form action="{{ route('general-vouchers.destroy', $generalVoucher) }}" method="POST" class="inline"
+                    class="inline-flex justify-center items-center px-3 py-2 sm:py-1.5 bg-green-600 rounded text-sm font-semibold text-white hover:bg-green-700 w-full sm:w-auto">Print</a>
+                <form action="{{ route('general-vouchers.destroy', $generalVoucher) }}" method="POST" class="w-full sm:w-auto"
                     onsubmit="return confirm('Are you sure you want to delete? This cannot be undone.');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-600 rounded text-sm font-semibold text-white hover:bg-red-700">Delete</button>
+                    <button type="submit" class="w-full inline-flex justify-center items-center px-3 py-2 sm:py-1.5 bg-red-600 rounded text-sm font-semibold text-white hover:bg-red-700">Delete</button>
                 </form>
             </div>
         </div>
 
-        <form method="POST" action="{{ route('general-vouchers.update', $generalVoucher) }}" enctype="multipart/form-data" id="voucherForm" class="p-6 space-y-3">
+        <form method="POST" action="{{ route('general-vouchers.update', $generalVoucher) }}" enctype="multipart/form-data" id="voucherForm" class="p-4 sm:p-6 space-y-3">
             @csrf
             @method('PUT')
             <input type="hidden" name="general_voucher_id" value="{{ $generalVoucher->general_voucher_id }}" />
@@ -66,8 +66,8 @@
 
             {{-- Row 1: Date & Entry Type --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
                     <div class="flex-1 min-w-0">
                         <input type="text" id="date_added" name="date_added" value="{{ $dateAddedValue }}" required readonly
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer shadow-sm"
@@ -76,9 +76,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label class="w-36 shrink-0 text-sm font-semibold text-red-600">Entry Type <span>*</span></label>
-                    <div class="flex items-center gap-6">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Entry Type <span>*</span></label>
+                    <div class="flex flex-wrap items-center gap-4 sm:gap-6">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="entry_type" value="1" {{ old('entry_type', $generalVoucher->entry_type) == '1' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -95,8 +95,8 @@
 
             {{-- Row 2: Bank & Amount --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="bank_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">Bank <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="bank_id" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Bank <span>*</span></label>
                     <div class="flex-1">
                         <select id="bank_id" name="bank_id" required class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select Bank Account</option>
@@ -116,8 +116,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="amount" class="w-36 shrink-0 text-sm font-semibold text-red-600">Amount <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="amount" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Amount <span>*</span></label>
                     <div class="flex-1">
                         <input type="number" id="amount" name="amount" step="0.01" value="{{ old('amount', $generalVoucher->amount) }}" required
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -129,8 +129,8 @@
 
             {{-- Row 3: Rate & Party --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="rate" class="w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="rate" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
                     <div class="flex-1">
                         <input type="number" id="rate" name="rate" step="0.0001" value="{{ old('rate', $generalVoucher->rate) }}" required min="0.0001"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -139,8 +139,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="party_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">Party <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="party_id" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Party <span>*</span></label>
                     <div class="flex-1">
                         <select id="party_id" name="party_id" required class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select Party</option>
@@ -156,8 +156,8 @@
             </div>
 
             {{-- Row 4: Details --}}
-            <div class="flex items-start gap-3 mb-6">
-                <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700 pt-1">Details</label>
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-3 mb-6">
+                <label for="details" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-gray-700 sm:pt-1">Details</label>
                 <div class="flex-1">
                     <input type="text" id="details" name="details" value="{{ old('details', $generalVoucher->details) }}"
                         class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -173,7 +173,7 @@
                     <p class="text-xs text-gray-500 mb-3">Manage your uploaded documents</p>
                     <div class="space-y-2">
                         @foreach($generalVoucher->attachments as $attachment)
-                            <div class="flex items-center justify-between p-3 bg-blue-50 rounded border border-blue-200">
+                            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-3 bg-blue-50 rounded border border-blue-200">
                                 <div class="flex items-center space-x-3 flex-1 min-w-0">
                                     <div class="flex-shrink-0">
                                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,7 +187,7 @@
                                         <a href="{{ $attachment->file_url }}" target="_blank" class="text-xs text-blue-700 hover:text-blue-900 font-medium truncate block">{{ $attachment->file_name }}</a>
                                     </div>
                                 </div>
-                                <button type="button" onclick="deleteAttachment({{ $attachment->id }})" class="px-3 py-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded ml-3 flex-shrink-0">Remove</button>
+                                <button type="button" onclick="deleteAttachment({{ $attachment->id }})" class="w-full sm:w-auto px-3 py-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded sm:ml-3 flex-shrink-0 text-sm font-medium">Remove</button>
                             </div>
                         @endforeach
                     </div>
@@ -195,7 +195,7 @@
             @endif
 
             {{-- Add New Attachments --}}
-            <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
+            <div class="border border-gray-200 rounded-xl p-3 sm:p-4 bg-gray-50 mb-4">
                 <h3 class="text-xs font-semibold text-gray-800 mb-1">Add New Attachments</h3>
                 <p class="text-xs text-gray-500 mb-3">Upload additional documents (PDF, DOC, DOCX, JPG, PNG, XLS, XLSX — Max 5MB each)</p>
                 <div id="attachments-container" class="space-y-2">
@@ -219,9 +219,9 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center gap-3 pt-2">
-                <button type="submit" id="submitBtn" class="inline-flex items-center px-5 py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700">Save</button>
-                <a href="{{ route('general-vouchers.show', $generalVoucher) }}" class="inline-flex items-center px-5 py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600">Cancel</a>
+            <div class="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:gap-3 pt-2">
+                <a href="{{ route('general-vouchers.show', $generalVoucher) }}" class="inline-flex justify-center items-center px-5 py-2.5 sm:py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600 w-full sm:w-auto">Cancel</a>
+                <button type="submit" id="submitBtn" class="inline-flex justify-center items-center px-5 py-2.5 sm:py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700 w-full sm:w-auto">Save</button>
             </div>
         </form>
     </div>

@@ -5,8 +5,8 @@
     <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
 
         {{-- Card Header --}}
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-            <div class="flex items-center gap-2">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
                 <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
@@ -19,14 +19,13 @@
                     <p class="text-xs text-gray-500 mt-0.5">Update voucher details</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                
-                <form action="{{ route('party-transfers.destroy', $partyTransfer) }}" method="POST" class="inline"
+            <div class="flex w-full sm:w-auto sm:shrink-0">
+                <form action="{{ route('party-transfers.destroy', $partyTransfer) }}" method="POST" class="w-full sm:w-auto"
                     onsubmit="return confirm('Are you sure you want to delete? This cannot be undone.')">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="inline-flex items-center px-3 py-1.5 bg-red-600 rounded text-xs font-semibold text-white hover:bg-red-700">
+                        class="inline-flex justify-center items-center w-full sm:w-auto px-3 py-2 sm:py-1.5 bg-red-600 rounded text-xs font-semibold text-white hover:bg-red-700">
                         <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
@@ -36,7 +35,7 @@
             </div>
         </div>
 
-        <form action="{{ route('party-transfers.update', $partyTransfer) }}" method="POST" id="transferForm" enctype="multipart/form-data" class="p-6">
+        <form action="{{ route('party-transfers.update', $partyTransfer) }}" method="POST" id="transferForm" enctype="multipart/form-data" class="px-4 sm:px-6 py-4 pb-6 space-y-3">
             @csrf
             @method('PUT')
 
@@ -60,11 +59,11 @@
 
             {{-- Row 1: Date & Details --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         Date <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <input type="text" id="date_added" name="date_added"
                             value="{{ old('date_added', $partyTransfer->date_added->format('d/m/Y')) }}" required readonly
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
@@ -73,9 +72,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700">Details</label>
-                    <div class="flex-1">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">Details</label>
+                    <div class="flex-1 min-w-0">
                         <input type="text" id="details" name="details"
                             value="{{ old('details', $partyTransfer->details) }}"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -87,11 +86,11 @@
 
             {{-- Row 2: Operation & Rate --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-6">
-                <div class="flex items-center gap-3">
-                    <label class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5 sm:pt-0">
                         Operation <span>*</span>
                     </label>
-                    <div class="flex items-center gap-5">
+                    <div class="flex flex-wrap items-center gap-4 sm:gap-5 flex-1 min-w-0">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="transaction_operation" value="1"
                                 {{ old('transaction_operation', $partyTransfer->transaction_operation) == '1' ? 'checked' : '' }}
@@ -109,11 +108,11 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="rate" class="w-36 shrink-0 text-sm font-semibold text-red-600">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="rate" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                         Rate <span>*</span>
                     </label>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                         <input type="number" id="rate" name="rate" step="1" min="1"
                             value="{{ old('rate', (int) $partyTransfer->rate) }}" required
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -124,7 +123,8 @@
             </div>
 
             {{-- Row 3: Debit & Credit Tables --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 pb-1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:min-w-[640px]">
 
                 @php
                     $defaultCurrencyId = $currencies->firstWhere('currency', 'PKR')->currency_id
@@ -269,6 +269,7 @@
                 </table>
 
             </div>
+            </div>
 
             {{-- Attachments Section --}}
             <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
@@ -324,18 +325,18 @@
             </div>
 
             {{-- Form Actions --}}
-            <div class="flex items-center gap-3 pt-2">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 pt-4 border-t border-gray-100">
+                <a href="{{ route('party-transfers.index') }}"
+                    class="inline-flex items-center justify-center px-5 py-2.5 sm:py-1.5 bg-red-500 rounded text-xs font-semibold text-white hover:bg-red-600 w-full sm:w-auto">
+                    Cancel
+                </a>
                 <button type="submit" id="submitBtn"
-                    class="inline-flex items-center px-5 py-1.5 bg-indigo-600 rounded text-xs font-semibold text-white hover:bg-indigo-700">
+                    class="inline-flex items-center justify-center px-5 py-2.5 sm:py-1.5 bg-indigo-600 rounded text-xs font-semibold text-white hover:bg-indigo-700 w-full sm:w-auto">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                     </svg>
                     Save
                 </button>
-                <a href="{{ route('party-transfers.index') }}"
-                    class="inline-flex items-center px-5 py-1.5 bg-red-500 rounded text-xs font-semibold text-white hover:bg-red-600">
-                    Cancel
-                </a>
             </div>
 
         </form>

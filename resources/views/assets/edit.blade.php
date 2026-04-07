@@ -37,8 +37,8 @@
         <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4 overflow-hidden">
 
             {{-- Card Header --}}
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
-                <div class="flex items-center gap-2">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 border-b border-gray-100 bg-white">
+                <div class="flex items-center gap-2 min-w-0">
                     <div class="bg-gradient-to-br from-slate-600 to-emerald-600 p-1.5 rounded-lg shadow-sm">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 7.5l-9-4.5L3 7.5m18 0l-9 4.5m9-4.5v9l-9 4.5M3 7.5l9 4.5M3 7.5v9l9 4.5m0-9v9" />
@@ -49,26 +49,26 @@
                         <p class="text-xs text-gray-500 mt-0.5">Update asset details</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex w-full sm:w-auto sm:shrink-0">
                     @if($asset->asset_status != 2)
                         <a href="{{ route('assets.destroy', $asset) }}"
                            onclick="event.preventDefault(); if(confirm('Are you sure you want to delete? This can not be undone.')) { document.getElementById('deleteAssetForm').submit(); }"
-                           class="inline-flex items-center rounded border border-red-300 bg-white px-3 py-1.5 text-xs font-medium text-red-700 shadow-sm hover:bg-red-50">
+                           class="inline-flex items-center justify-center w-full sm:w-auto rounded border border-red-300 bg-white px-3 py-2 sm:py-1.5 text-xs font-medium text-red-700 shadow-sm hover:bg-red-50">
                             Delete
                         </a>
                     @endif
                 </div>
             </div>
 
-            <div class="px-6 py-4">
+            <div class="px-4 sm:px-6 py-4">
 
                 {{-- Row 1: Date & Type --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <label for="date_added" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Purchase Date <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="date_added" name="date_added"
                                    value="{{ $displayDate }}" required readonly
                                    placeholder="dd/mm/yyyy"
@@ -77,11 +77,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-start gap-3">
-                        <label class="w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                        <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5">
                             Type <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             @php $type = old('purchase_transaction_type', (string)$asset->purchase_transaction_type); @endphp
                             <div class="flex flex-wrap gap-3">
                                 <label class="inline-flex items-center gap-1.5 cursor-pointer">
@@ -110,11 +110,11 @@
 
                 {{-- Row 2: Asset Category & Asset Name --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <label for="asset_category_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="asset_category_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Asset Category <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <select id="asset_category_id" name="asset_category_id" required
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select category</option>
@@ -128,11 +128,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <label for="asset_name" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="asset_name" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Asset Name <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="asset_name" name="asset_name"
                                    value="{{ old('asset_name', $asset->asset_name) }}" required
                                    class="block w-full rounded border-gray-300 text-sm uppercase focus:border-indigo-500 focus:ring-indigo-500"
@@ -146,11 +146,11 @@
 
                 {{-- Row 3: Conditional Party / Bank --}}
                 <div class="mb-4 space-y-3">
-                    <div id="purchase_party_wrapper" class="flex items-center gap-3">
-                        <label for="purchase_party_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div id="purchase_party_wrapper" class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="purchase_party_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Purchase From Party <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <select id="purchase_party_id" name="purchase_party_id"
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select party</option>
@@ -166,11 +166,11 @@
                         </div>
                     </div>
 
-                    <div id="purchase_bank_wrapper" class="flex items-center gap-3">
-                        <label for="purchase_bank_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div id="purchase_bank_wrapper" class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="purchase_bank_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Purchase From Bank <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <select id="purchase_bank_id" name="purchase_bank_id"
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select bank</option>
@@ -189,11 +189,11 @@
 
                 {{-- Row 4: Cost Amount & Purchase Details --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                    <div class="flex items-center gap-3">
-                        <label for="cost_amount" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="cost_amount" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Cost Amount <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="number" step="0.01" id="cost_amount" name="cost_amount"
                                    value="{{ old('cost_amount', $asset->cost_amount) }}" required
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -202,11 +202,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <label for="purchase_details" class="w-36 shrink-0 text-xs font-semibold text-gray-700">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="purchase_details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">
                             Purchase Details
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="purchase_details" name="purchase_details"
                                    value="{{ old('purchase_details', $asset->purchase_details) }}"
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -219,14 +219,14 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-100">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 px-4 sm:px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route('assets.index') }}"
-                   class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                   class="inline-flex items-center justify-center rounded border border-gray-300 bg-white px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto">
                     Cancel
                 </a>
                 @if($asset->asset_status != 2)
                     <button type="submit" id="submitBtn"
-                            class="inline-flex items-center rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+                            class="inline-flex items-center justify-center rounded bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 w-full sm:w-auto">
                         Update
                     </button>
                 @endif
@@ -261,8 +261,8 @@
         .chosen-container .chosen-drop { z-index: 9999 !important; }
         #date_added.flatpickr-input { height: 30px; font-size: 12px; }
         #date_added {
-            max-width: 180px;
-            display: inline-block;
+            max-width: 100%;
+            display: block;
         }
         .flatpickr-calendar { font-size: 12px; }
 
@@ -277,6 +277,7 @@
         #assetForm .attachment-group {
             margin-bottom: 0.5rem;
         }
+        #assetForm .flex.flex-col.gap-1\\.5,
         #assetForm .flex.items-center.gap-3,
         #assetForm .flex.items-start.gap-3 {
             gap: 0.5rem;
@@ -284,7 +285,7 @@
         #assetForm .flex.flex-wrap.gap-3 {
             gap: 0.6rem;
         }
-        #assetForm .px-6.py-4 {
+        #assetForm .py-4 {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }

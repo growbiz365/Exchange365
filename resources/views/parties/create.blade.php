@@ -26,7 +26,7 @@
             </div>
         @endif
 
-        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-4 sm:p-6">
             <div class="flex items-start gap-3 mb-5">
                 <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-2 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,13 +86,13 @@
         </div>
 
         <!-- Opening Balances Section -->
-        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-6">
-            <div class="flex items-center justify-between mb-4">
-                <div>
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-4 sm:p-6 mt-4 sm:mt-6">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-4">
+                <div class="min-w-0">
                     <h2 class="text-sm font-bold text-gray-900">Opening Balances (Multi-Currency)</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Add opening balances for different currencies (optional)</p>
                 </div>
-                <button type="button" onclick="addBalanceRow()" class="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-500">
+                <button type="button" onclick="addBalanceRow()" class="w-full sm:w-auto shrink-0 rounded-md bg-green-600 px-4 py-2.5 sm:py-2 text-sm font-medium text-white hover:bg-green-500">
                     + Add Currency
                 </button>
             </div>
@@ -111,9 +111,9 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="mt-6 flex items-center justify-end gap-x-4">
-            <a href="{{ route('parties.index') }}" class="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-500">Cancel</a>
-            <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-500">Save</button>
+        <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-x-4">
+            <a href="{{ route('parties.index') }}" class="text-center rounded-md bg-red-600 px-4 py-2.5 sm:py-2 text-sm font-medium text-white hover:bg-red-500">Cancel</a>
+            <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-medium text-white hover:bg-indigo-500">Save</button>
         </div>
     </form>
 </x-app-layout>
@@ -164,9 +164,9 @@ function addBalanceRow() {
                 <option value="2">Debit (Banam - They Owe Us)</option>
             </select>
         </div>
-        <div class="sm:col-span-2 flex items-center justify-end shrink-0 min-w-[6.5rem]">
+        <div class="sm:col-span-2 flex items-stretch sm:items-center justify-start sm:justify-end shrink-0">
             <button type="button" onclick="removeBalanceRow(${balanceRowIndex})"
-                class="inline-flex items-center shrink-0 px-2.5 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1">
+                class="inline-flex w-full sm:w-auto justify-center items-center shrink-0 px-2.5 py-2 sm:py-1.5 bg-red-600 text-white text-xs font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1">
                 <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7m-6 0h6m-7 0h8l-.8 11.2A1.5 1.5 0 0 1 13.7 20H10.3a1.5 1.5 0 0 1-1.5-1.3L8 7Z" />
                 </svg>

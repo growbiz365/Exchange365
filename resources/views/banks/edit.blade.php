@@ -31,7 +31,7 @@
             </div>
         @endif
 
-        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-4 sm:p-6 mt-4">
             <div class="flex items-start gap-3 mb-5">
                 <div class="bg-gradient-to-br from-sky-500 to-indigo-600 p-2 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,9 +98,9 @@
             </div>
         </div>
 
-        <div class="mt-6 flex items-center justify-end gap-x-4">
-            <a href="{{ route('banks.index') }}" class="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-500">Cancel</a>
-            <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-500">Update</button>
+        <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-x-4">
+            <a href="{{ route('banks.index') }}" class="text-center rounded-md bg-red-600 px-4 py-2.5 sm:py-2 text-sm font-medium text-white hover:bg-red-500">Cancel</a>
+            <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-medium text-white hover:bg-indigo-500">Update</button>
         </div>
     </form>
 </x-app-layout>

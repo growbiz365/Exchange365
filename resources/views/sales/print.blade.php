@@ -159,6 +159,35 @@
         .btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; }
         .btn-primary { background: linear-gradient(135deg, #059669, #0d9488); color: #fff; }
         .btn-secondary { background: #e2e8f0; color: #334155; }
+        @media (max-width: 640px) {
+            .page-container {
+                margin: 12px;
+                padding: 16px 14px;
+                border-radius: 10px;
+            }
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+            .report-header-right { text-align: left; }
+            .business-name { font-size: 18px; }
+            .report-title-main { font-size: 17px; }
+            .two-cols { grid-template-columns: 1fr; }
+            .signatures { grid-template-columns: 1fr; gap: 20px; }
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .summary-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .print-actions { flex-direction: column; }
+            .print-actions .btn { width: 100%; min-height: 44px; }
+        }
         @media print {
             body { background: #fff; }
             .page-container { margin: 0; padding: 10mm 12mm; border-radius: 0; box-shadow: none; border: none; max-width: none; }

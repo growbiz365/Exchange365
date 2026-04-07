@@ -8,13 +8,13 @@
 
     <x-dynamic-heading title="Bank Transfers" />
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 mt-4 mb-4">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
-                <x-search-form action="{{ route('bank-transfers.index') }}" placeholder="Search by account or details..." />
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-stretch sm:items-center min-w-0 w-full lg:flex-1">
+                <x-search-form action="{{ route('bank-transfers.index') }}" placeholder="Search by account or details..." class="w-full max-w-full" />
             </div>
             @can('create bank-transfers')
-            <div class="w-full sm:w-auto">
+            <div class="w-full sm:w-auto shrink-0">
                 <x-button href="{{ route('bank-transfers.create') }}">Add Transfer</x-button>
             </div>
             @endcan
@@ -29,7 +29,7 @@
         <x-error-alert message="{{ Session::get('error') }}" />
     @endif
 
-    <x-table-wrapper>
+    <x-table-wrapper table-class="min-w-[720px] w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>
                 <x-table-header>#</x-table-header>
@@ -66,7 +66,7 @@
         </tbody>
     </x-table-wrapper>
 
-    <div class="mt-4">
+    <div class="mt-4 flex justify-center sm:justify-end overflow-x-auto">
         {{ $transfers->links() }}
     </div>
 </x-app-layout>

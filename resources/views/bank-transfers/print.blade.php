@@ -278,6 +278,35 @@
             background: #e5e7eb;
             color: #111827;
         }
+        @media (max-width: 640px) {
+            .page-container {
+                margin: 12px;
+                padding: 16px 14px;
+                border-radius: 10px;
+            }
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+            .report-header-right { text-align: left; }
+            .business-name { font-size: 18px; }
+            .report-title-main { font-size: 17px; }
+            .grid { grid-template-columns: 1fr; }
+            .signatures { grid-template-columns: 1fr; gap: 20px; }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .print-actions { flex-direction: column; }
+            .print-actions .btn { width: 100%; min-height: 44px; }
+        }
         @media print {
             body { background: #ffffff; }
             .page-container {

@@ -44,14 +44,14 @@
         <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4 overflow-hidden">
 
             {{-- General info rows --}}
-            <div class="px-6 py-4 border-b border-gray-100 bg-white">
+            <div class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-white">
                 {{-- Row 1: Date & Details --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <label for="date_added" class="w-32 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Date <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input
                                 type="text"
                                 id="date_added"
@@ -66,11 +66,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <label for="details" class="w-32 shrink-0 text-xs font-semibold text-gray-700">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">
                             Details
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="details" name="details"
                                    value="{{ old('details', $sale->details) }}"
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -82,32 +82,34 @@
 
                 {{-- Row 2: Operation & Rate --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                    <div class="flex items-center gap-3">
-                        <label class="w-32 shrink-0 text-xs font-semibold text-red-600">
-                            Transaction Operation <span>*</span>
-                        </label>
-                        <div class="flex items-center gap-5">
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name="transaction_operation" value="2"
-                                       {{ old('transaction_operation', $sale->transaction_operation ?? 2) == '2' ? 'checked' : '' }} required
-                                       class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                <span class="text-sm text-gray-700">Multiply</span>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                            <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
+                                Transaction Operation <span>*</span>
                             </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="radio" name="transaction_operation" value="1"
-                                       {{ old('transaction_operation', $sale->transaction_operation ?? 2) == '1' ? 'checked' : '' }}
-                                       class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                <span class="text-sm text-gray-700">Divide</span>
-                            </label>
+                            <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="transaction_operation" value="2"
+                                           {{ old('transaction_operation', $sale->transaction_operation ?? 2) == '2' ? 'checked' : '' }} required
+                                           class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <span class="text-sm text-gray-700">Multiply</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="transaction_operation" value="1"
+                                           {{ old('transaction_operation', $sale->transaction_operation ?? 2) == '1' ? 'checked' : '' }}
+                                           class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <span class="text-sm text-gray-700">Divide</span>
+                                </label>
+                            </div>
                         </div>
                         <x-input-error :messages="$errors->get('transaction_operation')" class="mt-0.5 text-xs" />
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <label for="rate" class="w-32 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="rate" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Rate <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="number" id="rate" name="rate" step="0.0001"
                                    value="{{ old('rate', $sale->rate) }}" required placeholder="1"
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" />
@@ -118,7 +120,8 @@
             </div>
 
             {{-- Withdrawal & Party tables --}}
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 py-4">
+            <div class="overflow-x-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-3 sm:px-4 py-4 min-w-0">
 
                 {{-- Withdrawal Bank --}}
                 <table class="w-full border border-gray-300 text-xs rounded">
@@ -233,19 +236,20 @@
                 </table>
 
             </div>
+            </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-100">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 px-4 sm:px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route('sales.index') }}"
-                   class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                   class="inline-flex items-center justify-center rounded border border-gray-300 bg-white px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto">
                     Cancel
                 </a>
                 <a href="{{ route('sales.print', $sale) }}" target="_blank"
-                   class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                   class="inline-flex items-center justify-center rounded border border-gray-300 bg-white px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto">
                     Print
                 </a>
                 <button type="submit" id="submitBtn"
-                        class="inline-flex items-center rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+                        class="inline-flex items-center justify-center rounded bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 w-full sm:w-auto">
                     Update Sales
                 </button>
             </div>
@@ -306,7 +310,7 @@
         #salesForm .flex.items-center.gap-5 {
             gap: 0.75rem;
         }
-        #salesForm .px-6.py-4 {
+        #salesForm .border-b.border-gray-100.bg-white {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }

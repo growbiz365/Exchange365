@@ -9,8 +9,8 @@
     <x-dynamic-heading title="Create General Voucher" />
 
     <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-            <div class="flex items-center gap-2">
+        <div class="flex items-start sm:items-center gap-3 px-4 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
                 <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('general-vouchers.store') }}" enctype="multipart/form-data" id="voucherForm" class="p-6 space-y-3">
+        <form method="POST" action="{{ route('general-vouchers.store') }}" enctype="multipart/form-data" id="voucherForm" class="p-4 sm:p-6 space-y-3">
             @csrf
 
             @if ($errors->any())
@@ -53,8 +53,8 @@
 
             {{-- Row 1: Date & Entry Type --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
                     <div class="flex-1 min-w-0">
                         <input type="text" id="date_added" name="date_added" value="{{ $dateAddedValue }}" required readonly
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer shadow-sm"
@@ -63,9 +63,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label class="w-36 shrink-0 text-sm font-semibold text-red-600">Entry Type <span>*</span></label>
-                    <div class="flex items-center gap-6">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Entry Type <span>*</span></label>
+                    <div class="flex flex-wrap items-center gap-4 sm:gap-6">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="entry_type" value="1" {{ old('entry_type', '1') == '1' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -82,8 +82,8 @@
 
             {{-- Row 2: Bank & Amount --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="bank_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">Bank <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="bank_id" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Bank <span>*</span></label>
                     <div class="flex-1">
                         <select id="bank_id" name="bank_id" required class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select Bank Account</option>
@@ -103,8 +103,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="amount" class="w-36 shrink-0 text-sm font-semibold text-red-600">Amount <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="amount" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Amount <span>*</span></label>
                     <div class="flex-1">
                         <input type="number" id="amount" name="amount" step="0.01" value="{{ old('amount') }}" required
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -116,8 +116,8 @@
 
             {{-- Row 3: Rate & Party --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="rate" class="w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="rate" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
                     <div class="flex-1">
                         <input type="number" id="rate" name="rate" step="0.0001" value="{{ old('rate', '1') }}" required min="0.0001"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -126,8 +126,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="party_id" class="w-36 shrink-0 text-sm font-semibold text-red-600">Party <span>*</span></label>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="party_id" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Party <span>*</span></label>
                     <div class="flex-1">
                         <select id="party_id" name="party_id" required class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Select Party</option>
@@ -143,8 +143,8 @@
             </div>
 
             {{-- Row 4: Details --}}
-            <div class="flex items-start gap-3 mb-6">
-                <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700 pt-1">Details</label>
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-3 mb-6">
+                <label for="details" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-gray-700 sm:pt-1">Details</label>
                 <div class="flex-1">
                     <input type="text" id="details" name="details" value="{{ old('details') }}"
                         class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -154,7 +154,7 @@
             </div>
 
             {{-- Attachments --}}
-            <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
+            <div class="border border-gray-200 rounded-xl p-3 sm:p-4 bg-gray-50 mb-4">
                 <h3 class="text-xs font-semibold text-gray-800 mb-1">Attachments</h3>
                 <p class="text-xs text-gray-500 mb-3">Upload relevant documents (PDF, DOC, DOCX, JPG, PNG, XLS, XLSX — Max 5MB each)</p>
                 <div id="attachments-container" class="space-y-2">
@@ -182,9 +182,9 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center gap-3 pt-2">
-                <button type="submit" id="submitBtn" class="inline-flex items-center px-5 py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700">Save</button>
-                <a href="{{ route('general-vouchers.index') }}" class="inline-flex items-center px-5 py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600">Cancel</a>
+            <div class="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:gap-3 pt-2">
+                <a href="{{ route('general-vouchers.index') }}" class="inline-flex justify-center items-center px-5 py-2.5 sm:py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600 w-full sm:w-auto">Cancel</a>
+                <button type="submit" id="submitBtn" class="inline-flex justify-center items-center px-5 py-2.5 sm:py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700 w-full sm:w-auto">Save</button>
             </div>
         </form>
     </div>

@@ -78,9 +78,22 @@ class BankController extends Controller
                 ->with('error', 'Please select a business first.');
         }
 
-        $banks = Bank::forBusiness($businessId)
-            ->with(['currency', 'bankType'])
-            ->orderBy('bank_type_id')
+        $query = Bank::forBusiness($businessId)
+            ->with(['currency', 'bankType']);
+
+        if ($request->filled('bank_name')) {
+            $term = $request->bank_name;
+            $query->where(function ($q) use ($term) {
+                $q->where('bank_name', 'like', '%' . $term . '%')
+                    ->orWhere('account_number', 'like', '%' . $term . '%');
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $banks = $query->orderBy('bank_type_id')
             ->orderBy('currency_id')
             ->get();
 

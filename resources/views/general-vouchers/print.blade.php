@@ -121,6 +121,44 @@
         .btn { padding: 7px 16px; border-radius: 999px; border: none; font-size: 12px; font-weight: 500; cursor: pointer; }
         .btn-primary { background: linear-gradient(90deg, #0ea5e9, #2563eb); color: #f9fafb; }
         .btn-secondary { background: #e5e7eb; color: #111827; }
+
+        @media (max-width: 640px) {
+            .page-container {
+                margin: 12px;
+                padding: 16px 14px;
+                border-radius: 10px;
+            }
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+            .report-header-right {
+                text-align: left;
+            }
+            .business-name { font-size: 18px; }
+            .report-title-main { font-size: 17px; }
+            .grid { grid-template-columns: 1fr; }
+            .signatures { grid-template-columns: 1fr; gap: 20px; }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .print-actions {
+                flex-direction: column;
+            }
+            .print-actions .btn {
+                width: 100%;
+                min-height: 44px;
+            }
+        }
+
         @media print {
             body { background: #ffffff; }
             .page-container { margin: 0; border-radius: 0; box-shadow: none; max-width: none; padding: 8mm 10mm; }

@@ -110,7 +110,11 @@
         .report-header-right h2 { margin: 0 0 10px 0; font-size: 18px; }
         .report-header-right h4 { margin: 0; font-size: 14px; color: #444; }
 
-        .table-container { overflow-x: auto; margin-top: 15px; }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
         table { width: 100%; border-collapse: collapse; font-size: 12px; }
         th, td { border: 1px solid #333; padding: 8px; }
         th { background: #f9fafb; font-weight: 600; text-align: left; }
@@ -149,6 +153,55 @@
         .filter-form .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .filter-form .chosen-results { font-size: 13px; }
         .filter-form .chosen-results li.highlighted { background: #2563eb; color: white; }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 12px 10px;
+                max-width: 100%;
+            }
+
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .report-header-right {
+                text-align: left;
+            }
+
+            .filter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-form .form-group {
+                min-width: 100%;
+                width: 100%;
+            }
+
+            .filter-form .form-group:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .filter-form .btn,
+            .filter-form .form-group:last-child a {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            table {
+                font-size: 10px;
+            }
+
+            th, td {
+                padding: 5px 4px;
+                word-break: break-word;
+            }
+        }
     </style>
 </head>
 <body>

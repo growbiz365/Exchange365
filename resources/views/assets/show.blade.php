@@ -6,20 +6,20 @@
         ['url' => '#', 'label' => 'Asset #' . $asset->asset_id],
     ]" />
 
-    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 mt-4 overflow-hidden group">
+    <div class="relative bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 mb-6 mt-4 overflow-hidden group">
         <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-slate-400/10 to-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div class="flex items-center space-x-4">
+        <div class="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div class="flex items-start gap-3 sm:space-x-4 min-w-0">
                 <div class="flex-shrink-0">
-                    <div class="bg-gradient-to-br from-slate-600 to-emerald-600 p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gradient-to-br from-slate-600 to-emerald-600 p-2.5 sm:p-3 rounded-xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                        <svg class="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" />
                         </svg>
                     </div>
                 </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Asset #{{ $asset->asset_id }} — {{ $asset->asset_name }}</h1>
-                    <p class="text-sm text-gray-500 mt-0.5">
+                <div class="min-w-0 flex-1">
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight break-words">Asset #{{ $asset->asset_id }} — {{ $asset->asset_name }}</h1>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-0.5">
                         Purchased on @businessDate($asset->date_added)
                         @if($asset->user)
                             <span class="text-gray-400"> · Recorded by {{ $asset->user->name }}</span>
@@ -27,35 +27,35 @@
                     </p>
                 </div>
             </div>
-            <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full xl:max-w-4xl xl:shrink-0">
                 <a href="{{ route('assets.print', $asset) }}" target="_blank"
-                    class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition">
+                    class="inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                     Print
                 </a>
                 @if($asset->asset_status === \App\Models\Asset::STATUS_ACTIVE)
                     <a href="{{ route('assets.sell.form', $asset) }}"
-                        class="inline-flex items-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 transition">
+                        class="inline-flex justify-center items-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-emerald-600 hover:to-teal-700 transition w-full sm:w-auto">
                         <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
                         Sell Asset
                     </a>
                 @endif
                 <a href="{{ route('assets.edit', $asset) }}"
-                    class="inline-flex items-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-slate-700 hover:to-slate-900 transition">
+                    class="inline-flex justify-center items-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-slate-700 hover:to-slate-900 transition w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     Edit
                 </a>
-                <form action="{{ route('assets.destroy', $asset) }}" method="POST" class="inline"
+                <form action="{{ route('assets.destroy', $asset) }}" method="POST" class="w-full sm:w-auto"
                     onsubmit="return confirm('Are you sure you want to delete this asset? This action cannot be undone.');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-semibold text-rose-700 shadow-sm hover:bg-rose-50 transition">
+                    <button type="submit" class="w-full inline-flex justify-center items-center rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-semibold text-rose-700 shadow-sm hover:bg-rose-50 transition">
                         <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         Delete
                     </button>
                 </form>
                 <a href="{{ route('assets.index') }}"
-                    class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition">
+                    class="inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition w-full sm:w-auto sm:col-span-2 lg:col-span-1">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     Back to list
                 </a>
@@ -63,10 +63,10 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
         {{-- Purchase Info --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 border border-slate-100">
                         <svg class="h-5 w-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M9 7V5a3 3 0 016 0v2" /></svg>
@@ -116,7 +116,7 @@
 
         {{-- Sale Info --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
                         <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
@@ -176,7 +176,7 @@
 
         {{-- Summary --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100">
                         <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10m4 0h10"/></svg>

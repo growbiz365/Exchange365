@@ -102,6 +102,7 @@
             align-items: flex-end;
             justify-content: center;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .form-group {
@@ -186,9 +187,27 @@
             font-weight: 600;
         }
 
+        .currency-meta-count {
+            margin: 15px 0 10px 0;
+            text-align: right;
+            font-size: 13px;
+            color: #444;
+            font-weight: 600;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: inline-block;
+            float: right;
+        }
+
+        .clear-float {
+            clear: both;
+        }
+
         .table-container {
             margin-top: 20px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             border: 1px solid #333;
         }
 
@@ -275,6 +294,76 @@
                 print-color-adjust: exact;
             }
         }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 12px 10px;
+                max-width: 100%;
+            }
+
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .report-header-right,
+            .report-title {
+                text-align: left;
+            }
+
+            .report-title h2 {
+                font-size: 16px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                padding: 12px;
+            }
+
+            .filter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group,
+            .form-group.date-group {
+                flex: 1 1 100%;
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .filter-form button,
+            .filter-form a {
+                width: 100%;
+                box-sizing: border-box;
+                min-height: 44px;
+            }
+
+            .filter-form a {
+                display: block;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                word-break: break-word;
+            }
+
+            .currency-meta-count {
+                float: none;
+                display: block;
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+        }
     </style>
 </head>
 <body>
@@ -338,10 +427,10 @@
             </div>
 
             @if($currencyBalances->count() > 0)
-                <div style="margin: 15px 0 10px 0; text-align: right; font-size: 13px; color: #444; font-weight: 600; padding: 8px 12px; background-color: #f8f9fa; border-radius: 4px; display: inline-block; float: right;">
+                <div class="currency-meta-count">
                     Total Currencies: <strong>{{ $currencyBalances->count() }}</strong>
                 </div>
-                <div style="clear: both;"></div>
+                <div class="clear-float"></div>
 
                 <div class="table-container" style="margin-top: 10px;">
                     <table>

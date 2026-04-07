@@ -1,11 +1,23 @@
-<form action="{{ $action }}" method="GET" class="flex w-full max-w-md">
-    <div class="relative flex-grow">
+@props([
+    'action',
+    'placeholder' => '',
+    'name' => 'search',
+    'value' => null,
+])
+
+@php
+    $fieldName = $name;
+    $fieldValue = $value !== null && $value !== '' ? $value : request($fieldName, '');
+@endphp
+
+<form action="{{ $action }}" method="GET" {{ $attributes->class('flex w-full min-w-0 max-w-full sm:max-w-md') }}>
+    <div class="relative flex-grow min-w-0">
         <span class="relative isolate block">
-            <input 
-                type="text" 
-                name="search" 
-                value="{{ request('search') }}" 
-                class="relative block w-full appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-gray-900 placeholder:text-gray-500 border border-gray-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" 
+            <input
+                type="text"
+                name="{{ $fieldName }}"
+                value="{{ $fieldValue }}"
+                class="relative block w-full min-w-0 appearance-none rounded-l-lg pl-10 px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base/6 text-gray-900 placeholder:text-gray-500 border border-gray-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="{{ $placeholder }}"
             >
             <svg
@@ -25,7 +37,7 @@
     </div>
     <button
         type="submit"
-        class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        class="flex shrink-0 items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

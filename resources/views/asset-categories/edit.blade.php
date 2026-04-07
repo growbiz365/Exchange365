@@ -10,7 +10,7 @@
     <form action="{{ route('asset-categories.update', $assetCategory) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-6 mt-4">
+        <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-4 sm:p-6 mt-4">
             <div class="pb-6 mb-6 border-b border-gray-100">
                 <div class="flex items-center gap-2">
                     <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
@@ -45,9 +45,9 @@
                 </div>
             </div>
 
-            <div class="mt-6 flex items-center justify-end gap-x-6">
-                <a href="{{ route('asset-categories.index') }}" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-500">Cancel</a>
-                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 ml-2">Update</button>
+            <div class="mt-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2 border-t border-gray-100 pt-4">
+                <a href="{{ route('asset-categories.index') }}" class="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2.5 sm:py-2 text-sm font-semibold text-white hover:bg-red-500 w-full sm:w-auto">Cancel</a>
+                <button type="submit" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2.5 sm:py-2 text-sm font-semibold text-white hover:bg-indigo-500 w-full sm:w-auto">Update</button>
             </div>
         </div>
     </form>

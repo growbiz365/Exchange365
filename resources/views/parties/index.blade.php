@@ -9,17 +9,19 @@
     <x-dynamic-heading title="All Parties" />
     
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-4 mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 mt-4 mb-4">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
-                <x-search-form 
-                    action="{{ route('parties.index') }}" 
-                    placeholder="Search by name or contact..." 
-                    name="party_name"
-                    value="{{ request('party_name') }}"
-                />
+            <div class="flex flex-col gap-3 w-full min-w-0 sm:flex-row sm:flex-wrap sm:items-stretch lg:items-center">
+                <div class="w-full min-w-0 sm:flex-1 sm:max-w-md lg:max-w-lg">
+                    <x-search-form 
+                        action="{{ route('parties.index') }}" 
+                        placeholder="Search by name or contact..." 
+                        name="party_name"
+                        value="{{ request('party_name') }}"
+                    />
+                </div>
                 <select name="status" 
-                    class="rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                    class="w-full sm:w-auto sm:min-w-[10rem] rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2" 
                     onchange="window.location.href='{{ route('parties.index') }}?status='+this.value+'&party_name={{ request('party_name') }}'">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
@@ -27,10 +29,9 @@
                 </select>
             </div>
             
-            <div class="w-full sm:w-auto">
-                    <x-button href="{{ route('parties.create') }}">Add Party</x-button>
-                </div>
-            
+            <div class="w-full sm:w-auto shrink-0">
+                <x-button href="{{ route('parties.create') }}">Add Party</x-button>
+            </div>
         </div>
     </div>
 
@@ -104,7 +105,7 @@
         </tbody>
     </x-table-wrapper>
 
-    <div class="mt-4">
+    <div class="mt-4 flex justify-center sm:justify-end overflow-x-auto">
         {{ $parties->links() }}
     </div>
 </x-app-layout>

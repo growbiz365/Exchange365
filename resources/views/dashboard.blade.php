@@ -108,12 +108,6 @@
             <!-- Key Statistics Cards -->
             @php
                 $netBalance = $totalCredit - $totalDebit;
-                $absNet     = abs($netBalance);
-                $netDisplay = ($absNet >= 1_000_000)
-                    ? ($netBalance >= 0 ? '+' : '-') . number_format($absNet / 1_000_000, 2) . 'M'
-                    : (($absNet >= 1_000)
-                        ? ($netBalance >= 0 ? '+' : '-') . number_format($absNet / 1_000, 2) . 'K'
-                        : ($netBalance >= 0 ? '+' : '') . number_format($netBalance, 2));
                 $netFull = ($netBalance >= 0 ? '+' : '') . number_format($netBalance, 2);
             @endphp
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
@@ -144,9 +138,8 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">Net Party Balance</p>
-                            <p class="text-lg font-bold {{ $netBalance >= 0 ? 'text-emerald-700' : 'text-rose-600' }} leading-tight mt-0.5 truncate"
-                               title="{{ $netFull }}">
-                                {{ $netDisplay }}
+                            <p class="text-base sm:text-lg font-bold {{ $netBalance >= 0 ? 'text-emerald-700' : 'text-rose-600' }} leading-tight mt-0.5 break-all">
+                                {{ $netFull }}
                             </p>
                             <span class="text-xs text-gray-400">{{ $netBalance >= 0 ? 'Net receivable' : 'Net payable' }}</span>
                         </div>
@@ -418,12 +411,6 @@
             <!-- Total Credit & Total Debit Pills -->
             <div class="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
 
-                @php
-                    $fmtNum = fn(float $n): string => $n >= 1_000_000
-                        ? number_format($n / 1_000_000, 1) . 'M'
-                        : ($n >= 1_000 ? number_format($n / 1_000, 1) . 'K' : number_format($n, 2));
-                @endphp
-
                 <!-- Total Credit -->
                 <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-sm border border-emerald-400/30 p-3 sm:p-4 group hover:shadow-md transition-all duration-200">
                     <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
@@ -436,9 +423,8 @@
                             </div>
                             <span class="text-[10px] sm:text-xs font-semibold text-white/80 tracking-wide uppercase">Credit</span>
                         </div>
-                        <p class="text-base sm:text-lg lg:text-xl font-bold text-white leading-tight truncate"
-                           title="{{ number_format($totalCredit, 2) }}">
-                            {{ $fmtNum((float) $totalCredit) }}
+                        <p class="text-sm sm:text-base lg:text-lg font-bold text-white leading-tight break-all">
+                            {{ number_format((float) $totalCredit, 2) }}
                         </p>
                         <p class="text-[10px] sm:text-xs text-white/70 mt-0.5 font-medium">
                             Total Credit <span class="font-bold hidden sm:inline">( جمع )</span>
@@ -458,9 +444,8 @@
                             </div>
                             <span class="text-[10px] sm:text-xs font-semibold text-white/80 tracking-wide uppercase">Debit</span>
                         </div>
-                        <p class="text-base sm:text-lg lg:text-xl font-bold text-white leading-tight truncate"
-                           title="{{ number_format(abs($totalDebit), 2) }}">
-                            {{ $fmtNum(abs((float) $totalDebit)) }}
+                        <p class="text-sm sm:text-base lg:text-lg font-bold text-white leading-tight break-all">
+                            {{ number_format(abs((float) $totalDebit), 2) }}
                         </p>
                         <p class="text-[10px] sm:text-xs text-white/70 mt-0.5 font-medium">
                             Total Debit <span class="font-bold hidden sm:inline">( بنام )</span>

@@ -10,8 +10,8 @@
     <x-dynamic-heading title="Edit Money Exchange #{{ $moneyExchange->money_exchange_id }}" />
 
     <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-            <div class="flex items-center gap-2">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
                 <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h11m0 0L12 3m3 4-3 4m7 6H9m0 0 3-4m-3 4 3 4" />
@@ -22,16 +22,16 @@
                     <p class="text-xs text-gray-500 mt-0.5">Update exchange voucher</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <form action="{{ route('money-exchanges.destroy', $moneyExchange) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete? This cannot be undone.');">
+            <div class="w-full sm:w-auto sm:shrink-0">
+                <form action="{{ route('money-exchanges.destroy', $moneyExchange) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Are you sure you want to delete? This cannot be undone.');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600">Delete</button>
+                    <button type="submit" class="inline-flex justify-center items-center w-full sm:w-auto px-3 py-2 sm:py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600">Delete</button>
                 </form>
             </div>
         </div>
 
-        <form action="{{ route('money-exchanges.update', $moneyExchange) }}" method="POST" id="exchangeForm" enctype="multipart/form-data" class="p-6 space-y-3">
+        <form action="{{ route('money-exchanges.update', $moneyExchange) }}" method="POST" id="exchangeForm" enctype="multipart/form-data" class="px-4 sm:px-6 py-4 pb-6 space-y-3">
             @csrf
             @method('PUT')
 
@@ -54,9 +54,9 @@
 
             {{-- Row 1: Date & Details --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <label for="date_added" class="w-36 shrink-0 text-sm font-semibold text-red-600">Date <span>*</span></label>
-                    <div class="flex-1">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">Date <span>*</span></label>
+                    <div class="flex-1 min-w-0">
                         @php
                             $dateAddedValue = old('date_added');
                             if (is_string($dateAddedValue) && $dateAddedValue !== '' && str_contains($dateAddedValue, '-')) {
@@ -69,9 +69,9 @@
                         <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <label for="details" class="w-36 shrink-0 text-sm font-semibold text-gray-700">Details</label>
-                    <div class="flex-1">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">Details</label>
+                    <div class="flex-1 min-w-0">
                         <input type="text" id="details" name="details" value="{{ old('details', $moneyExchange->details) }}"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="" />
                         <x-input-error :messages="$errors->get('details')" class="mt-0.5" />
@@ -81,9 +81,9 @@
 
             {{-- Row 2: Operation & Rate --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-6">
-                <div class="flex items-center gap-3">
-                    <label class="w-36 shrink-0 text-sm font-semibold text-red-600">Operation <span>*</span></label>
-                    <div class="flex items-center gap-5">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5 sm:pt-0">Operation <span>*</span></label>
+                    <div class="flex flex-wrap items-center gap-4 sm:gap-5 flex-1 min-w-0">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="transaction_operation" value="1" {{ old('transaction_operation', $moneyExchange->transaction_operation ?? 2) == '1' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -96,9 +96,9 @@
                         </label>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <label for="rate" class="w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
-                    <div class="flex-1">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <label for="rate" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">Rate <span>*</span></label>
+                    <div class="flex-1 min-w-0">
                         <input type="number" id="rate" name="rate" step="0.0001" value="{{ old('rate', $moneyExchange->rate) }}" required
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="1.0000" />
                         <x-input-error :messages="$errors->get('rate')" class="mt-0.5" />
@@ -107,7 +107,8 @@
             </div>
 
             {{-- Row 3: Debit & Credit Tables --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 pb-1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:min-w-[640px]">
                 <table class="w-full border border-gray-300 text-sm rounded">
                     <thead>
                         <tr>
@@ -181,6 +182,7 @@
                     </tbody>
                 </table>
             </div>
+            </div>
 
             {{-- Existing Attachments --}}
             @if($moneyExchange->attachments->count() > 0)
@@ -242,12 +244,12 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center gap-3 pt-2">
-                <button type="submit" id="submitBtn" class="inline-flex items-center px-5 py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 pt-4 border-t border-gray-100">
+                <a href="{{ route('money-exchanges.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 sm:py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600 w-full sm:w-auto">Cancel</a>
+                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center px-5 py-2.5 sm:py-1.5 bg-indigo-600 rounded text-sm font-semibold text-white hover:bg-indigo-700 w-full sm:w-auto">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                     Save
                 </button>
-                <a href="{{ route('money-exchanges.index') }}" class="inline-flex items-center px-5 py-1.5 bg-red-500 rounded text-sm font-semibold text-white hover:bg-red-600">Cancel</a>
             </div>
         </form>
     </div>

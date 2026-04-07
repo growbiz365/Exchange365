@@ -31,7 +31,7 @@
         <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4 overflow-hidden">
 
             {{-- Card Header --}}
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
+            <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100 bg-white">
                 <div class="flex items-center gap-2">
                     <div class="bg-gradient-to-br from-emerald-500 to-teal-600 p-1.5 rounded-lg shadow-sm">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="px-6 py-4">
+            <div class="px-4 sm:px-6 py-4">
 
                 {{-- Asset summary --}}
                 <div class="mb-4 rounded border border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-700">
@@ -60,11 +60,11 @@
 
                 {{-- Row 1: Sale Date & Type --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <label for="sale_date" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="sale_date" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Sale Date <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="sale_date" name="sale_date"
                                    value="{{ $displaySaleDate }}" required readonly
                                    placeholder="dd/mm/yyyy"
@@ -73,11 +73,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-start gap-3">
-                        <label class="w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                        <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5">
                             Type <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             @php $type = old('sale_transaction_type', '2'); @endphp
                             <div class="flex flex-wrap gap-3">
                                 <label class="inline-flex items-center gap-1.5 cursor-pointer">
@@ -102,11 +102,11 @@
 
                 {{-- Row 2: Conditional Party / Bank --}}
                 <div class="mb-4 space-y-3">
-                    <div id="sale_party_wrapper" class="flex items-center gap-3">
-                        <label for="sale_party_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div id="sale_party_wrapper" class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="sale_party_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Sale On Party <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <select id="sale_party_id" name="sale_party_id"
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select party</option>
@@ -124,11 +124,11 @@
                         </div>
                     </div>
 
-                    <div id="sale_bank_wrapper" class="flex items-center gap-3">
-                        <label for="sale_bank_id" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div id="sale_bank_wrapper" class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="sale_bank_id" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Sale Bank <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <select id="sale_bank_id" name="sale_bank_id"
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Select bank</option>
@@ -149,11 +149,11 @@
 
                 {{-- Row 3: Sale Amount & Sale Details --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                    <div class="flex items-center gap-3">
-                        <label for="sale_amount" class="w-36 shrink-0 text-xs font-semibold text-red-600">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="sale_amount" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
                             Sale Amount <span>*</span>
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="number" step="0.01" id="sale_amount" name="sale_amount"
                                    value="{{ old('sale_amount') }}" required
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -162,11 +162,11 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <label for="sale_details" class="w-36 shrink-0 text-xs font-semibold text-gray-700">
+                    <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                        <label for="sale_details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">
                             Sale Details
                         </label>
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <input type="text" id="sale_details" name="sale_details"
                                    value="{{ old('sale_details') }}"
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -179,13 +179,13 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-end gap-2 px-6 py-3 bg-gray-50 border-t border-gray-100">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 px-4 sm:px-6 py-3 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route('assets.index') }}"
-                   class="inline-flex items-center rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                   class="inline-flex items-center justify-center rounded border border-gray-300 bg-white px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto">
                     Cancel
                 </a>
                 <button type="submit"
-                        class="inline-flex items-center rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+                        class="inline-flex items-center justify-center rounded bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 w-full sm:w-auto">
                     Mark as Sold
                 </button>
             </div>
@@ -213,8 +213,8 @@
         .chosen-container .chosen-drop { z-index: 9999 !important; }
         #sale_date.flatpickr-input { height: 30px; font-size: 12px; }
         #sale_date {
-            max-width: 180px;
-            display: inline-block;
+            max-width: 100%;
+            display: block;
         }
         .flatpickr-calendar { font-size: 12px; }
 
@@ -226,6 +226,7 @@
             row-gap: 0.75rem;
             column-gap: 1rem;
         }
+        #assetSellForm .flex.flex-col.gap-1\\.5,
         #assetSellForm .flex.items-center.gap-3,
         #assetSellForm .flex.items-start.gap-3 {
             gap: 0.5rem;
@@ -233,7 +234,7 @@
         #assetSellForm .flex.flex-wrap.gap-3 {
             gap: 0.6rem;
         }
-        #assetSellForm .px-6.py-4 {
+        #assetSellForm .py-4 {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }

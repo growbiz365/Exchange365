@@ -78,31 +78,43 @@ class DashboardController extends Controller
             ->orderBy('b.currency_id')
             ->get();
 
-        // Total Credit / Debit from party ledger (default currency, same logic as party balances)
+        // Total Credit / Debit: same meaning as Party Balances report — sums of per-party net
+        // balances (receivable vs payable), not raw ledger column totals. Only party_type = 1
+        // (Khata / regular parties), matching PartyController::balances.
         $defaultCurrency = Currency::getDefault();
         $totalCredit = 0;
         $totalDebit  = 0;
         $topParties  = collect();
 
         if ($defaultCurrency) {
-            $partyTotals = PartyLedger::query()
+            $partyNetBalances = PartyLedger::query()
                 ->join('party as p', 'p.party_id', '=', 'party_ledger.party_id')
                 ->where('p.business_id', $businessId)
+                ->where('p.party_type', 1)
                 ->where('party_ledger.currency_id', $defaultCurrency->currency_id)
                 ->where('party_ledger.date_added', '<=', $today)
+                ->groupBy('p.party_id')
                 ->selectRaw('
-                    COALESCE(SUM(party_ledger.credit_amount), 0) as total_credit,
-                    COALESCE(SUM(party_ledger.debit_amount),  0) as total_debit
+                    p.party_id,
+                    COALESCE(SUM(party_ledger.credit_amount), 0)
+                    - COALESCE(SUM(party_ledger.debit_amount), 0) as net_balance
                 ')
-                ->first();
+                ->pluck('net_balance');
 
-            $totalCredit = (float) ($partyTotals->total_credit ?? 0);
-            $totalDebit  = (float) ($partyTotals->total_debit  ?? 0);
+            foreach ($partyNetBalances as $net) {
+                $net = (float) $net;
+                if ($net > 0) {
+                    $totalCredit += $net;
+                } elseif ($net < 0) {
+                    $totalDebit += abs($net);
+                }
+            }
 
             // Top parties by absolute net balance in default currency
             $topParties = PartyLedger::query()
                 ->join('party as p', 'p.party_id', '=', 'party_ledger.party_id')
                 ->where('p.business_id', $businessId)
+                ->where('p.party_type', 1)
                 ->where('party_ledger.currency_id', $defaultCurrency->currency_id)
                 ->where('party_ledger.date_added', '<=', $today)
                 ->selectRaw('
