@@ -46,7 +46,7 @@
             padding-left: 18rem;
         }
         
-        @media (max-width: 1024px) {
+        @media (max-width: 767px) {
             html.sidebar-collapsed .layout-container,
             html.sidebar-expanded .layout-container {
                 padding-left: 0 !important;
@@ -180,8 +180,8 @@
     <div class="layout-container min-h-screen bg-gray-100">
         @include('layouts.header')
 
-        <main class="py-6 page-transition bg-gray-100">
-            <div class="px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
+        <main class="py-3 sm:py-5 lg:py-6 page-transition bg-gray-100">
+            <div class="px-3 sm:px-5 lg:px-8 min-h-[calc(100vh-4rem)]">
                 {{$slot}}
             </div>
         </main>

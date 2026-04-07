@@ -6,7 +6,7 @@
         <button 
             type="button"
             @click="toggleSidebar()"
-            class="hidden lg:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all duration-200 group relative"
+            class="hidden md:flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all duration-200 group relative"
             title="Toggle Sidebar (Ctrl+B)">
             <svg class="h-5 w-5 transition-transform duration-200"
                 :class="{ 'rotate-180': sidebarCollapsed }"
@@ -26,7 +26,7 @@
         <!-- Mobile Menu Button -->
         <button 
             type="button" 
-            class="lg:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors" 
+            class="md:hidden flex items-center justify-center h-10 w-10 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors" 
             @click="sidebarOpen = true">
             <span class="sr-only">Open sidebar</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -50,7 +50,7 @@
 
                         <div class="flex items-center min-w-0">
                             <!-- Exchange Icon with live indicator -->
-                            <div class="flex-shrink-0 mr-3 relative">
+                            <div class="flex-shrink-0 mr-2 sm:mr-3 relative">
                                 <div class="h-8 w-8 bg-gradient-to-br from-blue-600 via-blue-700 to-amber-500 rounded-lg flex items-center justify-center shadow-sm">
                                     <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -65,23 +65,23 @@
                                 </div>
                             </div>
 
-                            <!-- Exchange Info -->
-                            <div class="min-w-0 flex-1">
+                            <!-- Exchange Info — hidden on mobile, visible on sm+ -->
+                            <div class="min-w-0 flex-1 hidden sm:block">
                                 @if (session('active_business'))
                                     @php
                                         $activeBusiness = \App\Models\Business::find(session('active_business'));
                 @endphp
-                                    <div class="text-sm font-semibold text-gray-900 truncate max-w-40 group-hover:text-gray-700 transition-colors duration-200">
+                                    <div class="text-sm font-semibold text-gray-900 truncate max-w-[7rem] lg:max-w-40 group-hover:text-gray-700 transition-colors duration-200">
                                         {{ $activeBusiness->business_name }}
                                     </div>
-                                    <div class="text-xs text-gray-500 mt-0.5 font-medium">
+                                    <div class="text-xs text-gray-500 mt-0.5 font-medium hidden lg:block">
                                         Exchange Branch
                                     </div>
                             @else
                                     <div class="text-sm font-medium text-gray-700">
                                         Select Exchange
                                     </div>
-                                    <div class="text-xs text-gray-400 mt-0.5">
+                                    <div class="text-xs text-gray-400 mt-0.5 hidden lg:block">
                                         No active exchange
                                     </div>
                             @endif
@@ -107,7 +107,7 @@
                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                         x-transition:leave-end="opacity-0 scale-95 translate-y-2"
                         @click.away="branchMenuOpen = false"
-                        class="absolute right-0 z-50 top-full mt-3 w-80 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-100 overflow-hidden backdrop-blur-sm">
+                        class="fixed left-3 right-3 top-[4.25rem] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-3 sm:w-80 z-50 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-100 overflow-hidden backdrop-blur-sm">
 
                         <!-- Modern Header with gradient -->
                         <div class="bg-gradient-to-r from-blue-50 via-blue-100 to-amber-50 px-4 py-3 border-b border-gray-100">
@@ -215,7 +215,7 @@
                     </svg>
                 </button> --}}
                 <!-- Separator -->
-                <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-300" aria-hidden="true"></div>
+                <div class="hidden md:block md:h-6 md:w-px md:bg-gray-300" aria-hidden="true"></div>
                 <!-- Enhanced Profile dropdown -->
                 <div class="relative" x-data="{ profileMenuOpen: false }">
                     <button type="button" 
@@ -269,7 +269,7 @@
                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                         x-transition:leave-end="opacity-0 scale-95 translate-y-2"
                         @click.away="profileMenuOpen = false"
-                        class="absolute right-0 z-50 mt-3 w-72 origin-top-right rounded-xl bg-white shadow-2xl ring-1 ring-black/5 border border-gray-100 overflow-hidden"
+                        class="fixed left-3 right-3 top-[4.25rem] sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-3 sm:w-72 z-50 origin-top-right rounded-xl bg-white shadow-2xl ring-1 ring-black/5 border border-gray-100 overflow-hidden"
                         role="menu" aria-orientation="vertical">
                         
                         <!-- Enhanced User Info Header -->
