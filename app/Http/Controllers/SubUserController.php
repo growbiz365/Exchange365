@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\SubUserCreated;
-use App\Models\Branch;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\Business;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 class SubUserController extends Controller
 {
@@ -103,13 +97,6 @@ class SubUserController extends Controller
             $subUser->roles()->sync($roles); // Assign roles
         }
 
-        // Get the assigned business and roles
-        $businesses = Business::whereIn('id', $request->businesses)->get();
-        $roles = Role::whereIn('id', $request->roles)->get(); // Fetch roles instead of permissions
-
-        $parentUser = auth()->user();
-
-       
         return redirect()->route('subusers.index')->with('success', 'Sub-user created successfully');
     }
 
