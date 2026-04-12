@@ -226,7 +226,7 @@
                     @if(!$loop->last)
                     <div class="absolute left-5 top-12 bottom-0 w-0.5 bg-gradient-to-b from-amber-200 to-transparent"></div>
                     @endif
-                    <a href="{{ route('parties.show', $party) }}"
+                    <a href="{{ route('parties.edit', $party) }}"
                         class="flex items-start gap-3 p-3 bg-gray-50 hover:bg-white rounded-lg border border-gray-200 hover:border-amber-200 hover:shadow-sm transition-all duration-200">
                         <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shadow-sm group-hover/item:scale-105 transition-transform duration-200">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
