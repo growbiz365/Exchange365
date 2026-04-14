@@ -115,7 +115,7 @@
                         </div>
                         <div class="sm:col-span-3 min-w-0">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Opening Balance <span class="text-red-500">*</span></label>
-                            <input type="number" name="opening_balances[{{ $index }}][opening_balance]" step="0.01" min="0" required
+                            <input type="number" name="opening_balances[{{ $index }}][opening_balance]" step="any" min="0" required inputmode="decimal"
                                 value="{{ $balance->opening_balance }}"
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                                 placeholder="0.00">
@@ -194,7 +194,7 @@ function addBalanceRow() {
         </div>
         <div class="sm:col-span-3 min-w-0">
             <label class="block text-sm font-medium text-gray-700 mb-1">Opening Balance <span class="text-red-500">*</span></label>
-            <input type="number" name="opening_balances[${balanceRowIndex}][opening_balance]" step="0.01" min="0" required
+            <input type="number" name="opening_balances[${balanceRowIndex}][opening_balance]" step="any" min="0" required inputmode="decimal"
                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                 placeholder="0.00">
         </div>
