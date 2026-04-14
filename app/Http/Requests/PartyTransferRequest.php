@@ -37,7 +37,7 @@ class PartyTransferRequest extends FormRequest
             'debit_party' => 'required|exists:party,party_id',
             'debit_currency_id' => 'required|exists:currency,currency_id',
             'debit_amount' => 'required|numeric|min:0.01',
-            'credit_party' => 'required|exists:party,party_id|different:debit_party',
+            'credit_party' => 'required|exists:party,party_id',
             'credit_currency_id' => 'required|exists:currency,currency_id',
             'credit_amount' => 'required|numeric|min:0.01',
             'rate' => 'required|numeric|min:0.0001',
@@ -71,7 +71,6 @@ class PartyTransferRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'credit_party.different' => 'Credit party must be different from debit party.',
             'attachments.*.mimes' => 'Each attachment must be a file of type: jpg, jpeg, png, pdf, doc, docx, xls, xlsx.',
             'attachments.*.max' => 'Each attachment must not be greater than 5MB.',
         ];

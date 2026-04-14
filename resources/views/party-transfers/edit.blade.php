@@ -532,7 +532,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     debitPartySelect.addEventListener('change', function() {
-        filterCreditPartyOptions();
         fetchPartyBalance('debit');
     });
     if (debitCurrencySelect) {
@@ -543,36 +542,11 @@ document.addEventListener('DOMContentLoaded', function() {
         creditCurrencySelect.addEventListener('change', function() { fetchPartyBalance('credit'); });
     }
 
-    function filterCreditPartyOptions() {
-        const selectedDebitParty = debitPartySelect.value;
-        const creditOptions = creditPartySelect.querySelectorAll('option');
-
-        creditOptions.forEach(option => {
-            option.style.display = 'block';
-            option.disabled = false;
-        });
-
-        if (selectedDebitParty) {
-            const debitOption = creditPartySelect.querySelector(`option[value="${selectedDebitParty}"]`);
-            if (debitOption) {
-                debitOption.style.display = 'none';
-                debitOption.disabled = true;
-            }
-            if (creditPartySelect.value === selectedDebitParty) {
-                creditPartySelect.value = '';
-            }
-        }
-        if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
-            jQuery('#credit_party').trigger('chosen:updated');
-        }
-    }
-
     flatpickr('#date_added', {
         dateFormat: 'd/m/Y',
         allowInput: false,
     });
 
-    filterCreditPartyOptions();
     fetchPartyBalance('debit');
     fetchPartyBalance('credit');
 
