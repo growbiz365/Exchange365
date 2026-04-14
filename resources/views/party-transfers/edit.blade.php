@@ -113,8 +113,8 @@
                         Rate <span>*</span>
                     </label>
                     <div class="flex-1 min-w-0">
-                        <input type="number" id="rate" name="rate" step="1" min="1"
-                            value="{{ old('rate', (int) $partyTransfer->rate) }}" required
+                        <input type="number" id="rate" name="rate" step="any" min="0.0001"
+                            value="{{ old('rate', $partyTransfer->rate) }}" required inputmode="decimal"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             placeholder="1" oninput="calculateCreditAmount()" />
                         @error('rate') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
@@ -192,7 +192,7 @@
                                 Amount <span class="text-red-600">*</span>
                             </td>
                             <td class="py-2 px-3">
-                                <input type="number" id="debit_amount" name="debit_amount" step="0.01"
+                                <input type="number" id="debit_amount" name="debit_amount" step="any"
                                     value="{{ old('debit_amount', $partyTransfer->debit_amount) }}" required
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
                                     placeholder="0.00" oninput="calculateCreditAmount()" />
@@ -258,7 +258,7 @@
                                 Amount <span class="text-red-600">*</span>
                             </td>
                             <td class="py-2 px-3">
-                                <input type="number" id="credit_amount" name="credit_amount" step="0.01"
+                                <input type="number" id="credit_amount" name="credit_amount" step="any"
                                     value="{{ old('credit_amount', $partyTransfer->credit_amount) }}" required
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500"
                                     placeholder="0.00" oninput="calculateDebitAmount()" />

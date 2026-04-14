@@ -40,7 +40,7 @@ class PartyTransferRequest extends FormRequest
             'credit_party' => 'required|exists:party,party_id|different:debit_party',
             'credit_currency_id' => 'required|exists:currency,currency_id',
             'credit_amount' => 'required|numeric|min:0.01',
-            'rate' => 'required|integer|min:1',
+            'rate' => 'required|numeric|min:0.0001',
             'transaction_operation' => 'nullable|in:1,2',
             'details' => 'nullable|string|max:1000',
             'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:5120', // 5MB max
