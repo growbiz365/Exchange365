@@ -109,7 +109,7 @@
                             Rate <span>*</span>
                         </label>
                         <div class="flex-1 min-w-0">
-                            <input type="number" id="rate" name="rate" step="0.0001"
+                            <input type="number" id="rate" name="rate" step="any"
                                    value="{{ old('rate', $purchase->rate) }}" required placeholder="1"
                                    class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" />
                             <x-input-error :messages="$errors->get('rate')" class="mt-0.5 text-xs" />

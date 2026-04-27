@@ -132,7 +132,7 @@
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                     <label for="rate" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Rate <span>*</span></label>
                     <div class="flex-1">
-                        <input type="number" id="rate" name="rate" step="0.0001" value="{{ old('rate', $generalVoucher->rate) }}" required min="0.0001"
+                        <input type="number" id="rate" name="rate" step="any" value="{{ old('rate', $generalVoucher->rate) }}" required min="0.0001"
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             placeholder="1" />
                         <x-input-error :messages="$errors->get('rate')" class="mt-0.5" />
