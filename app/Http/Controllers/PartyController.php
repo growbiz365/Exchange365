@@ -402,11 +402,24 @@ class PartyController extends Controller
             ? $request->currency_id
             : ($defaultCurrency->currency_id ?? null);
 
+        // Default to Khata Party (1) to preserve prior behaviour while allowing
+        // the user to switch to Other Party (2) or view all parties.
+        $partyType = $request->filled('party_type') ? $request->party_type : '1';
+        $allowedPartyTypes = ['all', '1', '2'];
+        if (!in_array($partyType, $allowedPartyTypes, true)) {
+            $partyType = '1';
+        }
+
         $partyBalances = null;
 
         if ($currencyId) {
-            $partyBalances = Party::forBusiness($business->id)
-                ->where('party_type', 1) // Only regular parties, not expense
+            $query = Party::forBusiness($business->id);
+
+            if ($partyType !== 'all') {
+                $query->where('party_type', (int) $partyType);
+            }
+
+            $partyBalances = $query
                 ->whereHas('ledgerEntries', function ($query) use ($currencyId, $dateSearch) {
                     $query->where('currency_id', $currencyId)
                         ->where('date_added', '<=', $dateSearch);
@@ -426,12 +439,14 @@ class PartyController extends Controller
                     return [
                         'party_id' => $party->party_id,
                         'party_name' => $party->party_name,
+                        'party_type' => $party->party_type,
                         'balance' => $balance,
                     ];
                 })
                 ->filter(function ($party) {
                     return $party['balance'] != 0;
-                });
+                })
+                ->values();
         }
 
         return view('parties.balances', compact(
@@ -439,7 +454,8 @@ class PartyController extends Controller
             'currencies',
             'partyBalances',
             'dateSearch',
-            'currencyId'
+            'currencyId',
+            'partyType'
         ));
     }
 
