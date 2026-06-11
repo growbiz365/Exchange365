@@ -49,6 +49,7 @@
                <nav class="flex flex-1 flex-col min-h-0 pt-3 overflow-y-auto">
                   <ul role="list" class="flex flex-1 flex-col gap-y-1 min-h-0">
                      <!-- Main -->
+                     @can('view dashboard')
                      <li>
                         <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1">Main</div>
                         <ul role="list" class="space-y-0.5">
@@ -63,8 +64,10 @@
                            </li>
                         </ul>
                      </li>
+                     @endcan
 
                      <!-- Management -->
+                     @canany(['view parties', 'view banks', 'view general vouchers', 'view purchases', 'view sales', 'view assets'])
                      <li class="mt-3">
                         <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1">Management</div>
                         <ul role="list" class="space-y-0.5">
@@ -79,6 +82,7 @@
                               </a>
                            </li>
                            @endcan
+                           @can('view banks')
                            <li>
                               <a href="{{ route('banks.dashboard') }}"
                                  class="group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 {{ request()->routeIs('banks.*') && !request()->routeIs('bank-transfers.*') && !request()->routeIs('general-vouchers.*') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-500' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -88,6 +92,8 @@
                                  <span>Banks</span>
                               </a>
                            </li>
+                           @endcan
+                           @can('view general vouchers')
                            <li>
                               <a href="{{ route('general-vouchers.index') }}"
                                  class="group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 {{ request()->routeIs('general-vouchers.*') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-500' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -97,6 +103,8 @@
                                  <span>General Vouchers</span>
                               </a>
                            </li>
+                           @endcan
+                           @can('view purchases')
                            <li>
                               <a href="{{ route('purchases.dashboard') }}"
                                  class="group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 {{ request()->routeIs('purchases.*') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-500' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -106,6 +114,8 @@
                                  <span>Purchase</span>
                               </a>
                            </li>
+                           @endcan
+                           @can('view sales')
                            <li>
                               <a href="{{ route('sales.dashboard') }}"
                                  class="group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 {{ request()->routeIs('sales.*') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-500' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -115,6 +125,8 @@
                                  <span>Sales</span>
                               </a>
                            </li>
+                           @endcan
+                           @can('view assets')
                            <li>
                               <a href="{{ route('assets.dashboard') }}"
                                  class="group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 {{ request()->routeIs('assets.*') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-500' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -124,10 +136,13 @@
                                  <span>Assets</span>
                               </a>
                            </li>
+                           @endcan
                         </ul>
                      </li>
+                     @endcanany
 
                      <!-- Reports -->
+                     @can('view reports')
                      <li class="mt-3">
                         <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1">Reports</div>
                         <ul role="list" class="space-y-0.5">
@@ -142,6 +157,7 @@
                            </li>
                         </ul>
                      </li>
+                     @endcan
 
                      <!-- Settings -->
                      @can('view settings')
@@ -202,6 +218,7 @@
             <ul role="list" class="flex flex-1 flex-col min-h-0 gap-y-1">
 
               <!-- Main -->
+              @can('view dashboard')
               <li>
                  <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1 transition-all duration-300 overflow-hidden"
                       :class="sidebarCollapsed ? 'w-0 opacity-0 h-0' : 'w-auto opacity-100'">
@@ -224,8 +241,10 @@
                     </li>
                  </ul>
               </li>
+              @endcan
 
               <!-- Management -->
+              @canany(['view parties', 'view banks', 'view general vouchers', 'view purchases', 'view sales', 'view assets'])
               <li class="mt-3">
                  <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1 transition-all duration-300 overflow-hidden"
                       :class="sidebarCollapsed ? 'w-0 opacity-0 h-0' : 'w-auto opacity-100'">
@@ -248,6 +267,7 @@
                        </div>
                     </li>
                     @endcan
+                    @can('view banks')
                     <li>
                        <div x-data="{ tooltip: false }">
                           <a href="{{ route('banks.dashboard') }}"
@@ -262,6 +282,8 @@
                           </a>
                        </div>
                     </li>
+                    @endcan
+                    @can('view general vouchers')
                     <li>
                        <div x-data="{ tooltip: false }">
                           <a href="{{ route('general-vouchers.index') }}"
@@ -276,6 +298,8 @@
                           </a>
                        </div>
                     </li>
+                    @endcan
+                    @can('view purchases')
                     <li>
                        <div x-data="{ tooltip: false }">
                           <a href="{{ route('purchases.dashboard') }}"
@@ -290,6 +314,8 @@
                           </a>
                        </div>
                     </li>
+                    @endcan
+                    @can('view sales')
                     <li>
                        <div x-data="{ tooltip: false }">
                           <a href="{{ route('sales.dashboard') }}"
@@ -304,6 +330,8 @@
                           </a>
                        </div>
                     </li>
+                    @endcan
+                    @can('view assets')
                     <li>
                        <div x-data="{ tooltip: false }">
                           <a href="{{ route('assets.dashboard') }}"
@@ -318,10 +346,13 @@
                           </a>
                        </div>
                     </li>
+                    @endcan
                  </ul>
               </li>
+              @endcanany
 
               <!-- Reports -->
+              @can('view reports')
               <li class="mt-3">
                  <div class="text-[10px] font-bold leading-6 text-gray-400 uppercase tracking-widest px-3 mb-1 transition-all duration-300 overflow-hidden"
                       :class="sidebarCollapsed ? 'w-0 opacity-0 h-0' : 'w-auto opacity-100'">
@@ -344,6 +375,7 @@
                     </li>
                  </ul>
               </li>
+              @endcan
 
               <!-- Settings -->
               @can('view settings')
