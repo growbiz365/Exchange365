@@ -110,8 +110,10 @@
                 $netBalance = $totalCredit - $totalDebit;
                 $netFull = ($netBalance >= 0 ? '+' : '') . number_format($netBalance, 2);
             @endphp
+            @canany(['view general vouchers', 'view parties transfers', 'view banks', 'view bank-transfers', 'view parties balances', 'view parties'])
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
 
+                @canany(['view general vouchers', 'view parties transfers', 'view banks', 'view bank-transfers'])
                 <!-- Today's Transactions -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-sky-500 p-4 hover:shadow-md transition-all duration-300 group">
                     <div class="flex items-center gap-3">
@@ -127,7 +129,9 @@
                         </div>
                     </div>
                 </div>
+                @endcanany
 
+                @can('view parties balances')
                 <!-- Net Party Balance -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 {{ $netBalance >= 0 ? 'border-l-emerald-500' : 'border-l-rose-500' }} p-4 hover:shadow-md transition-all duration-300 group">
                     <div class="flex items-center gap-3">
@@ -145,7 +149,9 @@
                         </div>
                     </div>
                 </div>
+                @endcan
 
+                @can('view general vouchers')
                 <!-- General Vouchers -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-emerald-500 p-4 hover:shadow-md transition-all duration-300 group">
                     <div class="flex items-center gap-3">
@@ -161,7 +167,9 @@
                         </div>
                     </div>
                 </div>
+                @endcan
 
+                @can('view parties')
                 <!-- Total Parties -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-amber-500 p-4 hover:shadow-md transition-all duration-300 group">
                     <div class="flex items-center gap-3">
@@ -177,8 +185,11 @@
                         </div>
                     </div>
                 </div>
+                @endcan
             </div>
+            @endcanany
 
+            @canany(['create general vouchers', 'create parties transfers', 'view banks', 'view parties', 'view finance'])
             <!-- Exchange Shortcuts -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
@@ -203,6 +214,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                    @can('create general vouchers')
                     <a href="{{ route('general-vouchers.create') }}"
                         class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-emerald-300 hover:shadow-md p-3 transition-all duration-200">
                         <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
@@ -215,8 +227,9 @@
                             <span class="block text-xs text-gray-400 mt-0.5">Create voucher</span>
                         </div>
                     </a>
+                    @endcan
 
-                    @can('view parties')
+                    @can('create parties transfers')
                     <a href="{{ route('party-transfers.create') }}"
                         class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md p-3 transition-all duration-200">
                         <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
@@ -268,6 +281,7 @@
                     </a>
                     @endcan
 
+                    @can('view finance')
                     <a href="{{ route('reports.index') }}"
                         class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-md p-3 transition-all duration-200">
                         <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
@@ -278,12 +292,16 @@
                             <span class="block text-xs text-gray-400 mt-0.5">View reports</span>
                         </div>
                     </a>
+                    @endcan
                 </div>
             </div>
+            @endcanany
 
+            @canany(['view bank balances', 'view parties balances', 'view finance'])
             <!-- Quick Reports & Top Parties -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
+                @canany(['view bank balances', 'view parties balances', 'view finance'])
                 <!-- Quick Reports -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                     <div class="flex items-center gap-2 mb-4">
@@ -296,7 +314,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        @can('view banks')
+                        @can('view bank balances')
                         <a href="{{ route('banks.balances') }}"
                             class="group/link flex items-center justify-between p-2.5 bg-gray-50 hover:bg-white rounded-lg border border-gray-200 hover:border-blue-200 hover:shadow-sm transition-all duration-200">
                             <div class="flex items-center gap-2.5">
@@ -312,7 +330,7 @@
                         </a>
                         @endcan
 
-                        @can('view parties')
+                        @can('view parties balances')
                         <a href="{{ route('parties.balances') }}"
                             class="group/link flex items-center justify-between p-2.5 bg-gray-50 hover:bg-white rounded-lg border border-gray-200 hover:border-purple-200 hover:shadow-sm transition-all duration-200">
                             <div class="flex items-center gap-2.5">
@@ -328,6 +346,7 @@
                         </a>
                         @endcan
 
+                        @can('view finance')
                         <a href="{{ route('reports.index') }}"
                             class="group/link flex items-center justify-between p-2.5 bg-gray-50 hover:bg-white rounded-lg border border-gray-200 hover:border-teal-200 hover:shadow-sm transition-all duration-200">
                             <div class="flex items-center gap-2.5">
@@ -341,9 +360,12 @@
                             </div>
                             <svg class="h-4 w-4 text-gray-300 group-hover/link:text-teal-400 group-hover/link:translate-x-0.5 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         </a>
+                        @endcan
                     </div>
                 </div>
+                @endcanany
 
+                @can('view parties balances')
                 <!-- Top Parties by Balance -->
                 <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                     <div class="flex items-center justify-between mb-4">
@@ -399,15 +421,19 @@
                         </div>
                     @endif
                 </div>
+                @endcan
             </div>
+            @endcanany
 
         </div>{{-- /left column --}}
 
         {{-- ══════════════════════════════════════════════════
              RIGHT COLUMN – Total Credit / Debit + Bank Balances
         ══════════════════════════════════════════════════ --}}
+        @canany(['view parties balances', 'view bank balances'])
         <div class="w-full lg:w-56 xl:w-64 flex-shrink-0 space-y-3 order-last lg:order-none">
 
+            @can('view parties balances')
             <!-- Total Credit & Total Debit Pills -->
             <div class="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
 
@@ -453,7 +479,9 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
+            @can('view bank balances')
             <!-- Bank Balances Table -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <!-- Card Header -->
@@ -469,7 +497,7 @@
                             <p class="text-[10px] text-gray-400 mt-0.5">Current accounts</p>
                         </div>
                     </div>
-                    @can('view banks')
+                    @can('view bank balances')
                     <a href="{{ route('banks.balances') }}"
                        class="text-[10px] font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors">
                         View all
@@ -523,8 +551,10 @@
                     @endif
                 </div>
             </div>
+            @endcan
 
         </div>{{-- /right column --}}
+        @endcanany
 
     </div>{{-- /two-column root --}}
 
