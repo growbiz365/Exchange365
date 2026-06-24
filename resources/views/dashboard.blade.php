@@ -189,7 +189,7 @@
             </div>
             @endcanany
 
-            @canany(['create general vouchers', 'create parties transfers', 'view banks', 'view parties', 'view finance'])
+            @canany(['create general vouchers', 'create parties transfers', 'view parties transfers', 'view banks', 'view parties', 'view finance'])
             <!-- Exchange Shortcuts -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
@@ -237,7 +237,18 @@
                         </div>
                         <div>
                             <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-blue-700 transition-colors">Party Transfer</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">Between parties</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">Create transfer</span>
+                        </div>
+                    </a>
+                    @elsecan('view parties transfers')
+                    <a href="{{ route('party-transfers.index') }}"
+                        class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md p-3 transition-all duration-200">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-blue-700 transition-colors">Party Transfer</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">View transfers</span>
                         </div>
                     </a>
                     @endcan

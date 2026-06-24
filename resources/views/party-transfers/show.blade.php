@@ -30,17 +30,20 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full lg:w-auto lg:shrink-0 lg:max-w-xl">
-                <a href="{{ route('party-transfers.edit', $partyTransfer) }}"
+                @can('edit parties transfers')
+            <a href="{{ route('party-transfers.edit', $partyTransfer) }}"
                     class="inline-flex justify-center items-center rounded-xl bg-gradient-to-br from-indigo-600 to-slate-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-indigo-700 hover:to-slate-800 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
                     Edit
                 </a>
+                @endcan
                 <form action="{{ route('party-transfers.destroy', $partyTransfer) }}" method="POST" class="w-full sm:w-auto"
                     onsubmit="return confirm('Are you sure you want to delete this transfer? This action cannot be undone.');">
                     @csrf
                     @method('DELETE')
+                    @can('delete parties transfers')
                     <button type="submit"
                         class="w-full inline-flex justify-center items-center rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-semibold text-rose-700 shadow-sm hover:bg-rose-50 transition focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
                         <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,7 +51,9 @@
                         </svg>
                         Delete
                     </button>
+                    @endcan
                 </form>
+                @can('view parties transfers')
                 <a href="{{ route('party-transfers.index') }}"
                     class="inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 w-full sm:w-auto">
                     <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,6 +61,7 @@
                     </svg>
                     Back to list
                 </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -246,10 +252,12 @@
             Back to Party Transfers
         </a>
         <div class="flex w-full sm:w-auto">
+            @can('edit parties transfers')
             <a href="{{ route('party-transfers.edit', $partyTransfer) }}"
                 class="inline-flex items-center justify-center w-full sm:w-auto rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 transition">
                 Edit transfer
             </a>
+            @endcan
         </div>
     </div>
 </x-app-layout>

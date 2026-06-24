@@ -142,11 +142,31 @@ Route::middleware('auth')->group(function () {
     // ========================================
     // PARTY TRANSFER MODULE - ExchangeHub
     // ========================================
-    Route::middleware('can:view parties')->group(function () {
-        Route::resource('party-transfers', PartyTransferController::class);
+    Route::middleware('can:view parties transfers')->group(function () {
+        Route::get('party-transfers', [PartyTransferController::class, 'index'])->name('party-transfers.index');
     });
+
+    Route::middleware('can:create parties transfers')->group(function () {
+        Route::get('party-transfers/create', [PartyTransferController::class, 'create'])->name('party-transfers.create');
+        Route::post('party-transfers', [PartyTransferController::class, 'store'])->name('party-transfers.store');
+    });
+
+    Route::middleware('can:view parties transfers')->group(function () {
+        Route::get('party-transfers/{party_transfer}', [PartyTransferController::class, 'show'])->name('party-transfers.show');
+    });
+
+    Route::middleware('can:edit parties transfers')->group(function () {
+        Route::get('party-transfers/{party_transfer}/edit', [PartyTransferController::class, 'edit'])->name('party-transfers.edit');
+        Route::put('party-transfers/{party_transfer}', [PartyTransferController::class, 'update'])->name('party-transfers.update');
+        Route::patch('party-transfers/{party_transfer}', [PartyTransferController::class, 'update']);
+    });
+
+    Route::middleware('can:delete parties transfers')->group(function () {
+        Route::delete('party-transfers/{party_transfer}', [PartyTransferController::class, 'destroy'])->name('party-transfers.destroy');
+    });
+
     Route::delete('/party-transfers/attachments/{attachment}', [PartyTransferController::class, 'deleteAttachment'])
-        ->middleware('auth')
+        ->middleware('can:edit parties transfers')
         ->name('party-transfers.attachments.delete');
 
     // ========================================

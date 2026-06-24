@@ -21,12 +21,14 @@
                     <p class="text-xs text-gray-500 mt-0.5">Debit and credit party vouchers</p>
                 </div>
                 <div class="w-full sm:w-auto shrink-0">
+                    @can('create parties transfers')
                     <a href="{{ route('party-transfers.create') }}" class="inline-flex w-full sm:w-auto justify-center items-center min-h-[2.25rem] rounded-lg bg-indigo-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white hover:bg-indigo-700">
                         <svg class="w-4 h-4 mr-1.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                         New transfer
                     </a>
+                    @endcan
                 </div>
             </div>
 
