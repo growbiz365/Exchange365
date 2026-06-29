@@ -19,7 +19,10 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Activity Log</h1>
-                    <p class="text-sm text-gray-500 mt-1">Audit trail of create, update, and delete actions across the system</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Audit trail for
+                        <span class="font-medium text-gray-700">{{ $business->business_name ?? 'selected business' }}</span>
+                    </p>
                     <div class="flex flex-wrap gap-2 mt-3">
                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-amber-50 text-amber-700 border-amber-100">Who, what, when</span>
                     </div>

@@ -14,6 +14,7 @@ use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Business;
 use Illuminate\Http\Request;
+use App\Support\ActivityBusinessScope;
 use Spatie\Activitylog\Models\Activity;
 
 class ReportController extends Controller
@@ -28,8 +29,16 @@ class ReportController extends Controller
      */
     public function activityLog(Request $request)
     {
+        $businessId = session('active_business');
+        if (! $businessId) {
+            return redirect()->route('businesses.index')
+                ->with('error', 'Please select a business first.');
+        }
+
         $query = Activity::query()
             ->with(['causer', 'subject'])
+            ->where('log_name', '!=', 'auth')
+            ->where(fn ($q) => ActivityBusinessScope::scopeQuery($q, (int) $businessId))
             ->orderByDesc('created_at');
 
         if ($request->filled('event')) {
@@ -46,8 +55,9 @@ class ReportController extends Controller
         }
 
         $activities = $query->paginate(20)->withQueryString();
+        $business = Business::find($businessId);
 
-        return view('reports.activity-log', compact('activities'));
+        return view('reports.activity-log', compact('activities', 'business'));
     }
 
     

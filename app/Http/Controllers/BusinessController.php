@@ -7,10 +7,12 @@ use App\Models\Country;
 use App\Models\Timezone;
 use App\Models\City;
 use App\Models\Currency;
+use App\Support\ActivityBusinessScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class BusinessController extends Controller
 {
@@ -271,7 +273,9 @@ class BusinessController extends Controller
             $businessName = $business->business_name;
 
             // Phase 1: Delete Audit & Activity Logs
-            \DB::table('activity_logs')->where('business_id', $businessId)->delete();
+            Activity::query()
+                ->where(fn ($q) => ActivityBusinessScope::scopeQuery($q, (int) $businessId))
+                ->delete();
             
             // Get all purchases for this business to delete their audit logs
             $purchaseIds = \DB::table('purchases')->where('business_id', $businessId)->pluck('id');
@@ -514,7 +518,9 @@ class BusinessController extends Controller
             $businessName = $business->business_name;
 
             // Phase 1: Delete Audit & Activity Logs
-            \DB::table('activity_logs')->where('business_id', $businessId)->delete();
+            Activity::query()
+                ->where(fn ($q) => ActivityBusinessScope::scopeQuery($q, (int) $businessId))
+                ->delete();
             
             // Get all purchases for this business to delete their audit logs
             $purchaseIds = \DB::table('purchases')->where('business_id', $businessId)->pluck('id');

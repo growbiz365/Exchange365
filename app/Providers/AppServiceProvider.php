@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use App\Observers\BusinessObserver;
 use App\Http\View\Composers\BusinessComposer;
+use App\Support\ActivityBusinessScope;
 use App\Models\Business;
 use App\Models\SaleInvoice;
 use App\Models\Purchase;
@@ -16,6 +17,7 @@ use App\Models\Party;
 use App\Models\BankTransfer;
 use App\Models\Expense;
 use App\Models\OtherIncome;
+use Spatie\Activitylog\Models\Activity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,5 +77,8 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         // Activity logging is handled by spatie/laravel-activitylog via LogsActivity trait on models.
+        Activity::creating(function (Activity $activity) {
+            ActivityBusinessScope::assignBusinessId($activity);
+        });
     }
 }
