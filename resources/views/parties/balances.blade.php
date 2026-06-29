@@ -7,12 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
-            size: A4;
-            margin: 12mm 12mm 16mm 12mm;
+            margin: 10mm;
         }
 
         * {
             box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
         }
 
         body {
@@ -21,13 +24,14 @@
             margin: 0;
             padding: 0;
             color: #1a1a1a;
-            background: #f3f4f6;
+            background: #fff;
         }
 
         .page-container {
-            max-width: 210mm;
-            margin: 0 auto;
-            padding: 15mm;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 16px 20px;
             background: white;
         }
 
@@ -162,9 +166,10 @@
         /* ===== Tables ===== */
         .tables-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
             margin-top: 20px;
+            width: 100%;
         }
 
         .tables-container.single-table {
@@ -321,6 +326,10 @@
                 background: white !important;
             }
 
+            .report-container {
+                position: static !important;
+            }
+
             .filters,
             .no-print {
                 display: none !important;
@@ -334,8 +343,8 @@
                 gap: 30px !important;
                 margin-bottom: 14px;
                 padding-bottom: 10px;
-                page-break-after: avoid;
                 page-break-inside: avoid;
+                break-inside: avoid;
             }
 
             .report-header-left {
@@ -363,37 +372,37 @@
                 color: #3730a3 !important;
             }
 
-            /*
-             * CSS Grid doesn't paginate reliably in Chromium when printing
-             * (the whole grid can get pushed to page 2, leaving page 1 blank).
-             * Fall back to an inline-block 2-column layout for print so each
-             * table-container flows naturally onto subsequent pages.
-             */
             .tables-container {
                 display: block !important;
-                gap: 0 !important;
-                margin-top: 12px;
-                font-size: 0; /* remove inline-block whitespace gap */
+                width: 100% !important;
+                margin-top: 10px !important;
+            }
+
+            .tables-container::after {
+                content: "";
+                display: table;
+                clear: both;
             }
 
             .table-container {
-                display: inline-block;
-                vertical-align: top;
-                width: 49.5%;
-                margin: 0 1% 10px 0;
-                page-break-inside: auto;
+                float: left;
+                width: 49.5% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                page-break-inside: auto !important;
+                break-inside: auto !important;
                 overflow: visible !important;
                 border: 1px solid #000 !important;
-                font-size: 11px; /* restore font-size for table content */
             }
 
-            .table-container:nth-child(2n) {
-                margin-right: 0;
+            .table-container:last-child {
+                float: right;
             }
 
             table {
                 font-size: 11px;
                 page-break-inside: auto;
+                width: 100% !important;
             }
 
             thead {
@@ -404,9 +413,15 @@
                 display: table-footer-group;
             }
 
-            tr {
+            tbody tr {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
+            .table-title-row,
+            .total-row {
                 page-break-inside: avoid;
-                page-break-after: auto;
+                break-inside: avoid;
             }
 
             th {
@@ -435,27 +450,26 @@
             .debit-amount { color: #b91c1c !important; }
             .credit-amount { color: #15803d !important; }
 
-            /* Use inline-block columns instead of CSS grid for reliable print. */
+            /* Summary cards in one row for print */
             .summary-grid {
-                display: block !important;
-                gap: 0 !important;
+                display: table !important;
+                width: 100% !important;
+                table-layout: fixed;
+                border-collapse: separate;
+                border-spacing: 8px 0;
                 margin-top: 14px;
-                font-size: 0;
                 page-break-inside: avoid;
+                break-inside: avoid;
             }
 
             .summary-card {
-                display: inline-block;
+                display: table-cell !important;
                 vertical-align: top;
-                width: 32.66%;
-                margin-right: 1%;
+                width: 33.33% !important;
+                margin: 0 !important;
                 border: 1px solid #000 !important;
                 padding: 8px 10px;
                 font-size: 11px;
-            }
-
-            .summary-card:last-child {
-                margin-right: 0;
             }
             .summary-card .value { font-size: 14px; }
             .summary-card.debit { background: #fef2f2 !important; }
@@ -484,7 +498,6 @@
         @media screen and (max-width: 768px) {
             .page-container {
                 padding: 12px 10px;
-                max-width: 100%;
             }
 
             .report-header {
@@ -531,37 +544,6 @@
                 ];
                 $partyTypeLabel = $partyTypeLabels[$partyType] ?? 'All Parties';
             @endphp
-
-            @if($partyBalances !== null)
-                @php
-                    $business = \App\Models\Business::find(session('active_business'));
-                    $selectedCurrency = $currencies->firstWhere('currency_id', $currencyId);
-                @endphp
-                <div class="report-header">
-                    <div class="report-header-left">
-                        <div class="business-info">
-                            <h2>{{ $business->business_name ?? 'ExchangeHub' }}</h2>
-                            <div class="business-info-details">
-                                @if($business)
-                                    <div>{{ $business->address }}</div>
-                                    <div>Contact: {{ $business->contact_no }}</div>
-                                    <div>Email: {{ $business->email }}</div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="report-header-right">
-                        <div class="report-title">
-                            <h2>Party Balances Report</h2>
-                            <div class="meta">
-                                <div><strong>Currency:</strong> {{ $selectedCurrency->currency ?? 'N/A' }} ({{ $selectedCurrency->currency_symbol ?? '' }})</div>
-                                <div><strong>Party Type:</strong> <span class="meta-pill">{{ $partyTypeLabel }}</span></div>
-                                <div><strong>As of Date:</strong> {{ \Carbon\Carbon::parse($dateSearch)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
 
             <div class="filters no-print">
                 <form action="{{ route('parties.balances') }}" method="GET" class="filter-form">
@@ -614,6 +596,8 @@
 
             @if($partyBalances !== null)
                 @php
+                    $business = \App\Models\Business::find(session('active_business'));
+                    $selectedCurrency = $currencies->firstWhere('currency_id', $currencyId);
                     $debitParties = collect();
                     $creditParties = collect();
                     $debitTotal = 0;
@@ -632,6 +616,30 @@
                     $currencySymbol = $selectedCurrency->currency_symbol ?? '';
                     $netBalance = $creditTotal - $debitTotal;
                 @endphp
+                <div class="report-header print-header">
+                    <div class="report-header-left">
+                        <div class="business-info">
+                            <h2>{{ $business->business_name ?? 'ExchangeHub' }}</h2>
+                            <div class="business-info-details">
+                                @if($business)
+                                    <div>{{ $business->address }}</div>
+                                    <div>Contact: {{ $business->contact_no }}</div>
+                                    <div>Email: {{ $business->email }}</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="report-header-right">
+                        <div class="report-title">
+                            <h2>Party Balances Report</h2>
+                            <div class="meta">
+                                <div><strong>Currency:</strong> {{ $selectedCurrency->currency ?? 'N/A' }} ({{ $selectedCurrency->currency_symbol ?? '' }})</div>
+                                <div><strong>Party Type:</strong> <span class="meta-pill">{{ $partyTypeLabel }}</span></div>
+                                <div><strong>As of Date:</strong> {{ \Carbon\Carbon::parse($dateSearch)->format('d M Y') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="tables-container">
                     <!-- Debit Parties Table -->

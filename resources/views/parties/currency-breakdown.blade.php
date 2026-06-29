@@ -8,10 +8,11 @@
     <!-- Chosen CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
     <style>
-        @page {
-            size: A4;
-            margin: 15mm;
-        }
+        @page { margin: 10mm; }
+
+        * { box-sizing: border-box; }
+
+        html, body { width: 100%; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -19,14 +20,14 @@
             margin: 0;
             padding: 0;
             color: #1a1a1a;
-            background: #f8fafc;
+            background: #fff;
         }
 
         .page-container {
-            max-width: 210mm;
-            margin: 0 auto;
-            padding: 15mm;
-            box-sizing: border-box;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 16px 20px;
             background: white;
         }
 
@@ -117,6 +118,14 @@
             min-width: 180px;
         }
 
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
@@ -197,11 +206,21 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            height: 36px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
         }
 
         button:hover {
             background-color: #0b5ed7;
         }
+
+        button.btn-print { background-color: #16a34a; }
+        button.btn-print:hover { background-color: #15803d; }
 
         button.btn-secondary {
             background-color: #6c757d;
@@ -259,6 +278,7 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             border: 1px solid #333;
+            width: 100%;
         }
 
         table {
@@ -306,44 +326,93 @@
         }
 
         @media print {
-            body {
-                background: white;
+            html, body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
+
             .page-container {
-                padding: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+                background: white !important;
             }
-            .filters {
-                display: none;
-            }
+
+            .report-container { position: static !important; }
+
+            .filters, .no-print { display: none !important; }
+
             .report-header {
                 display: flex !important;
                 justify-content: space-between !important;
                 gap: 30px !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
-            .report-header-left {
-                text-align: left !important;
+
+            .report-header-left { text-align: left !important; }
+            .report-header-right { text-align: right !important; }
+            .business-info { text-align: left !important; }
+            .report-title { text-align: right !important; }
+
+            .summary-grid {
+                display: table !important;
+                width: 100% !important;
+                table-layout: fixed;
+                border-collapse: separate;
+                border-spacing: 8px 0;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
-            .report-header-right {
-                text-align: right !important;
+
+            .summary-card {
+                display: table-cell !important;
+                vertical-align: top;
+                width: 33.33% !important;
+                border: 1px solid #000 !important;
             }
-            .business-info {
-                text-align: left !important;
+
+            .table-container {
+                overflow: visible !important;
+                width: 100% !important;
+                border: 1px solid #000 !important;
+                page-break-inside: auto;
+                break-inside: auto;
             }
-            .report-title {
-                text-align: right !important;
+
+            table {
+                width: 100% !important;
+                font-size: 10.5px;
+                page-break-inside: auto;
             }
+
+            thead { display: table-header-group; }
+
+            tbody tr {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
             th {
                 background-color: #f8f8f8 !important;
+                border: 1px solid #000 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            td { border: 1px solid #000 !important; }
+
+            .credit-amount { color: #009900 !important; }
+            .debit-amount { color: #cc0000 !important; }
         }
 
-        @media (max-width: 768px) {
-            .page-container {
-                padding: 12px 10px;
-                max-width: 100%;
-            }
+        @media screen and (max-width: 768px) {
+            .page-container { padding: 12px 10px; }
 
             .report-header {
                 flex-direction: column;
@@ -380,15 +449,15 @@
                 max-width: 100%;
             }
 
-            .filter-form button,
-            .filter-form a {
+            .button-group {
                 width: 100%;
-                box-sizing: border-box;
-                min-height: 44px;
+                flex-wrap: wrap;
             }
 
-            .filter-form a {
-                display: block;
+            .button-group button,
+            .button-group a {
+                flex: 1 1 auto;
+                min-width: min(100%, 120px);
             }
 
             table {
@@ -461,7 +530,7 @@
                 </div>
             @endif
 
-            <div class="filters">
+            <div class="filters no-print">
                 <form action="{{ route('parties.currency') }}" method="GET" class="filter-form">
                     <div class="form-group">
                         <label for="party_id">Select Party</label>
@@ -480,13 +549,15 @@
                         <input type="date" name="date_search" id="date_search" value="{{ $dateSearch }}">
                     </div>
 
-                    <button type="submit">Apply</button>
-                    @if($partyDetails)
-                        <button type="button" onclick="window.print()">Print</button>
-                    @endif
-                    <a href="{{ route('parties.dashboard') }}">
-                        <button type="button" class="btn-secondary">Back</button>
-                    </a>
+                    <div class="button-group">
+                        <button type="submit">Apply</button>
+                        @if($partyDetails)
+                            <button type="button" class="btn-print" onclick="window.print()">Print</button>
+                        @endif
+                        <a href="{{ route('parties.dashboard') }}">
+                            <button type="button" class="btn-secondary">Back</button>
+                        </a>
+                    </div>
                 </form>
             </div>
 
@@ -554,7 +625,7 @@
                 <!-- Report Footer -->
                 <div style="margin-top: 20px; text-align: right; font-size: 11px; color: #666;">
                     <p>Generated by: {{ auth()->user()->name }} | Print time: {{ now()->format('d M Y h:i A') }}</p>
-                    <p style="margin-top: 5px;">Powered By ExchangeHub</p>
+                    <p style="margin-top: 5px;">Powered By Grow Business 365</p>
                 </div>
             @else
                 <div style="text-align: center; padding: 30px; color: #666;">

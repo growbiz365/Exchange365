@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     @section('title', 'Parties Dashboard - ExchangeHub')
     <x-breadcrumb :breadcrumbs="[
         ['url' => route('dashboard'), 'label' => 'Home'],
@@ -174,8 +174,8 @@
                     </svg>
                 </div>
                 <div>
-                    <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-violet-700 transition-colors">Balances</span>
-                    <span class="block text-xs text-gray-400 mt-0.5">By currency</span>
+                    <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-violet-700 transition-colors">Party Balances</span>
+                    <span class="block text-xs text-gray-400 mt-0.5">Current balance per party</span>
                 </div>
             </a>
 

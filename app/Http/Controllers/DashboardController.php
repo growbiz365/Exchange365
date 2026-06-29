@@ -64,6 +64,7 @@ class DashboardController extends Controller
             ->join('banks as b', 'b.bank_id', '=', 'bank_ledger.bank_id')
             ->join('currency as c', 'c.currency_id', '=', 'b.currency_id')
             ->where('b.business_id', $businessId)
+            ->where('b.status', 1)
             ->where('bank_ledger.date_added', '<=', $today)
             ->selectRaw('
                 b.bank_id,

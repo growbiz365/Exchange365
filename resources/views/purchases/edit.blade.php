@@ -164,6 +164,7 @@
                                        class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-emerald-500 focus:ring-emerald-500"
                                        placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('credit_amount')" class="mt-0.5 text-xs" />
+                                <x-amount-words for="credit_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -230,6 +231,7 @@
                                     Auto-calculated from Deposit Amount &amp; Rate. Editable.
                                 </p>
                                 <x-input-error :messages="$errors->get('debit_amount')" class="mt-0.5 text-xs" />
+                                <x-amount-words for="debit_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -382,22 +384,38 @@
                     .catch(function() { div.classList.add('hidden'); });
             }
 
+            var suppressAmountRecalc = false;
+
             function calculateDebitAmount() {
+                if (suppressAmountRecalc) return;
+
                 var credit = parseFloat(creditAmountInput.value) || 0;
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var debit = op === 2 ? credit * rate : (rate !== 0 ? credit / rate : 0);
+                suppressAmountRecalc = true;
                 debitAmountInput.value = isNaN(debit) ? '' : Math.round(debit * 100) / 100;
+                if (window.AmountInWords) {
+                    AmountInWords.update('debit_amount');
+                }
+                suppressAmountRecalc = false;
             }
 
             function calculateCreditAmountFromDebit() {
+                if (suppressAmountRecalc) return;
+
                 var debit = parseFloat(debitAmountInput.value) || 0;
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var credit = op === 2 ? (rate !== 0 ? debit / rate : 0) : debit * rate;
+                suppressAmountRecalc = true;
                 creditAmountInput.value = isNaN(credit) ? '' : Math.round(credit * 100) / 100;
+                if (window.AmountInWords) {
+                    AmountInWords.update('credit_amount');
+                }
+                suppressAmountRecalc = false;
             }
 
             bankSelect.addEventListener('change', function() { fetchBankBalance(this.value); });
@@ -425,4 +443,5 @@
             });
         });
     </script>
+    <x-amount-words-init :ids="['credit_amount', 'debit_amount']" />
 </x-app-layout>

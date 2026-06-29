@@ -94,6 +94,7 @@
                 </svg>
             </a>
 
+            @can('view activity-log')
             <a href="{{ route('reports.activity-log') }}"
                 class="group/card flex flex-col items-center text-center gap-3 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-slate-400 hover:shadow-md p-5 transition-all duration-200">
                 <div class="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-800 rounded-xl flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
@@ -109,6 +110,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
+            @endcan
         </div>
     </div>
 

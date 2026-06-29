@@ -179,6 +179,7 @@
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
                                     placeholder="0.00" oninput="calculateCreditAmount()" />
                                 @error('debit_amount') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
+                                <x-amount-words for="debit_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -245,6 +246,7 @@
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500"
                                     placeholder="0.00" oninput="calculateDebitAmount()" />
                                 @error('credit_amount') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
+                                <x-amount-words for="credit_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -307,20 +309,46 @@
         .chosen-results li.highlighted { background: #2563eb; color: white; }
         .chosen-container .chosen-drop { z-index: 9999 !important; }
 
-        /* Compact flatpickr date input & calendar */
-        #date_added.flatpickr-input {
-            height: 30px;
+        /* Flatpickr — keep d/m/Y; preserve 7-column calendar grid */
+        #date_added.flatpickr-input,
+        #date_added {
+            width: 100%;
+            max-width: none;
+            display: block;
+            box-sizing: border-box;
+            height: 36px;
             padding-top: 4px;
             padding-bottom: 4px;
-            font-size: 11px;
+            font-size: 0.875rem;
         }
         .flatpickr-calendar {
-            font-size: 11px;
+            width: 307px !important;
+            font-size: 0.8125rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+        }
+        .flatpickr-calendar .flatpickr-days,
+        .flatpickr-calendar .dayContainer {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
         }
         .flatpickr-day {
-            max-width: 26px;
-            height: 26px;
-            line-height: 26px;
+            flex-basis: 14.2857143% !important;
+            max-width: 39px !important;
+            height: 39px;
+            line-height: 39px;
+            border-radius: 9999px;
+        }
+        .flatpickr-day.today {
+            border-color: #4f46e5;
+        }
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            color: #fff;
         }
     </style>
 </x-app-layout>
@@ -364,7 +392,11 @@ function removeAttachmentField(id) {
     if (element) element.remove();
 }
 
+let suppressAmountRecalc = false;
+
 function calculateCreditAmount() {
+    if (suppressAmountRecalc) return;
+
     const debitAmount = parseFloat(document.getElementById('debit_amount').value) || 0;
     const rate = parseFloat(document.getElementById('rate').value) || 1;
     const operation = document.querySelector('input[name="transaction_operation"]:checked')?.value || '1';
@@ -377,11 +409,18 @@ function calculateCreditAmount() {
         } else {
             creditAmount = debitAmount * rate;
         }
+        suppressAmountRecalc = true;
         creditAmountField.value = creditAmount.toFixed(2);
+        if (window.AmountInWords) {
+            AmountInWords.update('credit_amount');
+        }
+        suppressAmountRecalc = false;
     }
 }
 
 function calculateDebitAmount() {
+    if (suppressAmountRecalc) return;
+
     const creditAmount = parseFloat(document.getElementById('credit_amount').value) || 0;
     const rate = parseFloat(document.getElementById('rate').value) || 1;
     const operation = document.querySelector('input[name="transaction_operation"]:checked')?.value || '1';
@@ -394,7 +433,12 @@ function calculateDebitAmount() {
         } else {
             debitAmount = creditAmount / rate;
         }
+        suppressAmountRecalc = true;
         debitAmountField.value = debitAmount.toFixed(2);
+        if (window.AmountInWords) {
+            AmountInWords.update('debit_amount');
+        }
+        suppressAmountRecalc = false;
     }
 }
 
@@ -465,6 +509,7 @@ document.addEventListener('DOMContentLoaded', function() {
     flatpickr('#date_added', {
         dateFormat: 'd/m/Y',
         allowInput: false,
+        disableMobile: true,
     });
 
     fetchPartyBalance('debit');
@@ -474,5 +519,6 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<svg class="animate-spin h-4 w-4 mr-1 inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Saving...';
     });
-});
+    });
 </script>
+<x-amount-words-init :ids="['debit_amount', 'credit_amount']" />

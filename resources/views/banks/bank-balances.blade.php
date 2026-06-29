@@ -6,10 +6,11 @@
     <title>Bank Balances Report - {{ $business->business_name ?? 'ExchangeHub' }} - ExchangeHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @page {
-            size: A4;
-            margin: 15mm;
-        }
+        @page { margin: 10mm; }
+
+        * { box-sizing: border-box; }
+
+        html, body { width: 100%; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -17,14 +18,14 @@
             margin: 0;
             padding: 0;
             color: #1a1a1a;
-            background: #f8fafc;
+            background: #fff;
         }
 
         .page-container {
-            max-width: 210mm;
-            margin: 0 auto;
-            padding: 15mm;
-            box-sizing: border-box;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 16px 20px;
             background: white;
         }
 
@@ -113,6 +114,8 @@
             display: flex;
             gap: 8px;
             flex-shrink: 0;
+            flex-wrap: nowrap;
+            align-items: center;
         }
 
         label {
@@ -142,11 +145,21 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            height: 36px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
         }
 
         button:hover {
             background-color: #0b5ed7;
         }
+
+        button.btn-print { background-color: #16a34a; }
+        button.btn-print:hover { background-color: #15803d; }
 
         button.btn-secondary {
             background-color: #6c757d;
@@ -165,6 +178,7 @@
             margin-top: 20px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
         }
 
         table {
@@ -228,49 +242,88 @@
         }
 
         @media print {
-            body {
-                background: white;
+            html, body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
+
             .page-container {
-                padding: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+                background: white !important;
             }
-            .filters {
-                display: none;
-            }
+
+            .report-container { position: static !important; }
+
+            .filters, .no-print { display: none !important; }
+
             .report-header {
                 display: flex !important;
                 justify-content: space-between !important;
                 gap: 30px !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
-            .report-header-left {
-                text-align: left !important;
+
+            .report-header-left { text-align: left !important; }
+            .report-header-right { text-align: right !important; }
+            .business-info { text-align: left !important; }
+            .report-title { text-align: right !important; }
+
+            .table-container {
+                overflow: visible !important;
+                width: 100% !important;
+                border: 1px solid #000 !important;
+                page-break-inside: auto;
+                break-inside: auto;
             }
-            .report-header-right {
-                text-align: right !important;
+
+            table {
+                width: 100% !important;
+                font-size: 10.5px;
+                page-break-inside: auto;
             }
-            .business-info {
-                text-align: left !important;
+
+            thead { display: table-header-group; }
+
+            tbody tr {
+                page-break-inside: auto;
+                break-inside: auto;
             }
-            .report-title {
-                text-align: right !important;
+
+            .total-row {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
+
             th {
                 background-color: #f8f8f8 !important;
+                border: 1px solid #000 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            td { border: 1px solid #000 !important; }
+
             .total-row td {
                 background-color: #f8f8f8 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                border-top: 2px solid #000 !important;
+            }
+
+            .grand-total {
+                page-break-inside: avoid;
+                border: 1px solid #000 !important;
             }
         }
 
-        @media (max-width: 768px) {
-            .page-container {
-                padding: 12px 10px;
-                max-width: 100%;
-            }
+        @media screen and (max-width: 768px) {
+            .page-container { padding: 12px 10px; }
 
             .report-header {
                 flex-direction: column;
@@ -357,7 +410,7 @@
                 </div>
             @endif
 
-            <div class="filters">
+            <div class="filters no-print">
                 <form action="{{ route('banks.balances') }}" method="GET" class="filter-form">
                     <div class="form-group">
                         <label for="date_search">As of Date</label>
@@ -366,7 +419,7 @@
                     <div class="button-group">
                         <button type="submit">Search</button>
                         @if($bankBalances->count() > 0)
-                            <button type="button" onclick="window.print()">Print</button>
+                            <button type="button" class="btn-print" onclick="window.print()">Print</button>
                         @endif
                         <a href="{{ route('banks.dashboard') }}">
                             <button type="button" class="btn-secondary">Back</button>
@@ -417,7 +470,7 @@
 
                     <div style="margin-top: 20px; text-align: right; font-size: 11px; color: #666;">
                         <p>Generated by: {{ auth()->user()->name }} | Print time: {{ now()->format('d M Y h:i A') }}</p>
-                        <p style="margin-top: 5px;">Powered By ExchangeHub</p>
+                        <p style="margin-top: 5px;">Powered By Grow Business 365</p>
                     </div>
                 @endif
             @else

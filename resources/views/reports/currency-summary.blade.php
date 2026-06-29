@@ -6,10 +6,11 @@
     <title>Currency Summary - {{ $business->business_name ?? 'ExchangeHub' }} - ExchangeHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @page {
-            size: A4;
-            margin: 15mm;
-        }
+        @page { margin: 10mm; }
+
+        * { box-sizing: border-box; }
+
+        html, body { width: 100%; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -17,14 +18,14 @@
             margin: 0;
             padding: 0;
             color: #1a1a1a;
-            background: #f8fafc;
+            background: #fff;
         }
 
         .page-container {
-            max-width: 210mm;
-            margin: 0 auto;
-            padding: 15mm;
-            box-sizing: border-box;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 16px 20px;
             background: white;
         }
 
@@ -101,6 +102,14 @@
             min-width: 180px;
         }
 
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
         .filters label {
             display: block;
             margin-bottom: 5px;
@@ -129,11 +138,21 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            height: 36px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
         }
 
         .filters button:hover {
             background-color: #0b5ed7;
         }
+
+        .filters button.btn-print { background-color: #16a34a; }
+        .filters button.btn-print:hover { background-color: #15803d; }
 
         .filters button.btn-secondary {
             background-color: #6c757d;
@@ -151,6 +170,8 @@
             margin-top: 20px;
             overflow-x: auto;
             border: 1px solid #333;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -219,31 +240,134 @@
         }
 
         @media print {
-            body {
-                background: white;
+            html, body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
+
             .page-container {
-                padding: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+                background: white !important;
             }
-            .filters {
-                display: none;
-            }
+
+            .report-container { position: static !important; }
+
+            .filters, .no-print { display: none !important; }
+
             .report-header {
                 display: flex !important;
                 justify-content: space-between !important;
                 gap: 30px !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
-            .report-header-left {
-                text-align: left !important;
+
+            .report-header-left { text-align: left !important; }
+            .report-header-right { text-align: right !important; }
+
+            .table-container {
+                overflow: visible !important;
+                width: 100% !important;
+                border: 1px solid #000 !important;
+                page-break-inside: auto;
+                break-inside: auto;
             }
-            .report-header-right {
-                text-align: right !important;
+
+            table {
+                width: 100% !important;
+                font-size: 10.5px;
+                page-break-inside: auto;
             }
+
+            thead { display: table-header-group; }
+
+            tbody tr {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
+            .total-row {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
             th {
                 background-color: #f8f8f8 !important;
+                border: 1px solid #000 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            td {
+                border: 1px solid #000 !important;
+            }
+
+            .total-row td {
+                background-color: #f8f8f8 !important;
+                border-top: 2px solid #000 !important;
+            }
+
+            table input[type="number"],
+            table select {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                font-size: inherit;
+                text-align: inherit;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+            table input[readonly] {
+                font-weight: inherit;
+            }
+
+            #total_summary {
+                font-weight: 700 !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .page-container { padding: 12px 10px; }
+
+            .report-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .report-header-right { text-align: left; }
+
+            .filter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group.date-group {
+                flex: 1 1 100%;
+                min-width: 100%;
+            }
+
+            .button-group {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .button-group button,
+            .button-group a {
+                flex: 1 1 auto;
+                min-width: min(100%, 120px);
+            }
+
+            table { font-size: 10px; }
+            th, td { padding: 5px 4px; word-break: break-word; }
         }
     </style>
 </head>
@@ -278,19 +402,21 @@
                 </div>
             @endif
 
-            <div class="filters">
+            <div class="filters no-print">
                 <form action="{{ route('reports.currency-summary') }}" method="GET" class="filter-form">
                     <div class="form-group date-group">
                         <label for="date_search">As On Date</label>
                         <input type="date" name="date_search" id="date_search" value="{{ $dateSearch }}">
                     </div>
-                    <button type="submit">Search</button>
-                    @if($rows->isNotEmpty())
-                        <button type="button" onclick="window.print()">Print</button>
-                    @endif
-                    <a href="{{ route('reports.index') }}">
-                        <button type="button" class="btn-secondary">Back</button>
-                    </a>
+                    <div class="button-group">
+                        <button type="submit">Search</button>
+                        @if($rows->isNotEmpty())
+                            <button type="button" class="btn-print" onclick="window.print()">Print</button>
+                        @endif
+                        <a href="{{ route('reports.index') }}">
+                            <button type="button" class="btn-secondary">Back</button>
+                        </a>
+                    </div>
                 </form>
             </div>
 
@@ -345,7 +471,7 @@
 
                 <div class="report-footer">
                     <p>Generated by: {{ auth()->user()->name ?? 'User' }} | Print time: {{ now()->format('d M Y h:i A') }}</p>
-                    <p>Powered By ExchangeHub</p>
+                    <p>Powered By Grow Business 365</p>
                 </div>
 
                 <script>

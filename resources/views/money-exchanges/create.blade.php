@@ -98,21 +98,16 @@
                 </div>
             </div>
 
-            {{-- Row 3: Debit & Credit Tables --}}
-            <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 pb-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:min-w-[640px]">
-                <table class="w-full border border-gray-300 text-sm rounded">
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="text-center bg-red-50 text-red-800 font-bold py-2 px-3 border-b border-gray-300 rounded-t">Debit ( بنام )</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr>
-                            <td class="py-2 px-3 font-semibold text-red-600 bg-gray-50 w-2/5 align-middle">From Account <span>*</span></td>
-                            <td class="py-2 px-3">
+            {{-- Row 3: Debit & Credit --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="border border-gray-300 rounded text-sm min-w-0">
+                    <div class="text-center bg-red-50 text-red-800 font-bold py-2 px-3 border-b border-gray-300 rounded-t">Debit ( بنام )</div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="grid grid-cols-1 sm:grid-cols-[2fr_3fr]">
+                            <div class="py-2 px-3 font-semibold text-red-600 bg-gray-50 sm:flex sm:items-center">From Account <span>*</span></div>
+                            <div class="py-2 px-3 min-w-0">
                                 <select id="from_account_id" name="from_account_id" required
-                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-red-500 focus:ring-red-500">
+                                    class="chosen-select block w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-red-500 focus:ring-red-500">
                                     <option value="">Select Bank Account</option>
                                     @foreach($banks as $bank)
                                         <option value="{{ $bank->bank_id }}" {{ old('from_account_id') == $bank->bank_id ? 'selected' : '' }}>
@@ -125,30 +120,28 @@
                                     <span id="from_balance_amount" class="ml-1"></span>
                                 </div>
                                 <x-input-error :messages="$errors->get('from_account_id')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-3 font-semibold text-red-600 bg-gray-50 align-middle">Debit Amount <span>*</span></td>
-                            <td class="py-2 px-3">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-[2fr_3fr]">
+                            <div class="py-2 px-3 font-semibold text-red-600 bg-gray-50 sm:flex sm:items-center">Debit Amount <span>*</span></div>
+                            <div class="py-2 px-3 min-w-0">
                                 <input type="number" id="debit_amount" name="debit_amount" step="0.01" value="{{ old('debit_amount') }}" required
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500" placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('debit_amount')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="w-full border border-gray-300 text-sm rounded">
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="text-center bg-green-50 text-green-800 font-bold py-2 px-3 border-b border-gray-300 rounded-t">Credit ( جمع )</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr>
-                            <td class="py-2 px-3 font-semibold text-green-700 bg-gray-50 w-2/5 align-middle">To Account <span>*</span></td>
-                            <td class="py-2 px-3">
+                                <x-amount-words for="debit_amount" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-300 rounded text-sm min-w-0">
+                    <div class="text-center bg-green-50 text-green-800 font-bold py-2 px-3 border-b border-gray-300 rounded-t">Credit ( جمع )</div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="grid grid-cols-1 sm:grid-cols-[2fr_3fr]">
+                            <div class="py-2 px-3 font-semibold text-green-700 bg-gray-50 sm:flex sm:items-center">To Account <span>*</span></div>
+                            <div class="py-2 px-3 min-w-0">
                                 <select id="to_account_id" name="to_account_id" required
-                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-green-500 focus:ring-green-500">
+                                    class="chosen-select block w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-green-500 focus:ring-green-500">
                                     <option value="">Select Bank Account</option>
                                     @foreach($banks as $bank)
                                         <option value="{{ $bank->bank_id }}" {{ old('to_account_id') == $bank->bank_id ? 'selected' : '' }}>
@@ -161,19 +154,19 @@
                                     <span id="to_balance_amount" class="ml-1"></span>
                                 </div>
                                 <x-input-error :messages="$errors->get('to_account_id')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-3 font-semibold text-green-700 bg-gray-50 align-middle">Credit Amount <span>*</span></td>
-                            <td class="py-2 px-3">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-[2fr_3fr]">
+                            <div class="py-2 px-3 font-semibold text-green-700 bg-gray-50 sm:flex sm:items-center">Credit Amount <span>*</span></div>
+                            <div class="py-2 px-3 min-w-0">
                                 <input type="number" id="credit_amount" name="credit_amount" step="0.01" value="{{ old('credit_amount') }}" required
                                     class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500" placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('credit_amount')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                <x-amount-words for="credit_amount" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {{-- Attachments --}}
@@ -217,15 +210,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        .chosen-container { width: 100% !important; }
-        .chosen-container-single .chosen-single { height: 32px; line-height: 30px; padding: 0 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px; background: #fff; }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 8px; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 12px; }
+        #exchangeForm .grid > div { min-width: 0; }
+        .chosen-container {
+            width: 100% !important;
+            max-width: 100%;
+        }
+        .chosen-container-single .chosen-single {
+            height: 36px;
+            line-height: 34px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0 2.25rem 0 0.75rem;
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 0.875rem;
+            color: #111827;
+            overflow: hidden;
+        }
+        .chosen-container-single .chosen-single span {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 0.5rem;
+        }
+        .chosen-container-single .chosen-single div { right: 0.5rem; }
+        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.375rem 0.375rem 0 0; }
+        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 0.375rem 0.375rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 100%; }
+        .chosen-results { font-size: 0.875rem; max-width: 100%; }
+        .chosen-results li {
+            white-space: normal;
+            word-break: break-word;
+        }
         .chosen-results li.highlighted { background: #2563eb; color: white; }
-        .chosen-container .chosen-drop { z-index: 9999 !important; }
         #date_added.flatpickr-input { height: 34px; padding: 4px 8px; font-size: 12px; }
         #date_added {
             max-width: 180px;
@@ -269,27 +286,48 @@
             const toAccountSelect = document.getElementById('to_account_id');
 
             if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
-                jQuery('.chosen-select').chosen({ width: '100%', search_contains: true, allow_single_deselect: true, placeholder_text_single: 'Select an option' });
+                jQuery('.chosen-select').chosen({
+                    width: '100%',
+                    search_contains: true,
+                    allow_single_deselect: true,
+                    placeholder_text_single: 'Select an option'
+                });
             }
 
             flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false });
 
+            let suppressAmountRecalc = false;
+
             function getOperation() { return document.querySelector('input[name="transaction_operation"]:checked')?.value || '2'; }
 
             function recalcFromDebit() {
+                if (suppressAmountRecalc) return;
+
                 const debit = parseFloat(debitInput.value) || 0;
                 const rate = parseFloat(rateInput.value) || 0;
                 if (debit > 0 && rate > 0) {
                     let credit = getOperation() === '1' ? debit / rate : debit * rate;
+                    suppressAmountRecalc = true;
                     creditInput.value = credit.toFixed(2);
+                    if (window.AmountInWords) {
+                        AmountInWords.update('credit_amount');
+                    }
+                    suppressAmountRecalc = false;
                 }
             }
             function recalcFromCredit() {
+                if (suppressAmountRecalc) return;
+
                 const credit = parseFloat(creditInput.value) || 0;
                 const rate = parseFloat(rateInput.value) || 0;
                 if (credit > 0 && rate > 0) {
                     let debit = getOperation() === '1' ? credit * rate : credit / rate;
+                    suppressAmountRecalc = true;
                     debitInput.value = debit.toFixed(2);
+                    if (window.AmountInWords) {
+                        AmountInWords.update('debit_amount');
+                    }
+                    suppressAmountRecalc = false;
                 }
             }
             function onOperationChange() {
@@ -354,4 +392,5 @@
             });
         });
     </script>
+    <x-amount-words-init :ids="['debit_amount', 'credit_amount']" />
 </x-app-layout>

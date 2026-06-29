@@ -166,6 +166,7 @@
                                        placeholder="0.00" />
                                 <p class="mt-0.5 text-xs text-gray-500">Must not exceed bank balance.</p>
                                 <x-input-error :messages="$errors->get('currency_amount')" class="mt-0.5 text-xs" />
+                                <x-amount-words for="currency_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -230,6 +231,7 @@
                                        placeholder="0.00" />
                                 <p class="mt-0.5 text-xs text-gray-500">Auto-calculated from Currency Amount &amp; Rate. Editable.</p>
                                 <x-input-error :messages="$errors->get('party_amount')" class="mt-0.5 text-xs" />
+                                <x-amount-words for="party_amount" />
                             </td>
                         </tr>
                     </tbody>
@@ -382,22 +384,38 @@
                     .catch(function() { div.classList.add('hidden'); });
             }
 
+            var suppressAmountRecalc = false;
+
             function calculatePartyAmount() {
+                if (suppressAmountRecalc) return;
+
                 var currencyAmt = parseFloat(currencyAmountInput.value) || 0;
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var partyAmt = op === 2 ? currencyAmt * rate : (rate !== 0 ? currencyAmt / rate : 0);
+                suppressAmountRecalc = true;
                 partyAmountInput.value = isNaN(partyAmt) ? '' : Math.round(partyAmt * 100) / 100;
+                if (window.AmountInWords) {
+                    AmountInWords.update('party_amount');
+                }
+                suppressAmountRecalc = false;
             }
 
             function calculateCurrencyAmountFromParty() {
+                if (suppressAmountRecalc) return;
+
                 var partyAmt = parseFloat(partyAmountInput.value) || 0;
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var currencyAmt = op === 2 ? (rate !== 0 ? partyAmt / rate : 0) : partyAmt * rate;
+                suppressAmountRecalc = true;
                 currencyAmountInput.value = isNaN(currencyAmt) ? '' : Math.round(currencyAmt * 100) / 100;
+                if (window.AmountInWords) {
+                    AmountInWords.update('currency_amount');
+                }
+                suppressAmountRecalc = false;
             }
 
             bankSelect.addEventListener('change', function() { fetchBankBalance(this.value); });
@@ -425,4 +443,5 @@
             });
         });
     </script>
+    <x-amount-words-init :ids="['currency_amount', 'party_amount']" />
 </x-app-layout>

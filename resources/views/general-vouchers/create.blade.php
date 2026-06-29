@@ -110,6 +110,7 @@
                             class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             placeholder="0.00" />
                         <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
+                        <x-amount-words for="amount" />
                     </div>
                 </div>
             </div>
@@ -310,4 +311,5 @@
             container.appendChild(div);
         }
     </script>
+    <x-amount-words-init :ids="['amount']" />
 </x-app-layout>

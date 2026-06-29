@@ -299,6 +299,7 @@ class BankController extends Controller
             ->join('banks as p', 'p.bank_id', '=', 'bank_ledger.bank_id')
             ->join('currency as c', 'c.currency_id', '=', 'p.currency_id')
             ->where('p.business_id', $businessId)
+            ->where('p.status', 1)
             ->where('bank_ledger.date_added', '<=', $dateSearch)
             ->selectRaw('p.bank_id, p.bank_name, c.currency, c.currency_symbol, (COALESCE(SUM(bank_ledger.deposit_amount), 0) - COALESCE(SUM(bank_ledger.withdrawal_amount), 0)) as bank_balance')
             ->groupBy('p.bank_id', 'p.bank_name', 'c.currency', 'c.currency_symbol', 'p.bank_type_id', 'p.currency_id')
