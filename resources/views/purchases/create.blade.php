@@ -159,7 +159,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="credit_amount" name="credit_amount" step="0.01"
                                        value="{{ old('credit_amount') }}" required
-                                       class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-emerald-500 focus:ring-emerald-500"
+                                       class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-emerald-500 focus:ring-emerald-500"
                                        placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('credit_amount')" class="mt-0.5 text-xs" />
                                 <x-amount-words for="credit_amount" />
@@ -223,7 +223,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="debit_amount" name="debit_amount" step="0.01"
                                        value="{{ old('debit_amount') }}" required
-                                       class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500"
+                                       class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500"
                                        placeholder="0.00" />
                                 <p class="mt-0.5 text-xs text-gray-500">
                                     Auto-calculated from Deposit Amount &amp; Rate. Editable.
@@ -383,13 +383,13 @@
             function calculateDebitAmount() {
                 if (suppressAmountRecalc) return;
 
-                var credit = parseFloat(creditAmountInput.value) || 0;
+                var credit = AmountFormat.read(creditAmountInput);
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var debit = op === 2 ? credit * rate : (rate !== 0 ? credit / rate : 0);
                 suppressAmountRecalc = true;
-                debitAmountInput.value = isNaN(debit) ? '' : Math.round(debit * 100) / 100;
+                AmountFormat.setValue(debitAmountInput, isNaN(debit) ? '' : Math.round(debit * 100) / 100);
                 if (window.AmountInWords) {
                     AmountInWords.update('debit_amount');
                 }
@@ -399,13 +399,13 @@
             function calculateCreditAmountFromDebit() {
                 if (suppressAmountRecalc) return;
 
-                var debit = parseFloat(debitAmountInput.value) || 0;
+                var debit = AmountFormat.read(debitAmountInput);
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var credit = op === 2 ? (rate !== 0 ? debit / rate : 0) : debit * rate;
                 suppressAmountRecalc = true;
-                creditAmountInput.value = isNaN(credit) ? '' : Math.round(credit * 100) / 100;
+                AmountFormat.setValue(creditAmountInput, isNaN(credit) ? '' : Math.round(credit * 100) / 100);
                 if (window.AmountInWords) {
                     AmountInWords.update('credit_amount');
                 }

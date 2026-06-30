@@ -238,7 +238,12 @@
                                 <span class="text-sm font-semibold text-gray-900 group-hover/item:text-amber-700 transition-colors">{{ $party->party_name }}</span>
                             </div>
                             <p class="text-xs text-gray-500 mb-1.5 flex flex-wrap items-center gap-1.5">
-                                <span class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium {{ $party->party_type == 1 ? 'bg-blue-50 text-blue-700' : 'bg-violet-50 text-violet-700' }}">
+                                <span class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium {{ match($party->party_type) {
+                                    \App\Models\Party::TYPE_KHATA => 'bg-blue-50 text-blue-700',
+                                    \App\Models\Party::TYPE_OTHER => 'bg-violet-50 text-violet-700',
+                                    \App\Models\Party::TYPE_INCOME => 'bg-emerald-50 text-emerald-700',
+                                    default => 'bg-gray-50 text-gray-700',
+                                } }}">
                                     {{ $party->party_type_label }}
                                 </span>
                                 <span class="text-gray-400">Since {{ $party->opening_date->format('d M Y') }}</span>

@@ -402,10 +402,9 @@ class PartyController extends Controller
             ? $request->currency_id
             : ($defaultCurrency->currency_id ?? null);
 
-        // Default to Khata Party (1) to preserve prior behaviour while allowing
-        // the user to switch to Other Party (2) or view all parties.
+        // Default to Khata Party (1) while allowing Other (2), Income (3), or all parties.
         $partyType = $request->filled('party_type') ? $request->party_type : '1';
-        $allowedPartyTypes = ['all', '1', '2'];
+        $allowedPartyTypes = ['all', '1', '2', '3'];
         if (!in_array($partyType, $allowedPartyTypes, true)) {
             $partyType = '1';
         }

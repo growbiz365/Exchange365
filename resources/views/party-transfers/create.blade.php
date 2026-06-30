@@ -176,7 +176,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="debit_amount" name="debit_amount" step="any"
                                     value="{{ old('debit_amount') }}" required
-                                    class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
+                                    class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
                                     placeholder="0.00" oninput="calculateCreditAmount()" />
                                 @error('debit_amount') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                                 <x-amount-words for="debit_amount" />
@@ -243,7 +243,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="credit_amount" name="credit_amount" step="any"
                                     value="{{ old('credit_amount') }}" required
-                                    class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500"
+                                    class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500"
                                     placeholder="0.00" oninput="calculateDebitAmount()" />
                                 @error('credit_amount') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                                 <x-amount-words for="credit_amount" />
@@ -397,7 +397,7 @@ let suppressAmountRecalc = false;
 function calculateCreditAmount() {
     if (suppressAmountRecalc) return;
 
-    const debitAmount = parseFloat(document.getElementById('debit_amount').value) || 0;
+    const debitAmount = AmountFormat.read('debit_amount');
     const rate = parseFloat(document.getElementById('rate').value) || 1;
     const operation = document.querySelector('input[name="transaction_operation"]:checked')?.value || '1';
     const creditAmountField = document.getElementById('credit_amount');
@@ -410,7 +410,7 @@ function calculateCreditAmount() {
             creditAmount = debitAmount * rate;
         }
         suppressAmountRecalc = true;
-        creditAmountField.value = creditAmount.toFixed(2);
+        AmountFormat.setValue(creditAmountField, creditAmount);
         if (window.AmountInWords) {
             AmountInWords.update('credit_amount');
         }
@@ -421,7 +421,7 @@ function calculateCreditAmount() {
 function calculateDebitAmount() {
     if (suppressAmountRecalc) return;
 
-    const creditAmount = parseFloat(document.getElementById('credit_amount').value) || 0;
+    const creditAmount = AmountFormat.read('credit_amount');
     const rate = parseFloat(document.getElementById('rate').value) || 1;
     const operation = document.querySelector('input[name="transaction_operation"]:checked')?.value || '1';
     const debitAmountField = document.getElementById('debit_amount');
@@ -434,7 +434,7 @@ function calculateDebitAmount() {
             debitAmount = creditAmount / rate;
         }
         suppressAmountRecalc = true;
-        debitAmountField.value = debitAmount.toFixed(2);
+        AmountFormat.setValue(debitAmountField, debitAmount);
         if (window.AmountInWords) {
             AmountInWords.update('debit_amount');
         }

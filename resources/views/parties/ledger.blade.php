@@ -580,7 +580,11 @@
                             <td colspan="5" class="total-label-colspan" style="text-align: center"><strong>Total</strong></td>
                             <td class="amount"><strong class="credit-val">{{ number_format($totalCredit, 2) }}</strong></td>
                             <td class="amount"><strong class="debit-val">{{ number_format($totalDebit, 2) }}</strong></td>
-                            <td class="amount"><strong>{{ number_format($balance, 2) }} {{ $currencySymbol }}</strong></td>
+                            <td class="amount">
+                                <strong class="{{ $balance > 0 ? 'credit-val' : ($balance < 0 ? 'debit-val' : '') }}">
+                                    {{ number_format($balance, 2) }} {{ $currencySymbol }}
+                                </strong>
+                            </td>
                         </tr>
                     </tfoot>
                 @endif

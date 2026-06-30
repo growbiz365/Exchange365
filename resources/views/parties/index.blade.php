@@ -70,7 +70,7 @@
                     </x-table-cell>
                     <x-table-cell>{{ $party->contact_no ?? 'N/A' }}</x-table-cell>
                     <x-table-cell>
-                        <span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded-full border {{ $party->party_type == 1 ? 'bg-sky-50 text-sky-700 border-sky-100' : 'bg-violet-50 text-violet-700 border-violet-100' }}">
+                        <span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded-full border {{ $party->party_type_badge_class }}">
                             {{ $party->party_type_label }}
                         </span>
                     </x-table-cell>

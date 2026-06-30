@@ -106,7 +106,7 @@
                     </label>
                     <div class="flex-1 min-w-0">
                         <x-text-input id="amount" name="amount" type="number" step="0.01"
-                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="format-amount block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             :value="old('amount')" required placeholder="0.00" />
                         <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
                         <x-amount-words for="amount" />
@@ -322,7 +322,7 @@
                 const amountInput   = document.getElementById('amount');
                 if (fromBalanceEl && fromBalanceEl.dataset.balance !== undefined && fromBalanceEl.dataset.balance !== '' && amountInput.value) {
                     const available = parseFloat(fromBalanceEl.dataset.balance);
-                    const requested = parseFloat(amountInput.value);
+                    const requested = AmountFormat.read(amountInput);
                     if (requested > available) {
                         e.preventDefault();
                         showInsufficientBalanceError(
@@ -394,7 +394,7 @@
             }
 
             const availableBalance = parseFloat(fromBalanceAmount.dataset.balance);
-            const transferAmount   = parseFloat(amountInput.value);
+            const transferAmount   = AmountFormat.read(amountInput);
 
             if (transferAmount > availableBalance) {
                 amountInput.classList.add('border-red-500', 'ring-1', 'ring-red-500');

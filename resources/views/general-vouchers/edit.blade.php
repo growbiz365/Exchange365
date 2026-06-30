@@ -120,7 +120,7 @@
                     <label for="amount" class="w-full sm:w-36 shrink-0 text-sm font-semibold text-red-600">Amount <span>*</span></label>
                     <div class="flex-1">
                         <input type="number" id="amount" name="amount" step="0.01" value="{{ old('amount', $generalVoucher->amount) }}" required
-                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="format-amount block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             placeholder="0.00" />
                         <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
                         <x-amount-words for="amount" />

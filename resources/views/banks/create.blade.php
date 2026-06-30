@@ -81,7 +81,7 @@
 
                 <div>
                     <x-input-label for="opening_balance">Opening Balance <span class="text-red-500">*</span></x-input-label>
-                    <x-text-input id="opening_balance" name="opening_balance" type="number" step="0.01" min="0" value="{{ old('opening_balance', '0') }}" required />
+                    <x-text-input id="opening_balance" name="opening_balance" type="number" step="0.01" min="0" value="{{ old('opening_balance', '0') }}" required class="format-amount" />
                     @error('opening_balance') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 

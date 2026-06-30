@@ -196,7 +196,7 @@
                         <div class="flex-1 min-w-0">
                             <input type="number" step="0.01" id="cost_amount" name="cost_amount"
                                    value="{{ old('cost_amount', $asset->cost_amount) }}" required
-                                   class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                   class="format-amount block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                                    placeholder="0.00" />
                             <x-input-error :messages="$errors->get('cost_amount')" class="mt-0.5 text-xs" />
                         </div>

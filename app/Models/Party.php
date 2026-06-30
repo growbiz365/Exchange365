@@ -11,6 +11,12 @@ class Party extends Model
 {
     use HasFactory, LogsActivity;
 
+    public const TYPE_KHATA = 1;
+
+    public const TYPE_OTHER = 2;
+
+    public const TYPE_INCOME = 3;
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -142,6 +148,18 @@ class Party extends Model
     }
 
     /**
+     * @return array<int, string>
+     */
+    public static function partyTypeLabels(): array
+    {
+        return [
+            self::TYPE_KHATA => 'Khata Party',
+            self::TYPE_OTHER => 'Other Party',
+            self::TYPE_INCOME => 'Income Party',
+        ];
+    }
+
+    /**
      * Get the status label.
      */
     public function getStatusLabelAttribute()
@@ -152,8 +170,18 @@ class Party extends Model
     /**
      * Get the party type label.
      */
-    public function getPartyTypeLabelAttribute()
+    public function getPartyTypeLabelAttribute(): string
     {
-        return $this->party_type == 1 ? 'Khata Party' : 'Other Party';
+        return self::partyTypeLabels()[$this->party_type] ?? 'Unknown';
+    }
+
+    public function getPartyTypeBadgeClassAttribute(): string
+    {
+        return match ((int) $this->party_type) {
+            self::TYPE_KHATA => 'bg-sky-50 text-sky-700 border-sky-100',
+            self::TYPE_OTHER => 'bg-violet-50 text-violet-700 border-violet-100',
+            self::TYPE_INCOME => 'bg-emerald-50 text-emerald-700 border-emerald-100',
+            default => 'bg-gray-50 text-gray-700 border-gray-100',
+        };
     }
 }

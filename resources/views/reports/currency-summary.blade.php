@@ -443,7 +443,7 @@
                                     <td class="amount">{{ number_format($row->currency_balance, 2) }}</td>
                                     <td class="amount">{{ number_format($row->party_balance, 2) }}</td>
                                     <td class="amount">
-                                        <input type="number" step="any" readonly id="total_amount_{{ $index }}" value="{{ $row->total_amount }}">
+                                        <input type="number" step="any" readonly id="total_amount_{{ $index }}" class="format-amount" value="{{ $row->total_amount }}">
                                     </td>
                                     <td>
                                         <input type="number" step="any" id="rate_{{ $index }}" value="1" min="0" onchange="calculateEndResult({{ $index }})" oninput="calculateEndResult({{ $index }})">
@@ -455,14 +455,14 @@
                                         </select>
                                     </td>
                                     <td class="amount">
-                                        <input type="number" readonly id="end_result_{{ $index }}" class="end-result">
+                                        <input type="number" readonly id="end_result_{{ $index }}" class="end-result format-amount">
                                     </td>
                                 </tr>
                             @endforeach
                             <tr class="total-row">
                                 <td colspan="7" style="text-align: right;"><strong>Total Summary</strong></td>
                                 <td class="amount">
-                                    <input type="number" readonly id="total_summary" style="font-weight: 700; border: none; background: transparent;">
+                                    <input type="number" readonly id="total_summary" class="format-amount" style="font-weight: 700; border: none; background: transparent;">
                                 </td>
                             </tr>
                         </tbody>
@@ -483,7 +483,7 @@
                 });
 
                 function calculateEndResult(row) {
-                    var totalAmount = parseFloat(document.getElementById('total_amount_' + row).value) || 0;
+                    var totalAmount = AmountFormat.read(document.getElementById('total_amount_' + row));
                     var rate = parseFloat(document.getElementById('rate_' + row).value) || 1;
                     var operation = document.getElementById('operation_' + row).value;
                     var endResult;
@@ -493,13 +493,13 @@
                     } else {
                         endResult = rate !== 0 ? totalAmount / rate : 0;
                     }
-                    document.getElementById('end_result_' + row).value = Math.round(endResult);
+                    AmountFormat.setValue(document.getElementById('end_result_' + row), Math.round(endResult));
 
                     var totalSummary = 0;
                     document.querySelectorAll('.end-result').forEach(function(input) {
-                        totalSummary += Number(input.value) || 0;
+                        totalSummary += AmountFormat.read(input);
                     });
-                    document.getElementById('total_summary').value = Math.round(totalSummary);
+                    AmountFormat.setValue(document.getElementById('total_summary'), Math.round(totalSummary));
                 }
                 </script>
             @else

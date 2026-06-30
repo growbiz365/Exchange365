@@ -159,7 +159,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="currency_amount" name="currency_amount" step="0.01"
                                        value="{{ old('currency_amount') }}" required
-                                       class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-rose-500 focus:ring-rose-500"
+                                       class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-rose-500 focus:ring-rose-500"
                                        placeholder="0.00" />
                                 <p class="mt-0.5 text-xs text-gray-500">Must not exceed bank balance.</p>
                                 <x-input-error :messages="$errors->get('currency_amount')" class="mt-0.5 text-xs" />
@@ -224,7 +224,7 @@
                             <td class="py-2 px-3">
                                 <input type="number" id="party_amount" name="party_amount" step="0.01"
                                        value="{{ old('party_amount') }}" required
-                                       class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-emerald-500 focus:ring-emerald-500"
+                                       class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-emerald-500 focus:ring-emerald-500"
                                        placeholder="0.00" />
                                 <p class="mt-0.5 text-xs text-gray-500">Auto-calculated from Currency Amount &amp; Rate. Editable.</p>
                                 <x-input-error :messages="$errors->get('party_amount')" class="mt-0.5 text-xs" />
@@ -382,13 +382,13 @@
             function calculatePartyAmount() {
                 if (suppressAmountRecalc) return;
 
-                var currencyAmt = parseFloat(currencyAmountInput.value) || 0;
+                var currencyAmt = AmountFormat.read(currencyAmountInput);
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var partyAmt = op === 2 ? currencyAmt * rate : (rate !== 0 ? currencyAmt / rate : 0);
                 suppressAmountRecalc = true;
-                partyAmountInput.value = isNaN(partyAmt) ? '' : Math.round(partyAmt * 100) / 100;
+                AmountFormat.setValue(partyAmountInput, isNaN(partyAmt) ? '' : Math.round(partyAmt * 100) / 100);
                 if (window.AmountInWords) {
                     AmountInWords.update('party_amount');
                 }
@@ -398,13 +398,13 @@
             function calculateCurrencyAmountFromParty() {
                 if (suppressAmountRecalc) return;
 
-                var partyAmt = parseFloat(partyAmountInput.value) || 0;
+                var partyAmt = AmountFormat.read(partyAmountInput);
                 var rate = parseFloat(rateInput.value) || 1;
                 if (rate <= 0) rate = 1;
                 var op = opMultiply && opMultiply.checked ? 2 : 1;
                 var currencyAmt = op === 2 ? (rate !== 0 ? partyAmt / rate : 0) : partyAmt * rate;
                 suppressAmountRecalc = true;
-                currencyAmountInput.value = isNaN(currencyAmt) ? '' : Math.round(currencyAmt * 100) / 100;
+                AmountFormat.setValue(currencyAmountInput, isNaN(currencyAmt) ? '' : Math.round(currencyAmt * 100) / 100);
                 if (window.AmountInWords) {
                     AmountInWords.update('currency_amount');
                 }

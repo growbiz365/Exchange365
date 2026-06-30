@@ -134,7 +134,7 @@
                             <div class="py-2 px-3 font-semibold text-red-600 bg-gray-50 sm:flex sm:items-center">Debit Amount <span>*</span></div>
                             <div class="py-2 px-3 min-w-0">
                                 <input type="number" id="debit_amount" name="debit_amount" step="0.01" value="{{ old('debit_amount', $moneyExchange->debit_amount) }}" required
-                                    class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500" placeholder="0.00" />
+                                    class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500" placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('debit_amount')" class="mt-0.5" />
                                 <x-amount-words for="debit_amount" />
                             </div>
@@ -168,7 +168,7 @@
                             <div class="py-2 px-3 font-semibold text-green-700 bg-gray-50 sm:flex sm:items-center">Credit Amount <span>*</span></div>
                             <div class="py-2 px-3 min-w-0">
                                 <input type="number" id="credit_amount" name="credit_amount" step="0.01" value="{{ old('credit_amount', $moneyExchange->credit_amount) }}" required
-                                    class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500" placeholder="0.00" />
+                                    class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500" placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('credit_amount')" class="mt-0.5" />
                                 <x-amount-words for="credit_amount" />
                             </div>
@@ -346,12 +346,12 @@
             function recalcFromDebit() {
                 if (suppressAmountRecalc) return;
 
-                const debit = parseFloat(debitInput.value) || 0;
+                const debit = AmountFormat.read(debitInput);
                 const rate = parseFloat(rateInput.value) || 0;
                 if (debit > 0 && rate > 0) {
                     let credit = getOperation() === '1' ? debit / rate : debit * rate;
                     suppressAmountRecalc = true;
-                    creditInput.value = credit.toFixed(2);
+                    AmountFormat.setValue(creditInput, credit);
                     if (window.AmountInWords) {
                         AmountInWords.update('credit_amount');
                     }
@@ -361,12 +361,12 @@
             function recalcFromCredit() {
                 if (suppressAmountRecalc) return;
 
-                const credit = parseFloat(creditInput.value) || 0;
+                const credit = AmountFormat.read(creditInput);
                 const rate = parseFloat(rateInput.value) || 0;
                 if (credit > 0 && rate > 0) {
                     let debit = getOperation() === '1' ? credit * rate : credit / rate;
                     suppressAmountRecalc = true;
-                    debitInput.value = debit.toFixed(2);
+                    AmountFormat.setValue(debitInput, debit);
                     if (window.AmountInWords) {
                         AmountInWords.update('debit_amount');
                     }

@@ -16,6 +16,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('js/amount-format.js') }}"></script>
 
     <style>
         /* Premium Sidebar Width Management with FIXED positioning */

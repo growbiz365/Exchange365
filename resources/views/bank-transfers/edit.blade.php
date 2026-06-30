@@ -107,7 +107,7 @@
                     </label>
                     <div class="flex-1 min-w-0">
                         <x-text-input id="amount" name="amount" type="number" step="0.01"
-                            class="block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="format-amount block w-full rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                             :value="old('amount', $bankTransfer->amount)" required placeholder="0.00" />
                         <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
                         <x-amount-words for="amount" />
@@ -376,7 +376,7 @@
                 return;
             }
             const availableBalance = parseFloat(fromBalanceAmount.dataset.balance);
-            const transferAmount = parseFloat(amountInput.value);
+            const transferAmount = AmountFormat.read(amountInput);
             if (transferAmount > availableBalance) {
                 amountInput.setCustomValidity('Insufficient balance in From Account.');
                 amountInput.classList.add('border-red-500');

@@ -59,8 +59,9 @@
                     <x-input-label for="party_type">Party Type <span class="text-red-500">*</span></x-input-label>
                     <select id="party_type" name="party_type"
                         class="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                        <option value="1" {{ old('party_type', '1') == '1' ? 'selected' : '' }}>Khata Party</option>
-                        <option value="2" {{ old('party_type') == '2' ? 'selected' : '' }}>Other Party</option>
+                        @foreach(\App\Models\Party::partyTypeLabels() as $value => $label)
+                            <option value="{{ $value }}" {{ old('party_type', '1') == (string) $value ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
                     </select>
                     @error('party_type') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -153,7 +154,7 @@ function addBalanceRow() {
         <div class="sm:col-span-3 min-w-0">
             <label class="block text-sm font-medium text-gray-700 mb-1">Opening Balance <span class="text-red-500">*</span></label>
             <input type="number" name="opening_balances[${balanceRowIndex}][opening_balance]" step="any" min="0" required inputmode="decimal"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                class="format-amount block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                 placeholder="0.00">
         </div>
         <div class="sm:col-span-3 min-w-0">
@@ -176,6 +177,9 @@ function addBalanceRow() {
     `;
     
     container.appendChild(row);
+    if (window.AmountFormat) {
+        AmountFormat.bind(row.querySelector('.format-amount'));
+    }
     balanceRowIndex++;
 }
 

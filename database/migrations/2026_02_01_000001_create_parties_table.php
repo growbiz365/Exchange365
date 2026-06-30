@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
             $table->date('opening_date');
             
-            $table->tinyInteger('party_type')->default(1)->comment('1=Khata Party, 2=Other Party');
+            $table->tinyInteger('party_type')->default(1)->comment('1=Khata Party, 2=Other Party, 3=Income Party');
             
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

@@ -519,7 +519,7 @@
                     </div>
                     <div class="summary-card">
                         <h4>Party Type</h4>
-                        <div class="summary-value" style="font-size: 14px;">{{ $partyDetails->party_type == 1 ? 'Regular' : 'Expense' }}</div>
+                        <div class="summary-value" style="font-size: 14px;">{{ $partyDetails->party_type_label }}</div>
                     </div>
                     <div class="summary-card">
                         <h4>Status</h4>

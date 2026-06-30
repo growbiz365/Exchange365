@@ -24,7 +24,7 @@ class PartyRequest extends FormRequest
         return [
             'party_name' => 'required|string|max:255',
             'contact_no' => 'nullable|string|max:50',
-            'party_type' => 'required|in:1,2',
+            'party_type' => 'required|in:1,2,3',
             'opening_date' => 'required|date',
             'status' => 'nullable|in:0,1',
             

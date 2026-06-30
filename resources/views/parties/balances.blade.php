@@ -541,6 +541,7 @@
                     'all' => 'All Parties',
                     '1'   => 'Khata Parties',
                     '2'   => 'Other Parties',
+                    '3'   => 'Income Parties',
                 ];
                 $partyTypeLabel = $partyTypeLabels[$partyType] ?? 'All Parties';
             @endphp
@@ -563,8 +564,9 @@
                         <label for="party_type">Party Type</label>
                         <select name="party_type" id="party_type">
                             <option value="all" {{ $partyType === 'all' ? 'selected' : '' }}>All Parties</option>
-                            <option value="1" {{ $partyType === '1' ? 'selected' : '' }}>Khata Party</option>
-                            <option value="2" {{ $partyType === '2' ? 'selected' : '' }}>Other Party</option>
+                            @foreach(\App\Models\Party::partyTypeLabels() as $value => $label)
+                                <option value="{{ $value }}" {{ $partyType === (string) $value ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
                         </select>
                     </div>
 
