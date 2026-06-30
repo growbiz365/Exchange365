@@ -370,6 +370,7 @@
             th, td { padding: 5px 4px; word-break: break-word; }
         }
     </style>
+    <script src="{{ asset('js/amount-format.js') }}"></script>
 </head>
 <body>
 
@@ -475,15 +476,33 @@
                 </div>
 
                 <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var totalRecords = {{ $rows->count() }};
-                    for (var i = 0; i < totalRecords; i++) {
-                        calculateEndResult(i);
+                function readReportAmount(el) {
+                    if (window.AmountFormat) {
+                        return AmountFormat.read(el);
                     }
-                });
+
+                    return parseFloat(String(el.value).replace(/,/g, '')) || 0;
+                }
+
+                function writeReportAmount(el, value) {
+                    if (!el) {
+                        return;
+                    }
+
+                    if (window.AmountFormat) {
+                        AmountFormat.setValue(el, value);
+                        return;
+                    }
+
+                    var num = typeof value === 'number' ? value : parseFloat(String(value).replace(/,/g, ''));
+                    el.value = isNaN(num) ? '' : num.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    });
+                }
 
                 function calculateEndResult(row) {
-                    var totalAmount = AmountFormat.read(document.getElementById('total_amount_' + row));
+                    var totalAmount = readReportAmount(document.getElementById('total_amount_' + row));
                     var rate = parseFloat(document.getElementById('rate_' + row).value) || 1;
                     var operation = document.getElementById('operation_' + row).value;
                     var endResult;
@@ -493,13 +512,27 @@
                     } else {
                         endResult = rate !== 0 ? totalAmount / rate : 0;
                     }
-                    AmountFormat.setValue(document.getElementById('end_result_' + row), Math.round(endResult));
+
+                    writeReportAmount(document.getElementById('end_result_' + row), Math.round(endResult * 100) / 100);
 
                     var totalSummary = 0;
                     document.querySelectorAll('.end-result').forEach(function(input) {
-                        totalSummary += AmountFormat.read(input);
+                        totalSummary += readReportAmount(input);
                     });
-                    AmountFormat.setValue(document.getElementById('total_summary'), Math.round(totalSummary));
+                    writeReportAmount(document.getElementById('total_summary'), Math.round(totalSummary * 100) / 100);
+                }
+
+                function initCurrencySummaryCalcs() {
+                    var totalRecords = {{ $rows->count() }};
+                    for (var i = 0; i < totalRecords; i++) {
+                        calculateEndResult(i);
+                    }
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initCurrencySummaryCalcs);
+                } else {
+                    initCurrencySummaryCalcs();
                 }
                 </script>
             @else
