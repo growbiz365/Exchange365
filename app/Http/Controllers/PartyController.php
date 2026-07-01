@@ -22,13 +22,6 @@ class PartyController extends Controller
     {
         $business = Business::findOrFail(session('active_business'));
 
-        $partyIds = Party::forBusiness($business->id)->pluck('party_id');
-
-        $totalParties = $partyIds->count();
-        $totalTransfers = PartyTransfer::where('business_id', $business->id)->count();
-        $partiesWithBalance = Party::forBusiness($business->id)->whereHas('openingBalances')->count();
-        $currenciesInUse = (int) PartyOpeningBalance::whereIn('party_id', $partyIds)->selectRaw('COUNT(DISTINCT currency_id) as c')->value('c');
-
         $recentParties = Party::forBusiness($business->id)
             ->with(['openingBalances.currency'])
             ->orderByDesc('party_id')
@@ -44,10 +37,6 @@ class PartyController extends Controller
 
         return view('parties.dashboard', compact(
             'business',
-            'totalParties',
-            'totalTransfers',
-            'partiesWithBalance',
-            'currenciesInUse',
             'recentParties',
             'recentTransfers'
         ));

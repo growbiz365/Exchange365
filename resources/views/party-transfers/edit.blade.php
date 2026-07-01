@@ -5,7 +5,7 @@
     <div class="bg-white shadow-sm rounded-xl border border-gray-200 mt-4">
 
         {{-- Card Header --}}
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-2.5 border-b border-gray-100">
             <div class="flex items-center gap-2 min-w-0">
                 <div class="bg-gradient-to-br from-indigo-600 to-slate-700 p-1.5 rounded-lg shadow-sm">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,13 +35,13 @@
             </div>
         </div>
 
-        <form action="{{ route('party-transfers.update', $partyTransfer) }}" method="POST" id="transferForm" enctype="multipart/form-data" class="px-4 sm:px-6 py-4 pb-6 space-y-3">
+        <form action="{{ route('party-transfers.update', $partyTransfer) }}" method="POST" id="transferForm" enctype="multipart/form-data" class="px-4 sm:px-6 py-2 pb-3 space-y-1.5">
             @csrf
             @method('PUT')
 
             {{-- Error Display --}}
             @if ($errors->any())
-                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-3 py-2 rounded mb-4 text-sm" role="alert">
+                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-3 py-2 rounded text-sm" role="alert">
                     <strong class="font-semibold">Errors:</strong>
                     <ul class="mt-1 list-disc list-inside">
                         @foreach ($errors->all() as $error)
@@ -52,45 +52,34 @@
             @endif
 
             @if (session('error'))
-                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-3 py-2 rounded mb-4 text-sm" role="alert">
+                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-3 py-2 rounded text-sm" role="alert">
                     <span class="text-xs">{{ session('error') }}</span>
                 </div>
             @endif
 
-            {{-- Row 1: Date & Details --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-4">
-                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-                    <label for="date_added" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
-                        Date <span>*</span>
-                    </label>
-                    <div class="flex-1 min-w-0">
-                        <input type="text" id="date_added" name="date_added"
-                            value="{{ old('date_added', $partyTransfer->date_added->format('d/m/Y')) }}" required readonly
-                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
-                            placeholder="dd/mm/yyyy" />
-                        @error('date_added') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
-                    </div>
+            {{-- Top Row: Date, Details, Operation, Rate --}}
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-1.5 pb-1.5 border-b border-gray-100">
+                <div>
+                    <label for="date_added" class="block text-xs font-semibold text-red-600 mb-0.5">Date <span>*</span></label>
+                    <input type="text" id="date_added" name="date_added"
+                        value="{{ old('date_added', $partyTransfer->date_added->format('d/m/Y')) }}" required readonly
+                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                        placeholder="dd/mm/yyyy" />
+                    @error('date_added') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-                    <label for="details" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-gray-700">Details</label>
-                    <div class="flex-1 min-w-0">
-                        <input type="text" id="details" name="details"
-                            value="{{ old('details', $partyTransfer->details) }}"
-                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            placeholder="" />
-                        @error('details') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
-                    </div>
+                <div>
+                    <label for="details" class="block text-xs font-semibold text-gray-700 mb-0.5">Details</label>
+                    <input type="text" id="details" name="details"
+                        value="{{ old('details', $partyTransfer->details) }}"
+                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        placeholder="" />
+                    @error('details') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
-            </div>
 
-            {{-- Row 2: Operation & Rate --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 mb-6">
-                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
-                    <label class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600 pt-0.5 sm:pt-0">
-                        Operation <span>*</span>
-                    </label>
-                    <div class="flex flex-wrap items-center gap-4 sm:gap-5 flex-1 min-w-0">
+                <div>
+                    <label class="block text-xs font-semibold text-red-600 mb-0.5">Operation <span>*</span></label>
+                    <div class="flex items-center gap-4 h-9">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="transaction_operation" value="1"
                                 {{ old('transaction_operation', $partyTransfer->transaction_operation) == '1' ? 'checked' : '' }}
@@ -108,23 +97,18 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-                    <label for="rate" class="w-full sm:w-36 shrink-0 text-xs font-semibold text-red-600">
-                        Rate <span>*</span>
-                    </label>
-                    <div class="flex-1 min-w-0">
-                        <input type="number" id="rate" name="rate" step="any" min="0.0001"
-                            value="{{ old('rate', $partyTransfer->rate) }}" required inputmode="decimal"
-                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            placeholder="1" oninput="calculateCreditAmount()" />
-                        @error('rate') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
-                    </div>
+                <div>
+                    <label for="rate" class="block text-xs font-semibold text-red-600 mb-0.5">Rate <span>*</span></label>
+                    <input type="number" id="rate" name="rate" step="any" min="0.0001"
+                        value="{{ old('rate', $partyTransfer->rate) }}" required inputmode="decimal"
+                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        placeholder="1" oninput="calculateCreditAmount()" />
+                    @error('rate') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
             </div>
 
-            {{-- Row 3: Debit & Credit Tables --}}
-            <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 pb-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:min-w-[640px]">
+            {{-- Debit & Credit Tables --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                 @php
                     $defaultCurrencyId = $currencies->firstWhere('currency', 'PKR')->currency_id
@@ -141,17 +125,17 @@
                     <thead>
                         <tr>
                             <th colspan="2"
-                                class="text-center bg-white text-black-800 font-bold py-2 px-3 border-b border-gray-300 tracking-wide rounded-t">
+                                class="text-center bg-white text-black-800 font-bold py-1.5 px-3 border-b border-gray-300 tracking-wide rounded-t">
                                 Debit &nbsp;( بنام )
                             </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-600 bg-gray-50 w-2/5 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 w-2/5 align-middle">
                                 Party <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <select id="debit_party" name="debit_party" required
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-red-500 focus:ring-red-500">
                                     <option value="">Select Party</option>
@@ -166,10 +150,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-600 bg-gray-50 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 align-middle">
                                 Currency <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <select id="debit_currency_id" name="debit_currency_id" required
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-red-500 focus:ring-red-500">
                                     <option value="">Select Currency</option>
@@ -181,17 +165,17 @@
                                     @endforeach
                                 </select>
                                 @error('debit_currency_id') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
-                                <div id="debit_balance" class="mt-1 text-xs text-gray-700 hidden">
+                                <div id="debit_balance" class="mt-0.5 text-xs text-gray-700 hidden">
                                     <span class="font-medium">Balance:</span>
                                     <span id="debit_balance_amount" class="ml-1"></span>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-600 bg-gray-50 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 align-middle">
                                 Amount <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <input type="number" id="debit_amount" name="debit_amount" step="any"
                                     value="{{ old('debit_amount', $partyTransfer->debit_amount) }}" required
                                     class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
@@ -208,17 +192,17 @@
                     <thead>
                         <tr>
                             <th colspan="2"
-                                class="text-center bg-white text-black-800 font-bold py-2 px-3 border-b border-gray-300 tracking-wide rounded-t">
+                                class="text-center bg-white text-black-800 font-bold py-1.5 px-3 border-b border-gray-300 tracking-wide rounded-t">
                                 Credit &nbsp;( جمع )
                             </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-700 bg-gray-50 w-2/5 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-700 bg-gray-50 w-2/5 align-middle">
                                 Party <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <select id="credit_party" name="credit_party" required
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-green-500 focus:ring-green-500">
                                     <option value="">Select Party</option>
@@ -233,10 +217,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-700 bg-gray-50 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-700 bg-gray-50 align-middle">
                                 Currency <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <select id="credit_currency_id" name="credit_currency_id" required
                                     class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-green-500 focus:ring-green-500">
                                     <option value="">Select Currency</option>
@@ -248,17 +232,17 @@
                                     @endforeach
                                 </select>
                                 @error('credit_currency_id') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
-                                <div id="credit_balance" class="mt-1 text-xs text-gray-700 hidden">
+                                <div id="credit_balance" class="mt-0.5 text-xs text-gray-700 hidden">
                                     <span class="font-medium">Balance:</span>
                                     <span id="credit_balance_amount" class="ml-1"></span>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-3 font-semibold text-red-700 bg-gray-50 align-middle">
+                            <td class="py-1.5 px-3 font-semibold text-red-700 bg-gray-50 align-middle">
                                 Amount <span class="text-red-600">*</span>
                             </td>
-                            <td class="py-2 px-3">
+                            <td class="py-1.5 px-3">
                                 <input type="number" id="credit_amount" name="credit_amount" step="any"
                                     value="{{ old('credit_amount', $partyTransfer->credit_amount) }}" required
                                     class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-green-500 focus:ring-green-500"
@@ -271,63 +255,68 @@
                 </table>
 
             </div>
-            </div>
 
-            {{-- Attachments Section --}}
-            <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 mb-4">
-
-                {{-- Existing Attachments --}}
-                @if($partyTransfer->attachments->count() > 0)
-                <div class="mb-4 pb-4 border-b border-gray-200">
-                    <h3 class="text-xs font-semibold text-gray-800 mb-1">Existing Attachments</h3>
-                    <p class="text-xs text-gray-500 mb-3">Manage your uploaded documents</p>
-                    <div class="space-y-2">
-                        @foreach($partyTransfer->attachments as $attachment)
-                        <div class="flex items-center justify-between p-2.5 bg-blue-50 rounded border border-blue-200">
-                            <div class="flex items-center space-x-3 flex-1 min-w-0">
-                                <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
-                                </svg>
-                                <div class="flex-1 min-w-0">
-                                    @if($attachment->file_title)
-                                    <p class="text-xs font-semibold text-gray-900 truncate">{{ $attachment->file_title }}</p>
-                                    @endif
-                                    <a href="{{ Storage::url($attachment->file_path) }}" target="_blank"
-                                        class="text-xs text-blue-700 hover:text-blue-900 font-medium truncate block">
-                                        {{ $attachment->file_name }}
-                                    </a>
-                                    <p class="text-xs text-gray-500">{{ $attachment->file_size_formatted }}</p>
-                                </div>
-                            </div>
-                            <button type="button" onclick="deleteAttachment({{ $attachment->id }})"
-                                class="px-2 py-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded ml-3 shrink-0">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-
-                {{-- Add New Attachments --}}
-                <h3 class="text-xs font-semibold text-gray-800 mb-1">Add New Attachments</h3>
-                <p class="text-xs text-gray-500 mb-3">Upload additional documents (PDF, DOC, DOCX, JPG, PNG, XLS, XLSX — Max 5MB each)</p>
-
-                <div id="attachments-container" class="space-y-2"></div>
-
-                <button type="button" onclick="addAttachmentField()"
-                    class="mt-3 inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            {{-- Attachments Section (collapsible) --}}
+            <details class="border border-gray-200 rounded-lg bg-gray-50 group" {{ $partyTransfer->attachments->count() > 0 ? 'open' : '' }}>
+                <summary class="flex items-center gap-2 px-4 py-2.5 cursor-pointer list-none select-none">
+                    <svg class="w-3.5 h-3.5 text-gray-500 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    Add Attachment
-                </button>
-            </div>
+                    <span class="text-xs font-semibold text-gray-700">Attachments</span>
+                    @if($partyTransfer->attachments->count() > 0)
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">{{ $partyTransfer->attachments->count() }}</span>
+                    @endif
+                    <span class="text-xs text-gray-400">(PDF, DOC, DOCX, JPG, PNG, XLS, XLSX — Max 5MB each)</span>
+                </summary>
+                <div class="px-4 pb-3 pt-1 border-t border-gray-200">
+                    {{-- Existing Attachments --}}
+                    @if($partyTransfer->attachments->count() > 0)
+                    <div class="mb-3">
+                        <p class="text-xs font-semibold text-gray-700 mb-2">Existing Attachments</p>
+                        <div class="space-y-1.5">
+                            @foreach($partyTransfer->attachments as $attachment)
+                            <div class="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-200">
+                                <div class="flex items-center space-x-3 flex-1 min-w-0">
+                                    <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                                    </svg>
+                                    <div class="flex-1 min-w-0">
+                                        @if($attachment->file_title)
+                                        <p class="text-xs font-semibold text-gray-900 truncate">{{ $attachment->file_title }}</p>
+                                        @endif
+                                        <a href="{{ Storage::url($attachment->file_path) }}" target="_blank"
+                                            class="text-xs text-blue-700 hover:text-blue-900 font-medium truncate block">
+                                            {{ $attachment->file_name }}
+                                        </a>
+                                        <p class="text-xs text-gray-500">{{ $attachment->file_size_formatted }}</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="deleteAttachment({{ $attachment->id }})"
+                                    class="px-2 py-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded ml-3 shrink-0">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Add New Attachments --}}
+                    <div id="attachments-container" class="space-y-2"></div>
+                    <button type="button" onclick="addAttachmentField()"
+                        class="mt-2 inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Attachment
+                    </button>
+                </div>
+            </details>
 
             {{-- Form Actions --}}
-            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 pt-4 border-t border-gray-100">
+            <div class="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:items-center sm:justify-end gap-2 pt-1.5 border-t border-gray-100">
                 <a href="{{ route('party-transfers.index') }}"
                     class="inline-flex items-center justify-center px-5 py-2.5 sm:py-1.5 bg-red-500 rounded text-xs font-semibold text-white hover:bg-red-600 w-full sm:w-auto">
                     Cancel

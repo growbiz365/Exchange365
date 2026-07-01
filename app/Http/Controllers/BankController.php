@@ -9,7 +9,6 @@ use App\Models\BankType;
 use App\Models\Business;
 use App\Models\Currency;
 use App\Models\BankTransfer;
-use App\Models\MoneyExchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,22 +27,6 @@ class BankController extends Controller
 
         $business = Business::findOrFail($businessId);
 
-        $totalBanks = Bank::forBusiness($businessId)->count();
-        $activeBanks = Bank::forBusiness($businessId)->active()->count();
-        $totalTransfers = BankTransfer::where('business_id', $businessId)->count();
-
-        $moneyExchangeAmount = (float) MoneyExchange::forBusiness($businessId)->sum('debit_amount');
-
-        $currenciesInUse = (int) Bank::forBusiness($businessId)
-            ->selectRaw('COUNT(DISTINCT currency_id) as c')
-            ->value('c');
-
-        $totalBalance = (float) BankLedger::query()
-            ->join('banks as b', 'b.bank_id', '=', 'bank_ledger.bank_id')
-            ->where('b.business_id', $businessId)
-            ->selectRaw('COALESCE(SUM(bank_ledger.deposit_amount), 0) - COALESCE(SUM(bank_ledger.withdrawal_amount), 0) as bank_balance')
-            ->value('bank_balance');
-
         $recentBanks = Bank::forBusiness($businessId)
             ->with(['currency', 'bankType'])
             ->orderByDesc('bank_id')
@@ -59,12 +42,6 @@ class BankController extends Controller
 
         return view('banks.dashboard', compact(
             'business',
-            'totalBanks',
-            'activeBanks',
-            'totalTransfers',
-            'moneyExchangeAmount',
-            'currenciesInUse',
-            'totalBalance',
             'recentBanks',
             'recentTransfers'
         ));

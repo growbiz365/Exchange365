@@ -3,15 +3,9 @@
 
     @php
         $businessTimezone   = $businessTimezone   ?? 'Asia/Karachi';
-        $stats = $stats ?? [
-            'total_banks' => 0, 'total_parties' => 0, 'total_general_vouchers' => 0, 'total_assets' => 0,
-            'total_party_transfers' => 0, 'total_money_exchanges' => 0, 'total_bank_transfers' => 0,
-            'general_vouchers_amount' => 0, 'party_transfers_amount' => 0, 'money_exchanges_amount' => 0, 'bank_transfers_amount' => 0
-        ];
         $totalCredit        = $totalCredit        ?? 0;
         $totalDebit         = $totalDebit         ?? 0;
         $bankBalances       = $bankBalances        ?? collect();
-        $todayTransactions  = $todayTransactions  ?? 0;
         $topParties         = $topParties         ?? collect();
     @endphp
 
@@ -105,91 +99,7 @@
 
             <x-success-alert message="You're Successfully logged in!" />
 
-            <!-- Key Statistics Cards -->
-            @php
-                $netBalance = $totalCredit - $totalDebit;
-                $netFull = ($netBalance >= 0 ? '+' : '') . number_format($netBalance, 2);
-            @endphp
-            @canany(['view general vouchers', 'view parties transfers', 'view banks', 'view bank-transfers', 'view parties balances', 'view parties'])
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-
-                @canany(['view general vouchers', 'view parties transfers', 'view banks', 'view bank-transfers'])
-                <!-- Today's Transactions -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-sky-500 p-4 hover:shadow-md transition-all duration-300 group">
-                    <div class="flex items-center gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-sky-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">Today's Transactions</p>
-                            <p class="text-xl font-bold text-gray-900 leading-tight mt-0.5">{{ number_format($todayTransactions) }}</p>
-                            <span class="text-xs text-gray-400">Entries recorded today</span>
-                        </div>
-                    </div>
-                </div>
-                @endcanany
-
-                @can('view parties balances')
-                <!-- Net Party Balance -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 {{ $netBalance >= 0 ? 'border-l-emerald-500' : 'border-l-rose-500' }} p-4 hover:shadow-md transition-all duration-300 group">
-                    <div class="flex items-center gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br {{ $netBalance >= 0 ? 'from-emerald-500 to-teal-600' : 'from-rose-500 to-rose-600' }} rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">Net Party Balance</p>
-                            <p class="text-base sm:text-lg font-bold {{ $netBalance >= 0 ? 'text-emerald-700' : 'text-rose-600' }} leading-tight mt-0.5 break-all">
-                                {{ $netFull }}
-                            </p>
-                            <span class="text-xs text-gray-400">{{ $netBalance >= 0 ? 'Net receivable' : 'Net payable' }}</span>
-                        </div>
-                    </div>
-                </div>
-                @endcan
-
-                @can('view general vouchers')
-                <!-- General Vouchers -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-emerald-500 p-4 hover:shadow-md transition-all duration-300 group">
-                    <div class="flex items-center gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">General Vouchers</p>
-                            <p class="text-xl font-bold text-gray-900 leading-tight mt-0.5">{{ number_format($stats['total_general_vouchers']) }}</p>
-                            <span class="text-xs text-gray-400">{{ number_format($stats['general_vouchers_amount']) }} total amount</span>
-                        </div>
-                    </div>
-                </div>
-                @endcan
-
-                @can('view parties')
-                <!-- Total Parties -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-amber-500 p-4 hover:shadow-md transition-all duration-300 group">
-                    <div class="flex items-center gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">Total Parties</p>
-                            <p class="text-xl font-bold text-gray-900 leading-tight mt-0.5">{{ number_format($stats['total_parties'] ?? 0) }}</p>
-                            <span class="text-xs text-gray-400">Customers &amp; suppliers</span>
-                        </div>
-                    </div>
-                </div>
-                @endcan
-            </div>
-            @endcanany
-
-            @canany(['create general vouchers', 'create parties transfers', 'view parties transfers', 'view banks', 'view parties', 'view finance'])
+            @canany(['create general vouchers', 'create parties transfers', 'create bank-transfers', 'create parties', 'create banks', 'view banks'])
             <!-- Exchange Shortcuts -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
@@ -201,7 +111,7 @@
                         </div>
                         <div>
                             <h2 class="text-sm font-bold text-gray-900">Exchange Shortcuts</h2>
-                            <p class="text-xs text-gray-500">Frequently used features</p>
+                            <p class="text-xs text-gray-500">Quick create new entries</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 rounded-lg border border-emerald-100">
@@ -240,17 +150,6 @@
                             <span class="block text-xs text-gray-400 mt-0.5">Create transfer</span>
                         </div>
                     </a>
-                    @elsecan('view parties transfers')
-                    <a href="{{ route('party-transfers.index') }}"
-                        class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md p-3 transition-all duration-200">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
-                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-                        </div>
-                        <div>
-                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-blue-700 transition-colors">Party Transfer</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">View transfers</span>
-                        </div>
-                    </a>
                     @endcan
 
                     @can('view banks')
@@ -261,46 +160,46 @@
                         </div>
                         <div>
                             <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-teal-700 transition-colors">Money Exchange</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">Between banks</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">Create exchange</span>
                         </div>
                     </a>
                     @endcan
 
-                    @can('view parties')
-                    <a href="{{ route('parties.index') }}"
+                    @can('create bank-transfers')
+                    <a href="{{ route('bank-transfers.create') }}"
+                        class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-sky-300 hover:shadow-md p-3 transition-all duration-200">
+                        <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-sky-700 transition-colors">Bank Transfer</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">Create transfer</span>
+                        </div>
+                    </a>
+                    @endcan
+
+                    @can('create parties')
+                    <a href="{{ route('parties.create') }}"
                         class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md p-3 transition-all duration-200">
                         <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
                             <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                         </div>
                         <div>
-                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-purple-700 transition-colors">Parties</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">All contacts</span>
+                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-purple-700 transition-colors">Party</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">Create party</span>
                         </div>
                     </a>
                     @endcan
 
-                    @can('view banks')
-                    <a href="{{ route('banks.dashboard') }}"
+                    @can('create banks')
+                    <a href="{{ route('banks.create') }}"
                         class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md p-3 transition-all duration-200">
                         <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
                             <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                         </div>
                         <div>
-                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-blue-700 transition-colors">Banks</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">Dashboard</span>
-                        </div>
-                    </a>
-                    @endcan
-
-                    @can('view finance')
-                    <a href="{{ route('reports.index') }}"
-                        class="group/card flex flex-col items-center text-center gap-2 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-md p-3 transition-all duration-200">
-                        <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
-                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        </div>
-                        <div>
-                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-teal-700 transition-colors">Reports</span>
-                            <span class="block text-xs text-gray-400 mt-0.5">View reports</span>
+                            <span class="block text-xs font-semibold text-gray-800 group-hover/card:text-blue-700 transition-colors">Bank</span>
+                            <span class="block text-xs text-gray-400 mt-0.5">Create bank</span>
                         </div>
                     </a>
                     @endcan

@@ -7,9 +7,11 @@
         ['url' => '#', 'label' => 'Create']
     ]" />
 
-    <x-dynamic-heading title="Create Bank Transfer" />
+    <div class="px-4 pt-3 pb-1">
+        <h2 class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Create Bank Transfer</h2>
+    </div>
 
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4 sm:p-6 mt-4">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4 sm:p-6 mt-1">
         @if ($errors->any())
             <div class="rounded-md mb-4 bg-red-50 border border-red-400 p-4 text-red-800">
                 <p class="text-sm font-medium">Whoops! Something went wrong.</p>
