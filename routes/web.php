@@ -224,6 +224,7 @@ Route::middleware('auth')->group(function () {
         Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('reports/currency-summary', [ReportController::class, 'currencySummary'])->name('reports.currency-summary');
         Route::get('reports/activity-log', [ReportController::class, 'activityLog'])->name('reports.activity-log');
+        Route::get('reports/daily-report', [ReportController::class, 'dailyReport'])->name('reports.daily-report');
     });
 
     Route::delete('general-vouchers/attachments/{attachment}', [GeneralVoucherController::class, 'deleteAttachment'])

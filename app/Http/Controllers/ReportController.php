@@ -25,6 +25,72 @@ class ReportController extends Controller
     }
 
     /**
+     * Daily Report: all vouchers for a selected date across every module.
+     */
+    public function dailyReport(Request $request)
+    {
+        $businessId = session('active_business');
+        if (!$businessId) {
+            return redirect()->route('businesses.index')
+                ->with('error', 'Please select a business first.');
+        }
+
+        $dateSearch = $request->input('date_search', now()->format('Y-m-d'));
+        $dateSearch = \Carbon\Carbon::parse($dateSearch)->format('Y-m-d');
+
+        $partyTransfers = PartyTransfer::with(['creditParty', 'debitParty', 'creditCurrency', 'debitCurrency'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('party_transfer_id')
+            ->get();
+
+        $bankTransfers = BankTransfer::with(['fromBank.currency', 'toBank.currency'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('bank_transfer_id')
+            ->get();
+
+        $generalVouchers = GeneralVoucher::with(['bank.currency', 'party'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('general_voucher_id')
+            ->get();
+
+        $purchases = Purchase::with(['bank.currency', 'party', 'partyCurrency'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('purchase_id')
+            ->get();
+
+        $sales = Sale::with(['bank.currency', 'party', 'partyCurrency'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('sales_id')
+            ->get();
+
+        $purchaseAssets = Asset::with(['purchaseBank', 'purchaseParty', 'category'])
+            ->where('business_id', $businessId)
+            ->whereDate('date_added', $dateSearch)
+            ->orderBy('asset_id')
+            ->get();
+
+        $saleAssets = Asset::with(['saleBank', 'saleParty', 'category'])
+            ->where('business_id', $businessId)
+            ->whereNotNull('sale_date')
+            ->whereDate('sale_date', $dateSearch)
+            ->where('asset_status', Asset::STATUS_SOLD)
+            ->orderBy('asset_id')
+            ->get();
+
+        $business = Business::find($businessId);
+
+        return view('reports.daily-report', compact(
+            'dateSearch', 'partyTransfers', 'bankTransfers', 'generalVouchers',
+            'purchases', 'sales', 'purchaseAssets', 'saleAssets', 'business'
+        ));
+    }
+
+    /**
      * Activity log report: who did what and when.
      */
     public function activityLog(Request $request)

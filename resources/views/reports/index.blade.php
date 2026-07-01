@@ -74,10 +74,26 @@
                     <p class="text-xs text-gray-500">Currency and balance overview by date</p>
                 </div>
             </div>
-            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">2 Reports</span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">3 Reports</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            <a href="{{ route('reports.daily-report') }}"
+                class="group/card flex flex-col items-center text-center gap-3 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md p-5 transition-all duration-200">
+                <div class="w-12 h-12 bg-gradient-to-br from-indigo-600 to-slate-700 rounded-xl flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-gray-900 group-hover/card:text-indigo-700 transition-colors">Daily Report</h3>
+                    <p class="text-xs text-gray-500 mt-0.5">All transactions for a selected date</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 group-hover/card:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+
             <a href="{{ route('reports.currency-summary') }}"
                 class="group/card flex flex-col items-center text-center gap-3 bg-gray-50 hover:bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md p-5 transition-all duration-200">
                 <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm group-hover/card:scale-110 transition-transform duration-200">
