@@ -57,13 +57,21 @@
                 </div>
             @endif
 
+            @php
+                $dateAddedValue = old('date_added');
+                if (is_string($dateAddedValue) && $dateAddedValue !== '' && str_contains($dateAddedValue, '-')) {
+                    try { $dateAddedValue = \Carbon\Carbon::parse($dateAddedValue)->format('d/m/Y'); } catch (\Throwable $e) {}
+                }
+                if (!$dateAddedValue) { $dateAddedValue = $partyTransfer->date_added->format('d/m/Y'); }
+            @endphp
+
             {{-- Top Row: Date, Details, Operation, Rate --}}
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-1.5 pb-1.5 border-b border-gray-100">
-                <div>
+                <div class="relative">
                     <label for="date_added" class="block text-xs font-semibold text-red-600 mb-0.5">Date <span>*</span></label>
                     <input type="text" id="date_added" name="date_added"
-                        value="{{ old('date_added', $partyTransfer->date_added->format('d/m/Y')) }}" required readonly
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                        value="{{ $dateAddedValue }}" required readonly
+                        class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
                         placeholder="dd/mm/yyyy" />
                     @error('date_added') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
@@ -72,7 +80,7 @@
                     <label for="details" class="block text-xs font-semibold text-gray-700 mb-0.5">Details</label>
                     <input type="text" id="details" name="details"
                         value="{{ old('details', $partyTransfer->details) }}"
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="" />
                     @error('details') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
@@ -101,7 +109,7 @@
                     <label for="rate" class="block text-xs font-semibold text-red-600 mb-0.5">Rate <span>*</span></label>
                     <input type="number" id="rate" name="rate" step="any" min="0.0001"
                         value="{{ old('rate', $partyTransfer->rate) }}" required inputmode="decimal"
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        class="block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="1" oninput="calculateCreditAmount()" />
                     @error('rate') <p class="text-xs text-red-600 mt-0.5">{{ $message }}</p> @enderror
                 </div>
@@ -338,63 +346,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        .chosen-container { width: 100% !important; }
-        .chosen-container-single .chosen-single {
-            height: 30px; line-height: 28px; padding: 0 8px;
-            border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px;
-            background: #fff; font-family: inherit;
-        }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 8px; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 12px; }
-        .chosen-results li.highlighted { background: #2563eb; color: white; }
-        .chosen-container .chosen-drop { z-index: 9999 !important; }
-
-        /* Flatpickr — keep d/m/Y; preserve 7-column calendar grid */
-        #date_added.flatpickr-input,
-        #date_added {
-            width: 100%;
-            max-width: none;
-            display: block;
-            box-sizing: border-box;
-            height: 36px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            font-size: 0.875rem;
-        }
-        .flatpickr-calendar {
-            width: 307px !important;
-            font-size: 0.8125rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
-        }
-        .flatpickr-calendar .flatpickr-days,
-        .flatpickr-calendar .dayContainer {
-            width: 100% !important;
-            min-width: 100% !important;
-            max-width: 100% !important;
-        }
-        .flatpickr-day {
-            flex-basis: 14.2857143% !important;
-            max-width: 39px !important;
-            height: 39px;
-            line-height: 39px;
-            border-radius: 9999px;
-        }
-        .flatpickr-day.today {
-            border-color: #4f46e5;
-        }
-        .flatpickr-day.selected,
-        .flatpickr-day.startRange,
-        .flatpickr-day.endRange {
-            background: #4f46e5;
-            border-color: #4f46e5;
-            color: #fff;
-        }
-    </style>
+    <x-chosen-styles />
+    <x-form-bold-input-styles form-id="transferForm" />
+    <x-flatpickr-compact-styles />
 </x-app-layout>
 
 <script>
@@ -579,6 +533,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dateFormat: 'd/m/Y',
         allowInput: false,
         disableMobile: true,
+        position: 'below left',
     });
 
     fetchPartyBalance('debit');

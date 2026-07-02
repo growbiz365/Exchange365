@@ -138,10 +138,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div id="sale_bank_balance_display" class="mt-1 text-xs text-gray-700 hidden">
-                                <span class="font-medium">Balance:</span>
-                                <span id="sale_bank_balance_amount" class="ml-1"></span>
-                            </div>
+                            <x-bank-balance-display display-id="sale_bank_balance_display" amount-id="sale_bank_balance_amount" />
                             <x-input-error :messages="$errors->get('sale_bank_id')" class="mt-0.5 text-xs" />
                         </div>
                     </div>
@@ -197,28 +194,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <x-chosen-styles />
+    <x-form-bold-input-styles form-id="assetSellForm" />
+    <x-flatpickr-compact-styles />
     <style>
-        .chosen-container { width: 100% !important; }
-        .chosen-container-single .chosen-single {
-            height: 30px; line-height: 28px; padding: 0 8px;
-            border: 1px solid #d1d5db; border-radius: 4px; font-size: 12px;
-            background: #fff; font-family: inherit;
-        }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 8px; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 4px 4px 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 4px 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 12px; }
-        .chosen-results li.highlighted { background: #2563eb; color: white; }
-        .chosen-container .chosen-drop { z-index: 9999 !important; }
-        #sale_date.flatpickr-input { height: 30px; font-size: 12px; }
-        #sale_date {
-            max-width: 100%;
-            display: block;
-        }
-        .flatpickr-calendar { font-size: 12px; }
-
-        /* More compact form spacing without changing font sizes */
         #assetSellForm .mb-4 {
             margin-bottom: 0.75rem;
         }
@@ -241,7 +220,7 @@
     </style>
 
     <script>
-        flatpickr('#sale_date', { dateFormat: 'd/m/Y', allowInput: false });
+        flatpickr('#sale_date', { dateFormat: 'd/m/Y', allowInput: false, disableMobile: true, position: 'below left' });
 
         document.addEventListener('DOMContentLoaded', function () {
             var typeInputs = document.querySelectorAll('input[name="sale_transaction_type"]');
@@ -259,14 +238,16 @@
                 });
             }
 
+            function isBankType() {
+                var selected = document.querySelector('input[name="sale_transaction_type"]:checked');
+                return selected ? selected.value === '2' : false;
+            }
+
             function updateVisibility() {
                 var selected = document.querySelector('input[name="sale_transaction_type"]:checked');
                 var value = selected ? selected.value : '2';
                 bankWrapper.classList.toggle('hidden', value !== '2');
                 partyWrapper.classList.toggle('hidden', value !== '3');
-                if (value !== '2') {
-                    document.getElementById('sale_bank_balance_display').classList.add('hidden');
-                }
                 if (value !== '3') {
                     document.getElementById('sale_party_balance_display').classList.add('hidden');
                 }
@@ -276,23 +257,23 @@
                 }
             }
 
-            function fetchSaleBankBalance(bankId) {
-                var div = document.getElementById('sale_bank_balance_display');
-                var span = document.getElementById('sale_bank_balance_amount');
-                if (!bankId) { div.classList.add('hidden'); return; }
-                fetch('/banks/' + bankId + '/balance')
-                    .then(function (r) { return r.json(); })
-                    .then(function (data) {
-                        if (typeof data.balance !== 'undefined') {
-                            var bal = parseFloat(data.balance);
-                            span.textContent = bal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            span.className = 'ml-1 font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
-                            div.classList.remove('hidden');
-                        } else {
-                            div.classList.add('hidden');
-                        }
-                    })
-                    .catch(function () { div.classList.add('hidden'); });
+            function refreshBankBalance() {
+                if (!window.BankBalance) return;
+                var display = document.getElementById('sale_bank_balance_display');
+                var amount = document.getElementById('sale_bank_balance_amount');
+                if (isBankType() && bankSelect.value) {
+                    BankBalance.fetch(bankSelect.value, 'sale_bank_balance_display', 'sale_bank_balance_amount');
+                } else if (display && amount) {
+                    display.classList.add('hidden');
+                    amount.textContent = '';
+                    delete amount.dataset.balance;
+                }
+            }
+
+            if (window.BankBalance) {
+                BankBalance.bind('sale_bank_id', 'sale_bank_balance_display', 'sale_bank_balance_amount', {
+                    shouldFetch: function () { return isBankType(); },
+                });
             }
 
             function fetchSalePartyBalance(partyId) {
@@ -317,23 +298,13 @@
             typeInputs.forEach(function (input) {
                 input.addEventListener('change', function () {
                     updateVisibility();
+                    refreshBankBalance();
                     var selected = document.querySelector('input[name="sale_transaction_type"]:checked');
                     var value = selected ? selected.value : '2';
-                    if (value === '2' && bankSelect.value) {
-                        fetchSaleBankBalance(bankSelect.value);
-                    }
                     if (value === '3' && partySelect.value) {
                         fetchSalePartyBalance(partySelect.value);
                     }
                 });
-            });
-
-            bankSelect.addEventListener('change', function () {
-                var selected = document.querySelector('input[name="sale_transaction_type"]:checked');
-                var value = selected ? selected.value : '2';
-                if (value === '2') {
-                    fetchSaleBankBalance(this.value);
-                }
             });
 
             partySelect.addEventListener('change', function () {
@@ -345,6 +316,8 @@
             });
 
             updateVisibility();
+            refreshBankBalance();
         });
     </script>
+    <x-bank-balance-init />
 </x-app-layout>

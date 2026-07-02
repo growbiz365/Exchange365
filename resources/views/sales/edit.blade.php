@@ -122,10 +122,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <div id="bank_balance_display" class="mt-0.5 text-xs text-gray-700 hidden">
-                                    <span class="font-medium">Balance:</span>
-                                    <span id="bank_balance_amount" class="ml-1"></span>
-                                </div>
+                                <x-bank-balance-display />
                                 <x-input-error :messages="$errors->get('bank_id')" class="mt-0.5" />
                             </td>
                         </tr>
@@ -232,29 +229,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        .chosen-container { width: 100% !important; }
-        .chosen-container-single .chosen-single {
-            height: 30px; line-height: 28px; padding: 0 8px;
-            border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px;
-            background: #fff; font-family: inherit;
-        }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 8px; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 12px; }
-        .chosen-results li.highlighted { background: #2563eb; color: white; }
-        .chosen-container .chosen-drop { z-index: 9999 !important; }
-        #date_added.flatpickr-input, #date_added {
-            width: 100%; max-width: none; display: block; box-sizing: border-box;
-            height: 36px; padding-top: 4px; padding-bottom: 4px; font-size: 0.875rem;
-        }
-        .flatpickr-calendar { width: 307px !important; font-size: 0.8125rem; border-radius: 0.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
-        .flatpickr-calendar .flatpickr-days, .flatpickr-calendar .dayContainer { width: 100% !important; min-width: 100% !important; max-width: 100% !important; }
-        .flatpickr-day { flex-basis: 14.2857143% !important; max-width: 39px !important; height: 39px; line-height: 39px; border-radius: 9999px; }
-        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange { background: #4f46e5; border-color: #4f46e5; color: #fff; }
-    </style>
+    <x-chosen-styles />
+    <x-form-bold-input-styles form-id="salesForm" />
+    <x-flatpickr-compact-styles />
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById('salesForm');
@@ -271,20 +248,10 @@
             if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
                 jQuery('.chosen-select').chosen({ width: '100%', search_contains: true, allow_single_deselect: true, placeholder_text_single: 'Select an option' });
             }
-            flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false, disableMobile: true });
+            flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false, disableMobile: true, position: 'below left' });
 
-            function fetchBankBalance(bankId) {
-                var div = document.getElementById('bank_balance_display');
-                var span = document.getElementById('bank_balance_amount');
-                if (!bankId) { div.classList.add('hidden'); return; }
-                fetch('/banks/' + bankId + '/balance').then(function(r) { return r.json(); }).then(function(data) {
-                    if (data.balance !== undefined) {
-                        var bal = parseFloat(data.balance);
-                        span.textContent = bal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                        span.className = 'ml-1 font-semibold ' + (bal >= 0 ? 'text-green-600' : 'text-red-600');
-                        div.classList.remove('hidden');
-                    } else { div.classList.add('hidden'); }
-                }).catch(function() { div.classList.add('hidden'); });
+            if (window.BankBalance) {
+                BankBalance.bind('bank_id', 'bank_balance_display', 'bank_balance_amount');
             }
 
             function fetchPartyBalance(partyId, currencyId) {
@@ -327,8 +294,6 @@
                 suppressAmountRecalc = false;
             }
 
-            bankSelect.addEventListener('change', function() { fetchBankBalance(this.value); });
-            if (bankSelect.value) fetchBankBalance(bankSelect.value);
             function updatePartyBalance() { fetchPartyBalance(partySelect.value, currencySelect.value); }
             partySelect.addEventListener('change', updatePartyBalance);
             currencySelect.addEventListener('change', updatePartyBalance);
@@ -347,5 +312,6 @@
             });
         });
     </script>
+    <x-bank-balance-init />
     <x-amount-words-init :ids="['currency_amount', 'party_amount']" />
 </x-app-layout>

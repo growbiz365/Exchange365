@@ -69,10 +69,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <div id="from_account_balance" class="mt-1 text-xs text-gray-700 hidden">
-                            <span class="font-medium">Balance:</span>
-                            <span id="from_balance_amount" class="ml-1"></span>
-                        </div>
+                        <x-bank-balance-display display-id="from_account_balance" amount-id="from_balance_amount" />
                         <x-input-error :messages="$errors->get('from_account_id')" class="mt-0.5" />
                     </div>
                 </div>
@@ -91,10 +88,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <div id="to_account_balance" class="mt-1 text-xs text-gray-700 hidden">
-                            <span class="font-medium">Balance:</span>
-                            <span id="to_balance_amount" class="ml-1"></span>
-                        </div>
+                        <x-bank-balance-display display-id="to_account_balance" amount-id="to_balance_amount" />
                         <x-input-error :messages="$errors->get('to_account_id')" class="mt-0.5" />
                     </div>
                 </div>
@@ -203,6 +197,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             margin-right: 0.5rem;
+            font-weight: 600;
         }
         .chosen-container-single .chosen-single div { right: 0.5rem; }
         .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 0.375rem 0.375rem 0 0; }
@@ -214,40 +209,10 @@
         }
         .chosen-results li.highlighted { background: #2563eb; color: white; }
 
-        /* Match date input to other form controls (full width, same height) */
-        #transferForm #date_added.flatpickr-input,
-        #transferForm #date_added {
-            width: 100%;
-            max-width: none;
-            display: block;
-            box-sizing: border-box;
-        }
-        #date_added.flatpickr-input {
-            height: 36px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            font-size: 0.875rem;
-        }
-        .flatpickr-calendar {
-            font-size: 0.75rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
-        }
-        .flatpickr-day {
-            max-width: 28px;
-            height: 28px;
-            line-height: 28px;
-            border-radius: 9999px;
-        }
-        .flatpickr-day.today {
-            border-color: #4f46e5;
-        }
-        .flatpickr-day.selected,
-        .flatpickr-day.startRange,
-        .flatpickr-day.endRange {
-            background: #4f46e5;
-            border-color: #4f46e5;
-            color: #fff;
+        #transferForm input[type="text"],
+        #transferForm input[type="number"],
+        #transferForm textarea {
+            font-weight: 600;
         }
 
         /* More compact form spacing without changing font sizes */
@@ -272,6 +237,8 @@
             margin-top: 1rem;
         }
     </style>
+    <x-form-bold-input-styles form-id="transferForm" />
+    <x-flatpickr-compact-styles />
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -293,23 +260,21 @@
                 });
             }
 
-            fromAccountSelect.addEventListener('change', function() {
-                fetchBankBalance(this.value, 'from');
+            if (window.BankBalance) {
+                BankBalance.bind('from_account_id', 'from_account_balance', 'from_balance_amount', {
+                    onChange: filterToAccountOptions,
+                });
+                BankBalance.bind('to_account_id', 'to_account_balance', 'to_balance_amount');
+            } else {
                 filterToAccountOptions();
-            });
-
-            toAccountSelect.addEventListener('change', function() {
-                fetchBankBalance(this.value, 'to');
-            });
-
-            if (fromAccountSelect.value) fetchBankBalance(fromAccountSelect.value, 'from');
-            if (toAccountSelect.value) fetchBankBalance(toAccountSelect.value, 'to');
-            filterToAccountOptions();
+            }
 
             // Date picker (day/month/year)
             flatpickr('#date_added', {
                 dateFormat: 'd/m/Y',
                 allowInput: false,
+                disableMobile: true,
+                position: 'below left',
             });
 
             form.addEventListener('submit', function(e) {
@@ -340,29 +305,6 @@
                 document.getElementById('submitBtn').innerHTML = 'Saving...';
             });
         });
-
-        function fetchBankBalance(bankId, type) {
-            if (!bankId) {
-                document.getElementById(type + '_account_balance').classList.add('hidden');
-                return;
-            }
-            fetch(`/banks/${bankId}/balance`)
-                .then(response => response.json())
-                .then(data => {
-                    const balanceDiv = document.getElementById(type + '_account_balance');
-                    const balanceAmount = document.getElementById(type + '_balance_amount');
-                    if (data.balance !== undefined) {
-                        const formattedBalance = parseFloat(data.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                        balanceAmount.textContent = formattedBalance;
-                        balanceAmount.className = 'ml-1 font-medium ' + (data.balance >= 0 ? 'text-green-600' : 'text-red-600');
-                        balanceAmount.dataset.balance = data.balance;
-                        balanceDiv.classList.remove('hidden');
-                    } else {
-                        balanceDiv.classList.add('hidden');
-                    }
-                })
-                .catch(() => document.getElementById(type + '_account_balance').classList.add('hidden'));
-        }
 
         function showInsufficientBalanceError(message) {
             // Remove any existing inline error banner
@@ -438,10 +380,10 @@
         }
 
         document.getElementById('amount').addEventListener('input', validateTransferAmount);
-        document.getElementById('from_account_id').addEventListener('change', function() { setTimeout(validateTransferAmount, 600); });
-        // Also hook into Chosen's change event for the from_account select
         if (typeof jQuery !== 'undefined') {
             jQuery('#from_account_id').on('change', function() { setTimeout(validateTransferAmount, 600); });
+        } else {
+            document.getElementById('from_account_id').addEventListener('change', function() { setTimeout(validateTransferAmount, 600); });
         }
 
         let attachmentIndex = 1;
@@ -468,5 +410,6 @@
             attachmentIndex++;
         }
     </script>
+    <x-bank-balance-init />
     <x-amount-words-init :ids="['amount']" />
 </x-app-layout>

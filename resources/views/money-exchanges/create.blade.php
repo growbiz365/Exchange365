@@ -123,10 +123,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <div id="from_account_balance" class="mt-0.5 text-xs text-gray-700 hidden">
-                                    <span class="font-medium">Balance:</span>
-                                    <span id="from_balance_amount" class="ml-1"></span>
-                                </div>
+                                <x-bank-balance-display display-id="from_account_balance" amount-id="from_balance_amount" />
                                 <x-input-error :messages="$errors->get('from_account_id')" class="mt-0.5" />
                             </td>
                         </tr>
@@ -170,10 +167,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <div id="to_account_balance" class="mt-0.5 text-xs text-gray-700 hidden">
-                                    <span class="font-medium">Balance:</span>
-                                    <span id="to_balance_amount" class="ml-1"></span>
-                                </div>
+                                <x-bank-balance-display display-id="to_account_balance" amount-id="to_balance_amount" />
                                 <x-input-error :messages="$errors->get('to_account_id')" class="mt-0.5" />
                             </td>
                         </tr>
@@ -237,60 +231,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        .chosen-container { width: 100% !important; }
-        .chosen-container-single .chosen-single {
-            height: 30px; line-height: 28px; padding: 0 8px;
-            border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px;
-            background: #fff; font-family: inherit;
-        }
-        .chosen-container-single .chosen-single span { margin-right: 0.5rem; }
-        .chosen-container-single .chosen-single div { right: 8px; }
-        .chosen-container-active.chosen-with-drop .chosen-single { border-radius: 6px 6px 0 0; }
-        .chosen-drop { border: 1px solid #d1d5db; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chosen-results { font-size: 12px; }
-        .chosen-results li.highlighted { background: #2563eb; color: white; }
-        .chosen-container .chosen-drop { z-index: 9999 !important; }
-
-        #date_added.flatpickr-input,
-        #date_added {
-            width: 100%;
-            max-width: none;
-            display: block;
-            box-sizing: border-box;
-            height: 36px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            font-size: 0.875rem;
-        }
-        .flatpickr-calendar {
-            width: 307px !important;
-            font-size: 0.8125rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
-        }
-        .flatpickr-calendar .flatpickr-days,
-        .flatpickr-calendar .dayContainer {
-            width: 100% !important;
-            min-width: 100% !important;
-            max-width: 100% !important;
-        }
-        .flatpickr-day {
-            flex-basis: 14.2857143% !important;
-            max-width: 39px !important;
-            height: 39px;
-            line-height: 39px;
-            border-radius: 9999px;
-        }
-        .flatpickr-day.today { border-color: #4f46e5; }
-        .flatpickr-day.selected,
-        .flatpickr-day.startRange,
-        .flatpickr-day.endRange {
-            background: #4f46e5;
-            border-color: #4f46e5;
-            color: #fff;
-        }
-    </style>
+    <x-chosen-styles />
+    <x-form-bold-input-styles form-id="exchangeForm" />
+    <x-flatpickr-compact-styles />
 </x-app-layout>
 
 <script>
@@ -395,26 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false, disableMobile: true });
-
-    function fetchBankBalance(type) {
-        const select = type === 'from' ? fromAccountSelect : toAccountSelect;
-        const balanceDiv = document.getElementById(type + '_account_balance');
-        const balanceAmount = document.getElementById(type + '_balance_amount');
-        if (!select || !balanceDiv || !balanceAmount) return;
-        const bankId = select.value;
-        if (!bankId) { balanceDiv.classList.add('hidden'); balanceAmount.textContent = ''; return; }
-        fetch('/banks/' + bankId + '/balance')
-            .then(r => r.json())
-            .then(data => {
-                if (data.balance !== undefined) {
-                    balanceAmount.textContent = parseFloat(data.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    balanceAmount.className = 'ml-1 font-semibold ' + (data.balance >= 0 ? 'text-green-600' : 'text-red-600');
-                    balanceDiv.classList.remove('hidden');
-                } else { balanceDiv.classList.add('hidden'); balanceAmount.textContent = ''; }
-            })
-            .catch(() => { balanceDiv.classList.add('hidden'); balanceAmount.textContent = ''; });
-    }
+    flatpickr('#date_added', { dateFormat: 'd/m/Y', allowInput: false, disableMobile: true, position: 'below left' });
 
     function filterToAccountOptions() {
         const selectedFrom = fromAccountSelect.value;
@@ -427,11 +351,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) jQuery('#to_account_id').trigger('chosen:updated');
     }
 
-    fromAccountSelect.addEventListener('change', function () { filterToAccountOptions(); fetchBankBalance('from'); });
-    toAccountSelect.addEventListener('change', function () { fetchBankBalance('to'); });
-    filterToAccountOptions();
-    fetchBankBalance('from');
-    fetchBankBalance('to');
+    if (window.BankBalance) {
+        BankBalance.bind('from_account_id', 'from_account_balance', 'from_balance_amount', {
+            onChange: filterToAccountOptions,
+        });
+        BankBalance.bind('to_account_id', 'to_account_balance', 'to_balance_amount');
+    } else {
+        filterToAccountOptions();
+    }
 
     document.getElementById('exchangeForm').addEventListener('submit', function () {
         submitBtn.disabled = true;
@@ -439,4 +366,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<x-bank-balance-init />
 <x-amount-words-init :ids="['debit_amount', 'credit_amount']" />
