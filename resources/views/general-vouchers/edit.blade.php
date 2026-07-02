@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('general-vouchers.update', $generalVoucher) }}" enctype="multipart/form-data" id="voucherForm" class="px-4 sm:px-6 py-2 pb-3 space-y-1.5">
+        <form method="POST" action="{{ route('general-vouchers.update', $generalVoucher) }}" enctype="multipart/form-data" id="voucherForm" class="px-4 sm:px-6 py-2 pb-3 space-y-3">
             @csrf
             @method('PUT')
             <input type="hidden" name="general_voucher_id" value="{{ $generalVoucher->general_voucher_id }}" />
@@ -72,26 +72,25 @@
                 if (!$dateAddedValue) { $dateAddedValue = $generalVoucher->date_added->format('d/m/Y'); }
             @endphp
 
-            {{-- Top Row: Date, Details, Entry Type, Rate --}}
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-1.5 pb-1.5 border-b border-gray-100">
-                <div>
-                    <label for="date_added" class="block text-xs font-semibold text-red-600 mb-0.5">Date <span>*</span></label>
-                    <input type="text" id="date_added" name="date_added" value="{{ $dateAddedValue }}" required readonly
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
-                        placeholder="dd/mm/yyyy" />
-                    <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
+            {{-- Row 1: Date | Entry Type --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="date_added" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Date <span>*</span>
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <input type="text" id="date_added" name="date_added" value="{{ $dateAddedValue }}" required readonly
+                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white cursor-pointer"
+                            placeholder="dd/mm/yyyy" />
+                        <x-input-error :messages="$errors->get('date_added')" class="mt-0.5" />
+                    </div>
                 </div>
 
-                <div>
-                    <label for="details" class="block text-xs font-semibold text-gray-700 mb-0.5">Details</label>
-                    <input type="text" id="details" name="details" value="{{ old('details', $generalVoucher->details) }}"
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="" />
-                    <x-input-error :messages="$errors->get('details')" class="mt-0.5" />
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-red-600 mb-0.5">Entry Type <span>*</span></label>
-                    <div class="flex flex-wrap items-center gap-3 h-9">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+                    <span class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600">
+                        Entry Type <span>*</span>
+                    </span>
+                    <div class="flex-1 min-w-0 flex flex-wrap items-center gap-3">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
                             <input type="radio" name="entry_type" value="1" {{ old('entry_type', $generalVoucher->entry_type) == '1' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -104,97 +103,93 @@
                         </label>
                     </div>
                 </div>
+            </div>
 
-                <div>
-                    <label for="rate" class="block text-xs font-semibold text-red-600 mb-0.5">Rate <span>*</span></label>
-                    <input type="number" id="rate" name="rate" step="any" min="0.0001" value="{{ old('rate', $generalVoucher->rate) }}" required inputmode="decimal"
-                        class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="1" />
-                    <x-input-error :messages="$errors->get('rate')" class="mt-0.5" />
+            {{-- Row 2: Bank | Amount --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="bank_id" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Bank <span>*</span>
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <select id="bank_id" name="bank_id" required
+                            class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Select Bank Account</option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->bank_id }}" {{ old('bank_id', $generalVoucher->bank_id) == $bank->bank_id ? 'selected' : '' }}>
+                                    {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <div id="bank_balance_display" class="mt-0.5 text-xs text-gray-700 hidden">
+                            <span class="font-medium">Balance:</span>
+                            <span id="bank_balance_amount" class="ml-1"></span>
+                        </div>
+                        <x-input-error :messages="$errors->get('bank_id')" class="mt-0.5" />
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="amount" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Amount <span>*</span>
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <input type="number" id="amount" name="amount" step="any"
+                            value="{{ old('amount', $generalVoucher->amount) }}" required
+                            class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-indigo-500 focus:ring-indigo-500"
+                            placeholder="0.00" />
+                        <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
+                        <x-amount-words for="amount" />
+                    </div>
                 </div>
             </div>
 
-            {{-- Bank & Party Tables --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {{-- Row 3: Rate --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 pb-3 border-b border-gray-200">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="rate" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Rate <span>*</span>
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <input type="number" id="rate" name="rate" step="any" min="0.0001" value="{{ old('rate', $generalVoucher->rate) }}" required inputmode="decimal"
+                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="1" />
+                        <x-input-error :messages="$errors->get('rate')" class="mt-0.5" />
+                        <x-amount-words for="rate" class="mt-0.5 text-xs text-amber-700 not-italic leading-snug" />
+                    </div>
+                </div>
+                <div class="hidden md:block" aria-hidden="true"></div>
+            </div>
 
-                {{-- Bank Table --}}
-                <table class="w-full border border-gray-300 text-xs rounded">
-                    <thead>
-                        <tr>
-                            <th colspan="2"
-                                class="text-center bg-white text-black-800 font-bold py-1.5 px-3 border-b border-gray-300 tracking-wide rounded-t">
-                                Bank
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr>
-                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 w-2/5 align-middle">
-                                Bank <span class="text-red-600">*</span>
-                            </td>
-                            <td class="py-1.5 px-3">
-                                <select id="bank_id" name="bank_id" required
-                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-red-500 focus:ring-red-500">
-                                    <option value="">Select Bank Account</option>
-                                    @foreach($banks as $bank)
-                                        <option value="{{ $bank->bank_id }}" {{ old('bank_id', $generalVoucher->bank_id) == $bank->bank_id ? 'selected' : '' }}>
-                                            {{ $bank->bank_name }} ({{ $bank->currency?->currency ?? '-' }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div id="bank_balance_display" class="mt-0.5 text-xs text-gray-700 hidden">
-                                    <span class="font-medium">Balance:</span>
-                                    <span id="bank_balance_amount" class="ml-1"></span>
-                                </div>
-                                <x-input-error :messages="$errors->get('bank_id')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 align-middle">
-                                Amount <span class="text-red-600">*</span>
-                            </td>
-                            <td class="py-1.5 px-3">
-                                <input type="number" id="amount" name="amount" step="any"
-                                    value="{{ old('amount', $generalVoucher->amount) }}" required
-                                    class="format-amount block w-full rounded border-gray-300 text-sm font-semibold focus:border-red-500 focus:ring-red-500"
-                                    placeholder="0.00" />
-                                <x-input-error :messages="$errors->get('amount')" class="mt-0.5" />
-                                <x-amount-words for="amount" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            {{-- Row 4: Party | Details --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 pt-1">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="party_id" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Party <span>*</span>
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <select id="party_id" name="party_id" required
+                            class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Select Party</option>
+                            @foreach($parties as $party)
+                                <option value="{{ $party->party_id }}" {{ old('party_id', $generalVoucher->party_id) == $party->party_id ? 'selected' : '' }}>
+                                    {{ $party->party_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('party_id')" class="mt-0.5" />
+                    </div>
+                </div>
 
-                {{-- Party Table --}}
-                <table class="w-full border border-gray-300 text-xs rounded">
-                    <thead>
-                        <tr>
-                            <th colspan="2"
-                                class="text-center bg-white text-black-800 font-bold py-1.5 px-3 border-b border-gray-300 tracking-wide rounded-t">
-                                Party
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr>
-                            <td class="py-1.5 px-3 font-semibold text-red-600 bg-gray-50 w-2/5 align-middle">
-                                Party <span class="text-red-600">*</span>
-                            </td>
-                            <td class="py-1.5 px-3">
-                                <select id="party_id" name="party_id" required
-                                    class="chosen-select block w-full rounded border-gray-300 text-sm focus:border-green-500 focus:ring-green-500">
-                                    <option value="">Select Party</option>
-                                    @foreach($parties as $party)
-                                        <option value="{{ $party->party_id }}" {{ old('party_id', $generalVoucher->party_id) == $party->party_id ? 'selected' : '' }}>
-                                            {{ $party->party_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <x-input-error :messages="$errors->get('party_id')" class="mt-0.5" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
+                    <label for="details" class="w-full sm:w-28 shrink-0 text-xs font-semibold text-red-600 pt-1.5 sm:pt-2">
+                        Details
+                    </label>
+                    <div class="flex-1 min-w-0">
+                        <input type="text" id="details" name="details" value="{{ old('details', $generalVoucher->details) }}"
+                            class="block w-full rounded border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="" />
+                        <x-input-error :messages="$errors->get('details')" class="mt-0.5" />
+                    </div>
+                </div>
             </div>
 
             {{-- Attachments Section (collapsible) --}}
@@ -437,4 +432,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-<x-amount-words-init :ids="['amount']" />
+<x-amount-words-init :ids="['amount', 'rate']" />
