@@ -154,7 +154,7 @@ class Party extends Model
     {
         return [
             self::TYPE_KHATA => 'Khata Party',
-            self::TYPE_OTHER => 'Other Party',
+            self::TYPE_OTHER => 'Expense Party',
             self::TYPE_INCOME => 'Income Party',
         ];
     }

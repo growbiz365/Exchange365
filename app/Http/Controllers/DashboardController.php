@@ -22,10 +22,13 @@ class DashboardController extends Controller
                 'totalCredit'       => 0,
                 'totalDebit'        => 0,
                 'topParties'        => collect(),
+                'defaultCurrencyId' => null,
             ]);
         }
 
         $today = now()->format('Y-m-d');
+        $defaultCurrency = Currency::getDefault();
+        $defaultCurrencyId = $defaultCurrency?->currency_id;
 
         $bankBalances = BankLedger::query()
             ->join('banks as b', 'b.bank_id', '=', 'bank_ledger.bank_id')
@@ -46,10 +49,6 @@ class DashboardController extends Controller
             ->orderBy('b.currency_id')
             ->get();
 
-        // Total Credit / Debit: same meaning as Party Balances report — sums of per-party net
-        // balances (receivable vs payable), not raw ledger column totals. Only party_type = 1
-        // (Khata / regular parties), matching PartyController::balances.
-        $defaultCurrency = Currency::getDefault();
         $totalCredit = 0;
         $totalDebit  = 0;
         $topParties  = collect();
@@ -101,7 +100,8 @@ class DashboardController extends Controller
             'bankBalances',
             'totalCredit',
             'totalDebit',
-            'topParties'
+            'topParties',
+            'defaultCurrencyId'
         ));
     }
 }

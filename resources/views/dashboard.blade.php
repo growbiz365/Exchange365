@@ -306,10 +306,18 @@
                                     $barColor    = $isPositive ? 'bg-emerald-500' : 'bg-rose-400';
                                     $amountColor = $isPositive ? 'text-emerald-700' : 'text-rose-600';
                                     $prefix      = $isPositive ? '+' : '';
+                                    $partyLedgerUrl = $defaultCurrencyId
+                                        ? route('parties.ledger', ['party_id' => $party->party_id, 'currency_id' => $defaultCurrencyId])
+                                        : null;
                                 @endphp
+                                @if($partyLedgerUrl && auth()->user()->can('view parties'))
+                                <a href="{{ $partyLedgerUrl }}"
+                                   class="group/row block rounded-lg px-1 -mx-1 hover:bg-indigo-50/60 transition-colors">
+                                @else
                                 <div class="group/row">
+                                @endif
                                     <div class="flex items-center justify-between mb-0.5">
-                                        <span class="text-xs font-medium text-gray-700 truncate max-w-[55%]">{{ $party->party_name }}</span>
+                                        <span class="text-xs font-medium text-gray-700 truncate max-w-[55%] group-hover/row:text-indigo-700 transition-colors">{{ $party->party_name }}</span>
                                         <span class="text-xs font-bold {{ $amountColor }} flex-shrink-0 ml-2">
                                             {{ $prefix }}{{ number_format($party->net_balance, 2) }}
                                         </span>
@@ -318,7 +326,11 @@
                                         <div class="{{ $barColor }} h-2 rounded-full transition-all duration-500 group-hover/row:opacity-80"
                                              style="width: {{ $barWidth }}%"></div>
                                     </div>
+                                @if($partyLedgerUrl && auth()->user()->can('view parties'))
+                                </a>
+                                @else
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     @else
@@ -427,11 +439,17 @@
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             @foreach($bankBalances as $bank)
-                            <tr class="hover:bg-indigo-50/40 transition-colors duration-100 group/row">
+                            @php
+                                $bankLedgerUrl = auth()->user()->can('view banks')
+                                    ? route('banks.ledger', ['bank_id' => $bank->bank_id])
+                                    : null;
+                            @endphp
+                            <tr class="hover:bg-indigo-50/40 transition-colors duration-100 group/row {{ $bankLedgerUrl ? 'cursor-pointer' : '' }}"
+                                @if($bankLedgerUrl) onclick="window.location='{{ $bankLedgerUrl }}'" @endif>
                                 <td class="px-4 py-2.5">
                                     <div class="flex items-center gap-2">
                                         <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 flex-shrink-0 group-hover/row:bg-indigo-600 transition-colors"></div>
-                                        <span class="font-medium text-gray-700 truncate max-w-[7rem]">
+                                        <span class="font-medium text-gray-700 truncate max-w-[7rem] group-hover/row:text-indigo-700 transition-colors">
                                             {{ $bank->bank_name }}
                                         </span>
                                     </div>
