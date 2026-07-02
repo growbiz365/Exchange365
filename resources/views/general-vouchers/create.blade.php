@@ -71,12 +71,12 @@
                     </span>
                     <div class="flex-1 min-w-0 flex flex-wrap items-center gap-3">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                            <input type="radio" name="entry_type" value="1" {{ old('entry_type', '2') == '1' ? 'checked' : '' }}
+                            <input type="radio" name="entry_type" value="1" {{ old('entry_type', '1') == '1' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                             <span class="text-sm font-medium text-gray-700">Credit <span class="text-gray-500">( جمع )</span></span>
                         </label>
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                            <input type="radio" name="entry_type" value="2" {{ old('entry_type', '2') == '2' ? 'checked' : '' }}
+                            <input type="radio" name="entry_type" value="2" {{ old('entry_type') == '2' ? 'checked' : '' }}
                                 class="border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                             <span class="text-sm font-medium text-gray-700">Debit <span class="text-gray-500">( بنام )</span></span>
                         </label>
