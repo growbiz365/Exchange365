@@ -79,6 +79,7 @@
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Debit (بنام) Amount</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Credit (جمع) Party</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Credit (جمع) Amount</th>
+                                <th class="px-3 py-2 text-left font-bold text-gray-800">Rate</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Link</th>
                             </tr>
                         </thead>
@@ -94,15 +95,16 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->credit_amount, 0) }} {{ $row->creditCurrency?->currency }}
                                 </td>
+                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate != 0 ? number_format($row->rate, 4) : '—' }}</td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('party-transfers.edit', $row->party_transfer_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('party-transfers.edit', $row->party_transfer_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="bg-gray-50 border-t border-gray-200">
                             <tr>
-                                <td colspan="6" class="px-3 py-2 font-bold text-gray-700">
+                                <td colspan="7" class="px-3 py-2 font-bold text-gray-700">
                                     Total Record Found : <strong>{{ $partyTransfers->count() }}</strong>
                                 </td>
                             </tr>
@@ -126,6 +128,7 @@
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">From Account</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">To Amount</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Transfer Amount</th>
+                                <th class="px-3 py-2 text-left font-bold text-gray-800">Rate</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Link</th>
                             </tr>
                         </thead>
@@ -136,15 +139,16 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->fromBank?->bank_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->toBank?->bank_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ number_format($row->amount, 0) }}</td>
+                                <td class="px-3 py-2 font-bold text-gray-800">—</td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('bank-transfers.edit', $row->bank_transfer_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('bank-transfers.edit', $row->bank_transfer_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="bg-gray-50 border-t border-gray-200">
                             <tr>
-                                <td colspan="5" class="px-3 py-2 font-bold text-gray-700">
+                                <td colspan="6" class="px-3 py-2 font-bold text-gray-700">
                                     Total Record Found : <strong>{{ $bankTransfers->count() }}</strong>
                                 </td>
                             </tr>
@@ -169,6 +173,7 @@
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Bank</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Party</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Amount</th>
+                                <th class="px-3 py-2 text-left font-bold text-gray-800">Rate</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Link</th>
                             </tr>
                         </thead>
@@ -188,15 +193,16 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->amount, 0) }} {{ $row->bank?->currency?->currency }}
                                 </td>
+                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate != 0 ? number_format($row->rate, 4) : '—' }}</td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('general-vouchers.edit', $row->general_voucher_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('general-vouchers.edit', $row->general_voucher_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="bg-gray-50 border-t border-gray-200">
                             <tr>
-                                <td colspan="6" class="px-3 py-2 font-bold text-gray-700">
+                                <td colspan="7" class="px-3 py-2 font-bold text-gray-700">
                                     Total Record Found : <strong>{{ $generalVouchers->count() }}</strong>
                                 </td>
                             </tr>
@@ -233,13 +239,13 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->credit_amount, 0) }} {{ $row->bank?->currency?->currency }}
                                 </td>
-                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate }}</td>
+                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate != 0 ? number_format($row->rate, 4) : '—' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->party?->party_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->debit_amount, 0) }} {{ $row->partyCurrency?->currency }}
                                 </td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('purchases.edit', $row->purchase_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('purchases.edit', $row->purchase_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -283,13 +289,13 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->currency_amount, 0) }} {{ $row->bank?->currency?->currency }}
                                 </td>
-                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate }}</td>
+                                <td class="px-3 py-2 font-bold text-gray-800">{{ $row->rate != 0 ? number_format($row->rate, 4) : '—' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->party?->party_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">
                                     {{ number_format($row->party_amount, 0) }} {{ $row->partyCurrency?->currency }}
                                 </td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('sales.edit', $row->sales_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('sales.edit', $row->sales_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -322,6 +328,7 @@
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Bank</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Party</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Cost</th>
+                                <th class="px-3 py-2 text-left font-bold text-gray-800">Rate</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Link</th>
                             </tr>
                         </thead>
@@ -334,15 +341,16 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->purchaseBank?->bank_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->purchaseParty?->party_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ number_format($row->cost_amount, 0) }}</td>
+                                <td class="px-3 py-2 font-bold text-gray-800">—</td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('assets.edit', $row->asset_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('assets.edit', $row->asset_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="bg-gray-50 border-t border-gray-200">
                             <tr>
-                                <td colspan="7" class="px-3 py-2 font-bold text-gray-700">
+                                <td colspan="8" class="px-3 py-2 font-bold text-gray-700">
                                     Total Record Found : <strong>{{ $purchaseAssets->count() }}</strong>
                                 </td>
                             </tr>
@@ -368,6 +376,7 @@
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Bank</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Party</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Sale Amount</th>
+                                <th class="px-3 py-2 text-left font-bold text-gray-800">Rate</th>
                                 <th class="px-3 py-2 text-left font-bold text-gray-800">Link</th>
                             </tr>
                         </thead>
@@ -380,15 +389,16 @@
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->saleBank?->bank_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ $row->saleParty?->party_name ?? '-' }}</td>
                                 <td class="px-3 py-2 font-bold text-gray-800">{{ number_format($row->sale_amount, 0) }}</td>
+                                <td class="px-3 py-2 font-bold text-gray-800">—</td>
                                 <td class="px-3 py-2">
-                                    <a href="{{ route('assets.edit', $row->asset_id) }}" class="text-blue-600 font-bold hover:underline">Open Record</a>
+                                    <a href="{{ route('assets.edit', $row->asset_id) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-bold hover:underline">Open Record</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="bg-gray-50 border-t border-gray-200">
                             <tr>
-                                <td colspan="7" class="px-3 py-2 font-bold text-gray-700">
+                                <td colspan="8" class="px-3 py-2 font-bold text-gray-700">
                                     Total Record Found : <strong>{{ $saleAssets->count() }}</strong>
                                 </td>
                             </tr>
