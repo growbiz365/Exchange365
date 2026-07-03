@@ -9,6 +9,7 @@ use App\Models\Party;
 use App\Models\PartyLedger;
 use App\Models\PartyOpeningBalance;
 use App\Models\PartyTransfer;
+use App\Support\VoucherLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -353,7 +354,26 @@ class PartyController extends Controller
                     ->whereBetween('date_added', [$dateFrom, $dateTo])
                     ->orderBy('date_added', 'asc')
                     ->orderBy('party_ledger_id', 'asc')
-                    ->get();
+                    ->get()
+                    ->map(function (PartyLedger $row) {
+                        $voucherId = $row->voucher_id;
+                        if (!$voucherId) {
+                            $voucherId = VoucherLink::resolvePartyLedgerVoucherId(
+                                $row->voucher_type,
+                                (int) $row->party_id,
+                                (int) $row->currency_id,
+                                $row->date_added,
+                                (float) $row->credit_amount,
+                                (float) $row->debit_amount,
+                                $row->details
+                            );
+                        }
+
+                        $row->voucher_id = $voucherId;
+                        $row->voucher_url = VoucherLink::showUrl($row->voucher_type, $voucherId);
+
+                        return $row;
+                    });
 
                 $currency = Currency::where('currency_id', $currencyId)->first();
                 $currencySymbol = $currency ? ($currency->currency_symbol ?? $currency->currency) : '';

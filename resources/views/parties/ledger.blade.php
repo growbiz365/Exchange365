@@ -187,6 +187,16 @@
         .btn-secondary { background: #6c757d; color: white; }
         .btn-secondary:hover { background: #5c636a; }
 
+        .voucher-link {
+            color: #0d6efd;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .voucher-link:hover {
+            text-decoration: underline;
+        }
+
         /* Table */
         .table-container {
             overflow-x: auto;
@@ -403,6 +413,11 @@
                 color: #166534 !important;
             }
 
+            .voucher-link {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
             .total-row td {
                 background: #f3f4f6 !important;
                 border-top: 2px solid #000 !important;
@@ -547,7 +562,17 @@
                         @endphp
                         <tr>
                             <td>{{ $row->date_added->format('d M Y') }}</td>
-                            <td>{{ $row->voucher_type }} #{{ $row->voucher_id }}</td>
+                            <td>
+                                @if($row->voucher_url)
+                                    <a href="{{ $row->voucher_url }}" class="voucher-link">
+                                        {{ $row->voucher_type }} #{{ $row->voucher_id }}
+                                    </a>
+                                @elseif($row->voucher_type && $row->voucher_id)
+                                    {{ $row->voucher_type }} #{{ $row->voucher_id }}
+                                @else
+                                    {{ $row->voucher_type ?? '—' }}
+                                @endif
+                            </td>
                             <td>{{ $row->details ?: '—' }}</td>
                             <td class="col-party">{{ $row->transaction_party ?: '—' }}</td>
                             <td class="col-rate amount">{{ $row->rate != 0 ? number_format($row->rate, 4) : '—' }}</td>

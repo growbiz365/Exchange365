@@ -158,6 +158,16 @@
         .badge-success { background: #dcfce7; color: #166534; }
         .badge-danger { background: #fee2e2; color: #991b1b; }
 
+        .voucher-link {
+            color: #0d6efd;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .voucher-link:hover {
+            text-decoration: underline;
+        }
+
         .total-row td { font-weight: 700; border-top: 2px solid #333; background: #f9fafb; }
         .pagin { margin-top: 10px; font-size: 13px; color: #555; }
         .print-footer { margin-top: 20px; font-size: 11px; color: #666; }
@@ -293,6 +303,11 @@
                 color: #991b1b !important;
             }
 
+            image.png            .voucher-link {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
             .total-row td {
                 background: #f3f4f6 !important;
                 border-top: 2px solid #000 !important;
@@ -391,7 +406,17 @@
                                 @endphp
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($row->date_added)->format('d M Y') }}</td>
-                                    <td>{{ $row->voucher_type ?? '-' }}</td>
+                                    <td>
+                                        @if($row->voucher_url)
+                                            <a href="{{ $row->voucher_url }}" class="voucher-link">
+                                                {{ $row->voucher_type }} #{{ $row->voucher_id }}
+                                            </a>
+                                        @elseif($row->voucher_type && $row->voucher_id)
+                                            {{ $row->voucher_type }} #{{ $row->voucher_id }}
+                                        @else
+                                            {{ $row->voucher_type ?? '-' }}
+                                        @endif
+                                    </td>
                                     <td>{{ $row->details ?? '-' }}</td>
                                     <td class="amount">
                                         @if($dep != 0)

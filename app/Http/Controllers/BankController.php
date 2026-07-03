@@ -9,6 +9,7 @@ use App\Models\BankType;
 use App\Models\Business;
 use App\Models\Currency;
 use App\Models\BankTransfer;
+use App\Support\VoucherLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -228,9 +229,24 @@ class BankController extends Controller
                 $running = $previousBalance;
                 foreach ($bankLedger as $row) {
                     $running += (float) $row->deposit_amount - (float) $row->withdrawal_amount;
+
+                    $voucherId = $row->voucher_id;
+                    if (!$voucherId) {
+                        $voucherId = VoucherLink::resolveBankLedgerVoucherId(
+                            $row->voucher_type,
+                            (int) $row->bank_id,
+                            $row->date_added,
+                            (float) $row->deposit_amount,
+                            (float) $row->withdrawal_amount,
+                            $row->details
+                        );
+                    }
+
                     $ledgerWithBalance->push((object) [
                         'date_added' => $row->date_added,
+                        'voucher_id' => $voucherId,
                         'voucher_type' => $row->voucher_type,
+                        'voucher_url' => VoucherLink::showUrl($row->voucher_type, $voucherId),
                         'details' => $row->details,
                         'deposit_amount' => $row->deposit_amount,
                         'withdrawal_amount' => $row->withdrawal_amount,
