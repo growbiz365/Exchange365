@@ -152,11 +152,15 @@ class ReportController extends Controller
             ->orderBy('c.currency_id')
             ->get();
 
+        // party_ledger.credit_amount = business owes the party (liability); debit_amount = party owes
+        // the business (receivable). For this report, party_balance must represent value the business
+        // effectively holds, so it's receivable minus payable: debit - credit (see party_opening_balances
+        // migration comment: "1=Credit (We owe them), 2=Debit (They owe us)").
         $partyBalancesByCurrency = PartyLedger::query()
             ->join('party as p', 'p.party_id', '=', 'party_ledger.party_id')
             ->where('p.business_id', $businessId)
             ->where('party_ledger.date_added', '<=', $dateSearch)
-            ->selectRaw('party_ledger.currency_id, COALESCE(SUM(party_ledger.credit_amount), 0) - COALESCE(SUM(party_ledger.debit_amount), 0) as party_balance')
+            ->selectRaw('party_ledger.currency_id, COALESCE(SUM(party_ledger.debit_amount), 0) - COALESCE(SUM(party_ledger.credit_amount), 0) as party_balance')
             ->groupBy('party_ledger.currency_id')
             ->get()
             ->keyBy('currency_id');
