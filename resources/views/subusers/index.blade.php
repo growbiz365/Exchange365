@@ -118,6 +118,11 @@
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">
                                         Email
                                     </th>
+                                    @if($isSuperAdmin)
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
+                                        Parent User
+                                    </th>
+                                    @endif
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">
                                         Roles
                                     </th>
@@ -145,6 +150,11 @@
                                             <td class="px-4 py-3 text-sm text-gray-800 w-1/4">
                                                 {{ $user->email }}
                                             </td>
+                                            @if($isSuperAdmin)
+                                            <td class="px-4 py-3 text-sm text-gray-800 w-1/5">
+                                                {{ $user->parent?->name ?? '—' }}
+                                            </td>
+                                            @endif
                                             <td class="px-4 py-3 text-sm text-gray-800 w-1/5">
                                                 @foreach ($user->roles as $role)
                                                     <span class="inline-block px-2 py-1 text-xs text-white bg-indigo-600 rounded-full mr-2 mb-2">
@@ -216,7 +226,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="6" class="px-4 py-10 text-center text-sm text-gray-500">
+                                        <td colspan="{{ $isSuperAdmin ? 8 : 7 }}" class="px-4 py-10 text-center text-sm text-gray-500">
                                             No users found.
                                         </td>
                                     </tr>

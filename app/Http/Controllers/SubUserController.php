@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Business;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -16,15 +17,16 @@ class SubUserController extends Controller
     public function index(Request $request)
     {
         $title = 'Manage Sub Users';
-
-        // Get the currently authenticated parent user
         $parentUser = auth()->user();
-
-        // Apply search filters if provided
+        $isSuperAdmin = $parentUser->isSuperAdmin();
         $search = $request->input('search');
 
-        // Fetch the sub-users with the applied search filters
-        $users = $parentUser->subUsers()
+        $query = $isSuperAdmin
+            ? User::query()->whereNotNull('parent_id')
+            : $parentUser->subUsers();
+
+        $users = $query
+            ->with(['roles', 'parent'])
             ->when($search, function ($query, $search) {
                 return $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', '%' . $search . '%')
@@ -32,10 +34,10 @@ class SubUserController extends Controller
                         ->orWhere('username', 'like', '%' . $search . '%');
                 });
             })
-            ->orderBy('created_at', 'desc') // Optional: Sort by created date (latest first)
-            ->paginate(10); // Pagination for 10 items per page
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
-        return view('subusers.index', compact('users', 'title'));
+        return view('subusers.index', compact('users', 'title', 'isSuperAdmin'));
     }
 
     /**
@@ -106,18 +108,19 @@ class SubUserController extends Controller
      */
     public function edit($id)
     {
-        // Fetch the sub-user to be edited
         $subUser = User::findOrFail($id);
-
         $parentUser = auth()->user();
 
-        // Get roles that the parent user can assign (including their own roles and created roles)
-        $assignableRoles = $parentUser->getAssignableRoles();
+        if (!$this->canManageSubUser($subUser)) {
+            return redirect()->route('subusers.index')->with('error', 'You can only edit your own sub-users.');
+        }
 
-        // Get assigned roles and branches of the sub-user
+        $assignableRoles = $parentUser->getAssignableRoles();
         $assignedRoles = $subUser->roles->pluck('id')->toArray();
-        $assignedBusinesses = $subUser->businesses->pluck('id')->toArray(); // Add this line
-        $businesses = $parentUser->businesses;
+        $assignedBusinesses = $subUser->businesses->pluck('id')->toArray();
+        $businesses = $parentUser->isSuperAdmin()
+            ? Business::orderBy('business_name')->get()
+            : $parentUser->businesses;
 
         return view('subusers.edit', compact(
             'subUser',
@@ -135,6 +138,11 @@ class SubUserController extends Controller
     public function update(Request $request, $id)
     {
         $subUser = User::findOrFail($id);
+        $parentUser = auth()->user();
+
+        if (!$this->canManageSubUser($subUser)) {
+            return redirect()->route('subusers.index')->with('error', 'You can only update your own sub-users.');
+        }
 
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -178,8 +186,7 @@ class SubUserController extends Controller
         $subUser = User::findOrFail($id);
         $parentUser = auth()->user();
         
-        // Ensure the sub-user belongs to the current parent
-        if ($subUser->parent_id !== $parentUser->id) {
+        if (!$this->canManageSubUser($subUser)) {
             return redirect()->route('subusers.index')->with('error', 'You can only suspend your own sub-users.');
         }
         
@@ -202,8 +209,7 @@ class SubUserController extends Controller
         $subUser = User::findOrFail($id);
         $parentUser = auth()->user();
         
-        // Ensure the sub-user belongs to the current parent
-        if ($subUser->parent_id !== $parentUser->id) {
+        if (!$this->canManageSubUser($subUser)) {
             return redirect()->route('subusers.index')->with('error', 'You can only unsuspend your own sub-users.');
         }
         
@@ -220,8 +226,7 @@ class SubUserController extends Controller
         $subUser = User::findOrFail($id);
         $parentUser = auth()->user();
         
-        // Ensure the sub-user belongs to the current parent
-        if ($subUser->parent_id !== $parentUser->id) {
+        if (!$this->canManageSubUser($subUser)) {
             return redirect()->route('subusers.index')->with('error', 'You can only delete your own sub-users.');
         }
         
@@ -232,5 +237,12 @@ class SubUserController extends Controller
         
         $subUser->delete();
         return redirect()->route('subusers.index')->with('success', 'Sub-user deleted successfully');
+    }
+
+    protected function canManageSubUser(User $subUser): bool
+    {
+        $user = auth()->user();
+
+        return $user->isSuperAdmin() || $subUser->parent_id === $user->id;
     }
 }
