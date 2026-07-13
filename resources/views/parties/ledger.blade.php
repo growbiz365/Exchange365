@@ -189,7 +189,7 @@
 
         .voucher-link {
             color: #0d6efd;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
         }
 
@@ -233,6 +233,11 @@
         }
 
         .amount { text-align: right; white-space: nowrap; }
+
+        #ledger-table tbody td,
+        #ledger-table tfoot td {
+            font-weight: 600;
+        }
 
         .credit-val {
             color: #15803d;
@@ -404,6 +409,7 @@
             td {
                 border: 1px solid #000 !important;
                 padding: 4px 6px;
+                font-weight: 600 !important;
             }
 
             .opening-balance-row td { background: #dcfce7 !important; }
@@ -416,6 +422,7 @@
             .voucher-link {
                 color: inherit !important;
                 text-decoration: none !important;
+                font-weight: 600 !important;
             }
 
             .total-row td {
