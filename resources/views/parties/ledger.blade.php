@@ -550,7 +550,11 @@
                     <tr class="opening-balance-row">
                         <td>{{ \Carbon\Carbon::parse($dateFrom)->format('d M Y') }}</td>
                         <td colspan="6" class="opening-head-colspan"><span class="opening-label">Opening Balance</span></td>
-                        <td class="amount">{{ number_format($previousBalance, 2) }} {{ $currencySymbol }}</td>
+                        <td class="amount">
+                            <span class="{{ $previousBalance > 0 ? 'credit-val' : ($previousBalance < 0 ? 'debit-val' : '') }}">
+                                {{ number_format($previousBalance, 2) }} {{ $currencySymbol }}
+                            </span>
+                        </td>
                     </tr>
 
                     @php
@@ -597,7 +601,11 @@
                                     —
                                 @endif
                             </td>
-                            <td class="amount">{{ number_format($balance, 2) }}</td>
+                            <td class="amount">
+                                <span class="{{ $balance > 0 ? 'credit-val' : ($balance < 0 ? 'debit-val' : '') }}">
+                                    {{ number_format($balance, 2) }}
+                                </span>
+                            </td>
                         </tr>
                     @empty
                         <tr>
