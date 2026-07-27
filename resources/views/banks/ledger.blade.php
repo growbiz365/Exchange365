@@ -116,24 +116,42 @@
         .report-header-left { flex: 1; text-align: left; }
         .report-header-right { flex: 1; text-align: right; }
 
-        .report-header-left h1 {
-            margin: 4px 0 8px 0;
+        .business-info h2 {
+            margin: 4px 0 6px 0;
             font-size: 18px;
             font-weight: 700;
+            color: #1a1a1a;
         }
 
-        .report-header-left h4,
-        .report-header-right h4 {
-            margin: 0;
+        .business-info-details {
+            font-size: 11px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .report-title h2 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .report-title .meta {
             font-size: 12px;
             color: #555;
             line-height: 1.7;
         }
 
-        .report-header-right h2 {
-            margin: 0 0 8px 0;
-            font-size: 18px;
-            font-weight: 700;
+        .report-title .meta strong { color: #1a1a1a; }
+
+        .meta-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #3730a3;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         .table-container {
@@ -143,24 +161,68 @@
             -webkit-overflow-scrolling: touch;
             width: 100%;
         }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid #333; padding: 8px; }
-        th { background: #f9fafb; font-weight: 600; text-align: left; }
-        .urdu { font-size: 11px; color: #666; display: block; }
 
-        .amount { text-align: right; }
-        .credit-amount { color: #059669; font-weight: 600; }
-        .debit-amount { color: #dc2626; font-weight: 600; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
 
-        .opening-balance-row { background: #dcfce7 !important; }
-        .opening-balance-row td { background: #dcfce7 !important; font-weight: 600; }
-        .badge { padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-        .badge-success { background: #dcfce7; color: #166534; }
-        .badge-danger { background: #fee2e2; color: #991b1b; }
+        th, td {
+            border: 1px solid #333;
+            padding: 7px 8px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .urdu {
+            font-size: 10px;
+            color: #666;
+            display: block;
+            font-weight: 400;
+        }
+
+        .amount { text-align: right; white-space: nowrap; }
+
+        #ledger-table tbody td,
+        #ledger-table tfoot td {
+            font-weight: 600;
+        }
+
+        .credit-val {
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        .debit-val {
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .opening-balance-row td {
+            background: #dcfce7 !important;
+            font-weight: 600;
+        }
+
+        .opening-label {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            background: #bbf7d0;
+            color: #166534;
+            font-size: 11px;
+            font-weight: 600;
+        }
 
         .voucher-link {
             color: #0d6efd;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
         }
 
@@ -168,12 +230,36 @@
             text-decoration: underline;
         }
 
-        .total-row td { font-weight: 700; border-top: 2px solid #333; background: #f9fafb; }
-        .pagin { margin-top: 10px; font-size: 13px; color: #555; }
-        .print-footer { margin-top: 20px; font-size: 11px; color: #666; }
+        .total-row td {
+            font-weight: 700;
+            border-top: 2px solid #333;
+            background: #f9fafb;
+        }
+
+        .record-count {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .report-footer {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #6b7280;
+            border-top: 1px solid #d1d5db;
+            padding-top: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
 
         /* Chosen select (bank dropdown) */
-        .filter-form .chosen-container { width: 100% !important; min-width: 140px; }
+        .filter-form .chosen-container { width: 100% !important; }
         .filter-form .chosen-container-single .chosen-single {
             height: 36px;
             line-height: 34px;
@@ -185,14 +271,11 @@
             background: #fff;
             box-shadow: none;
         }
-        .filter-form .chosen-container-single .chosen-single:hover { border-color: #0d6efd; }
         .filter-form .chosen-container-active.chosen-with-drop .chosen-single {
             border-color: #0d6efd;
             border-radius: 4px 4px 0 0;
         }
-        .filter-form .chosen-drop { border: 1px solid #dee2e6; border-radius: 0 0 4px 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .filter-form .chosen-results { font-size: 13px; }
-        .filter-form .chosen-results li.highlighted { background: #0d6efd; color: white; }
+        .filter-form .chosen-results li.highlighted { background: #0d6efd; }
 
         @media screen and (max-width: 768px) {
             .page-container { padding: 12px 10px; }
@@ -210,13 +293,13 @@
 
             .button-group { width: 100%; flex-wrap: wrap; }
             .button-group button, .button-group .btn-link {
-                flex: 1 1 auto;
-                min-width: min(100%, 120px);
+                flex: 1;
                 justify-content: center;
+                min-width: min(100%, 120px);
             }
 
             table { font-size: 10px; }
-            th, td { padding: 5px 4px; word-break: break-word; }
+            th, td { padding: 5px 4px; }
         }
 
         @media print {
@@ -251,6 +334,20 @@
 
             .report-header-left { flex: 1 !important; text-align: left !important; }
             .report-header-right { flex: 1 !important; text-align: right !important; }
+
+            .business-info { text-align: left !important; }
+            .report-title { text-align: right !important; }
+
+            .business-info h2,
+            .report-title h2 { font-size: 16px; }
+
+            .business-info-details,
+            .report-title .meta { font-size: 11px; }
+
+            .meta-pill {
+                background: #eef2ff !important;
+                color: #3730a3 !important;
+            }
 
             .table-container {
                 overflow: visible !important;
@@ -289,23 +386,20 @@
             td {
                 border: 1px solid #000 !important;
                 padding: 4px 6px;
+                font-weight: 600 !important;
             }
 
             .opening-balance-row td { background: #dcfce7 !important; }
 
-            .badge-success {
-                background: #dcfce7 !important;
+            .opening-label {
+                background: #bbf7d0 !important;
                 color: #166534 !important;
             }
 
-            .badge-danger {
-                background: #fee2e2 !important;
-                color: #991b1b !important;
-            }
-
-            image.png            .voucher-link {
+            .voucher-link {
                 color: inherit !important;
                 text-decoration: none !important;
+                font-weight: 600 !important;
             }
 
             .total-row td {
@@ -313,7 +407,10 @@
                 border-top: 2px solid #000 !important;
             }
 
-            .print-footer {
+            .credit-val { color: #15803d !important; }
+            .debit-val { color: #b91c1c !important; }
+
+            .report-footer {
                 margin-top: 12px;
                 font-size: 9px;
                 page-break-inside: avoid;
@@ -357,36 +454,57 @@
         @if($fields)
             <div class="report-header">
                 <div class="report-header-left">
-                    <h1>{{ $business->business_name ?? 'ExchangeHub' }}</h1>
-                    <h4>Bank: ( {{ $fields->bank_name }} ) - {{ $fields->currency?->currency ?? '' }} ({{ $fields->currency?->currency_symbol ?? '' }})</h4>
+                    <div class="business-info">
+                        <h2>{{ $business->business_name ?? 'ExchangeHub' }}</h2>
+                        <div class="business-info-details">
+                            @if($business?->address)
+                                <div>{{ $business->address }}</div>
+                            @endif
+                            @if($business?->contact_no)
+                                <div>Contact: {{ $business->contact_no }}</div>
+                            @endif
+                            @if($business?->email)
+                                <div>Email: {{ $business->email }}</div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="report-header-right">
-                    <h2>{{ auth()->user()->name }}</h2>
-                    <h4>Bank Ledger - {{ \Carbon\Carbon::parse($dateFrom)->format('d M Y') }} to {{ \Carbon\Carbon::parse($dateTo)->format('d M Y') }}</h4>
+                    <div class="report-title">
+                        <h2>Bank Ledger</h2>
+                        <div class="meta">
+                            @if($business?->owner_name)
+                                <div><strong>Owner:</strong> {{ $business->owner_name }}</div>
+                            @endif
+                            <div><strong>Bank:</strong> <span class="meta-pill">{{ $fields->bank_name }}</span></div>
+                            <div><strong>Currency:</strong> {{ $fields->currency?->currency ?? '' }} ({{ $fields->currency?->currency_symbol ?? '' }})</div>
+                            <div><strong>Period:</strong> {{ \Carbon\Carbon::parse($dateFrom)->format('d M Y') }} to {{ \Carbon\Carbon::parse($dateTo)->format('d M Y') }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="table-container">
-                <table>
+                <table id="ledger-table">
                     <thead>
                         <tr>
-                            <th width="10%">Date <span class="urdu">( تاریخ )</span></th>
-                            <th width="18%">Voucher Type <span class="urdu">( واؤچر )</span></th>
-                            <th width="32%">Description <span class="urdu">( تفصیل )</span></th>
-                            <th width="14%">Deposit <span class="urdu">( جمع )</span></th>
-                            <th width="14%">Withdrawal <span class="urdu">( بنام )</span></th>
-                            <th width="12%">Balance <span class="urdu">( بقیہ )</span></th>
+                            <th>Date <span class="urdu">(تاریخ)</span></th>
+                            <th>Voucher <span class="urdu">(واؤچر)</span></th>
+                            <th>Description <span class="urdu">(تفصیل)</span></th>
+                            <th class="amount">Deposit <span class="urdu">(جمع)</span></th>
+                            <th class="amount">Withdrawal <span class="urdu">(بنام)</span></th>
+                            <th class="amount">Balance <span class="urdu">(بقیہ)</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Opening Balance -->
                         <tr class="opening-balance-row">
                             <td>{{ \Carbon\Carbon::parse($dateFrom)->format('d M Y') }}</td>
-                            <td>Opening</td>
-                            <td><span class="badge badge-success">*** Opening Balance ***</span></td>
-                            <td class="amount">-</td>
-                            <td class="amount">-</td>
-                            <td class="amount">{{ number_format($previousBalance, 2) }} {{ $currencySymbol }}</td>
+                            <td colspan="4" class="opening-head-colspan"><span class="opening-label">Opening Balance</span></td>
+                            <td class="amount">
+                                <span class="{{ $previousBalance > 0 ? 'credit-val' : ($previousBalance < 0 ? 'debit-val' : '') }}">
+                                    {{ number_format($previousBalance, 2) }} {{ $currencySymbol }}
+                                </span>
+                            </td>
                         </tr>
 
                         @php
@@ -420,19 +538,23 @@
                                     <td>{{ $row->details ?? '-' }}</td>
                                     <td class="amount">
                                         @if($dep != 0)
-                                            <span class="badge badge-success">{{ number_format($dep, 2) }}</span>
+                                            <span class="credit-val">{{ number_format($dep, 2) }}</span>
                                         @else
-                                            -
+                                            —
                                         @endif
                                     </td>
                                     <td class="amount">
                                         @if($with != 0)
-                                            <span class="badge badge-danger">{{ number_format($with, 2) }}</span>
+                                            <span class="debit-val">{{ number_format($with, 2) }}</span>
                                         @else
-                                            -
+                                            —
                                         @endif
                                     </td>
-                                    <td class="amount">{{ number_format($balance, 2) }}</td>
+                                    <td class="amount">
+                                        <span class="{{ $balance > 0 ? 'credit-val' : ($balance < 0 ? 'debit-val' : '') }}">
+                                            {{ number_format($balance, 2) }}
+                                        </span>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif
@@ -442,33 +564,37 @@
                         <tfoot>
                             <tr class="total-row">
                                 <td colspan="3" style="text-align: center"><strong>Total</strong></td>
-                                <td class="amount"><strong>{{ number_format($total_deposit, 2) }} {{ $currencySymbol }}</strong></td>
-                                <td class="amount"><strong>{{ number_format($total_withdrawal, 2) }} {{ $currencySymbol }}</strong></td>
-                                <td class="amount"><strong>{{ number_format($balance, 2) }} {{ $currencySymbol }}</strong></td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <div class="pagin">
-                                        Total Record Found: <strong><span class="total_row">{{ $ledgerWithBalance->count() }}</span></strong>
-                                    </div>
+                                <td class="amount"><strong class="credit-val">{{ number_format($total_deposit, 2) }}</strong></td>
+                                <td class="amount"><strong class="debit-val">{{ number_format($total_withdrawal, 2) }}</strong></td>
+                                <td class="amount">
+                                    <strong class="{{ $balance > 0 ? 'credit-val' : ($balance < 0 ? 'debit-val' : '') }}">
+                                        {{ number_format($balance, 2) }} {{ $currencySymbol }}
+                                    </strong>
                                 </td>
                             </tr>
                         </tfoot>
                     @else
                         <tfoot>
                             <tr>
-                                <td colspan="6" style="text-align: center; padding: 20px; color: #666;">No Transactions Found.</td>
+                                <td colspan="6" class="empty-state">No transactions found for this period.</td>
                             </tr>
                         </tfoot>
                     @endif
                 </table>
             </div>
 
-            <div class="print-footer">
-                <strong>Print Date/Time:</strong> {{ now()->format('d-m-Y H:i:s') }}
+            @if($ledgerWithBalance && $ledgerWithBalance->count() > 0)
+                <div class="record-count no-print">
+                    Total records: <strong>{{ $ledgerWithBalance->count() }}</strong>
+                </div>
+            @endif
+
+            <div class="report-footer">
+                <span>Generated by: {{ auth()->user()->name ?? 'User' }}</span>
+                <span>Printed: {{ now()->format('d M Y, h:i A') }}</span>
             </div>
         @else
-            <p style="text-align: center; color: #666; padding: 30px;">Please select a Bank and date range, then click Search to view the ledger.</p>
+            <p class="empty-state">Select a bank and date range, then click <strong>Search</strong> to view the ledger.</p>
         @endif
     </div>
 
