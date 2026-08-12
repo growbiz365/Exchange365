@@ -3,7 +3,7 @@
 
     <x-dynamic-heading title="Edit Currency" />
 
-    <form action="{{ route('currencies.update', $currency->id) }}" method="POST">
+    <form action="{{ route('currencies.update', $currency) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -23,18 +23,13 @@
 
                 <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1 mb-4">
-                        <x-input-label for="currency_code">Currency Code <span class="text-red-500">*</span></x-input-label>
-                        <x-text-input name="currency_code" value="{{ old('currency_code', $currency->currency_code) }}" required />
+                        <x-input-label for="currency">Currency <span class="text-red-500">*</span></x-input-label>
+                        <x-text-input name="currency" value="{{ old('currency', $currency->currency) }}" required />
                     </div>
 
                     <div class="sm:col-span-1 mb-4 ml-4">
-                        <x-input-label for="currency_name">Currency Name <span class="text-red-500">*</span></x-input-label>
-                        <x-text-input name="currency_name" value="{{ old('currency_name', $currency->currency_name) }}" required />
-                    </div>
-
-                    <div class="sm:col-span-1 mb-4">
-                        <x-input-label for="symbol">Symbol</x-input-label>
-                        <x-text-input name="symbol" value="{{ old('symbol', $currency->symbol) }}" />
+                        <x-input-label for="currency_symbol">Symbol</x-input-label>
+                        <x-text-input name="currency_symbol" value="{{ old('currency_symbol', $currency->currency_symbol) }}" />
                     </div>
                 </div>
             </div>

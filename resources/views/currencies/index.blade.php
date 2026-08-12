@@ -22,8 +22,7 @@
         <thead class="bg-gray-50">
             <tr>
                 <x-table-header>#</x-table-header>
-                <x-table-header>Currency Code</x-table-header>
-                <x-table-header>Currency Name</x-table-header>
+                <x-table-header>Currency</x-table-header>
                 <x-table-header>Symbol</x-table-header>
                 <x-table-header>Actions</x-table-header>
             </tr>
@@ -32,16 +31,15 @@
             @foreach ($currencies as $currency)
                 <tr>
                     <x-table-cell>{{ $loop->iteration }}</x-table-cell>
-                    <x-table-cell>{{ $currency->currency_code }}</x-table-cell>
-                    <x-table-cell>{{ $currency->currency_name }}</x-table-cell>
-                    <x-table-cell>{{ $currency->symbol ?? 'N/A' }}</x-table-cell>
+                    <x-table-cell>{{ $currency->currency }}</x-table-cell>
+                    <x-table-cell>{{ $currency->currency_symbol ?? 'N/A' }}</x-table-cell>
                     <x-table-cell>
                         @can('edit currencies')
-                            <a href="{{ route('currencies.edit', $currency->id) }}"
+                            <a href="{{ route('currencies.edit', $currency) }}"
                                 class="text-blue-600 hover:underline">Edit</a>
                         @endcan
                         @can('delete currencies')
-                            <form action="{{ route('currencies.destroy', $currency->id) }}" method="POST"
+                            <form action="{{ route('currencies.destroy', $currency) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
