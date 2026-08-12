@@ -481,11 +481,11 @@
             </div>
             <div class="form-group checks-stack">
                 <label class="checkbox-group">
-                    <input type="checkbox" id="check_party_col" value="1" checked>
+                    <input type="checkbox" id="check_party_col" value="1">
                     Show Party Column
                 </label>
                 <label class="checkbox-group">
-                    <input type="checkbox" id="check_rate_col" value="1" checked>
+                    <input type="checkbox" id="check_rate_col" value="1">
                     Show Rate Column
                 </label>
             </div>
@@ -660,8 +660,8 @@ $(function() {
 });
 
 function updateColspans() {
-    var showParty = document.getElementById('check_party_col')?.checked ?? true;
-    var showRate  = document.getElementById('check_rate_col')?.checked ?? true;
+    var showParty = document.getElementById('check_party_col')?.checked ?? false;
+    var showRate  = document.getElementById('check_rate_col')?.checked ?? false;
     var hidden    = (showParty ? 0 : 1) + (showRate ? 0 : 1);
 
     var openingHead = document.querySelector('.opening-head-colspan');
