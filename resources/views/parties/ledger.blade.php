@@ -485,7 +485,7 @@
                     Show Party Column
                 </label>
                 <label class="checkbox-group">
-                    <input type="checkbox" id="check_rate_col" value="1">
+                    <input type="checkbox" id="check_rate_col" value="1" checked>
                     Show Rate Column
                 </label>
             </div>
