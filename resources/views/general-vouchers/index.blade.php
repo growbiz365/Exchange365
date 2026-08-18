@@ -48,7 +48,7 @@
                 <div class="min-w-0">
                     <label for="bank_id" class="sr-only">Bank</label>
                     <select id="bank_id" name="bank_id"
-                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        class="chosen-select w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">All Banks</option>
                         @foreach($banks as $b)
                             <option value="{{ $b->bank_id }}" {{ request('bank_id') == $b->bank_id ? 'selected' : '' }}>{{ $b->bank_name }}</option>
@@ -58,7 +58,7 @@
                 <div class="min-w-0">
                     <label for="party_id" class="sr-only">Party</label>
                     <select id="party_id" name="party_id"
-                        class="w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        class="chosen-select w-full px-2 py-1 border border-gray-300 bg-white rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">All Parties</option>
                         @foreach($parties as $p)
                             <option value="{{ $p->party_id }}" {{ request('party_id') == $p->party_id ? 'selected' : '' }}>{{ $p->party_name }}</option>
@@ -171,4 +171,29 @@
             </div>
         @endif
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <x-chosen-styles />
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+            jQuery('#bank_id').chosen({
+                width: '100%',
+                search_contains: true,
+                allow_single_deselect: true,
+                placeholder_text_single: 'All Banks'
+            });
+
+            jQuery('#party_id').chosen({
+                width: '100%',
+                search_contains: true,
+                allow_single_deselect: true,
+                placeholder_text_single: 'All Parties'
+            });
+        }
+    });
+    </script>
 </x-app-layout>
